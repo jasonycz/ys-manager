@@ -24,7 +24,7 @@
         var date = new Date();
         var year = date.getFullYear();
         var main = {
-            brand: 'Material',
+            brand: '工作室后台',
             name: 'Lisa',
             year: year,
             layout: 'wide',                                 // 'boxed', 'wide'
@@ -61,7 +61,7 @@
         var lightGreenAlt = $mdThemingProvider.extendPalette('light-green', {
             'contrastLightColors': '500 600 700 800 900',
             'contrastStrongLightColors': '500 600 700 800 900'
-        })        
+        })
 
         $mdThemingProvider
             .definePalette('cyanAlt', cyanAlt)

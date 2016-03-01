@@ -80,7 +80,7 @@ span.block {
 }
 
 .ui-section {
-    margin-bottom: 60px;
+    margin-bottom: 20px;
 }
 .section-header {
     font-weight: normal;
@@ -121,6 +121,3 @@ a.bg-danger { @include bg-variant-alt ($brand-danger); }
 .bg-facebook { @include bg-style(#335397, $reverse); }
 .bg-twitter { @include bg-style(#00c7f7, $reverse); }
 .bg-google-plus { @include bg-style(#df4a32, $reverse); }
-
-
-
