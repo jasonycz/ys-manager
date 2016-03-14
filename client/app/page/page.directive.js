@@ -28,8 +28,8 @@
                     case '/page/404':
                     case '/page/500':
                         return $element.addClass('body-wide body-err');
-                    case '/page/signin':
-                    case '/page/signup':
+                    case '/page/updatepassword':
+                    case '/page/login':
                     case '/page/forgot-password':
                         return $element.addClass('body-wide body-auth');
                     case '/page/lock-screen':
@@ -45,9 +45,7 @@
                 }
                 return addBg($location.path());
             });
-        }        
+        }
     }
- 
-})(); 
 
-
+})();

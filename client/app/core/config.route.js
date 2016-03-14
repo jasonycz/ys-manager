@@ -7,7 +7,9 @@
 
             routes = [
                 'page/blank',
-                'page/profile'
+                'page/profile',
+                'page/updatepassword',
+                'page/login'
             ]
 
             setRoutes = function(route) {
