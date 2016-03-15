@@ -8,10 +8,6 @@
 
     function ProfileController($scope, $state) {
       $scope.create = function () {
-        // $location.href('http://www.baidu.com')
-
-        // $location.replace('/#/page/blank', '/abc')
-
         $state.go('page/blank')
       }
     }
@@ -77,7 +73,12 @@
             return
           }
 
-          console.log(phone, password, repassword)
+          $http.post('/api/updatepassword', {
+            phone: phone,
+            password: password
+          }).then(function () {
+            // todo something.....
+          })
         }
     }
 
