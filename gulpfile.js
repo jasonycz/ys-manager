@@ -93,7 +93,7 @@ gulp.task('sass-min', function() {
         .src(config.sass)
         .pipe($.plumber({errorHandler: swallowError}))
         .pipe($.sass(sassOptions))
-        .pipe(gulp.dest(config.tmp + '/styles'));    
+        .pipe(gulp.dest(config.tmp + '/styles'));
 })
 
 gulp.task('sass-watcher', function() {
@@ -149,12 +149,14 @@ gulp.task('serve', ['inject', 'sass'], function() {
     startBrowserSync('serve');
 });
 
-gulp.task('build', ['optimize', 'copy'], function() {
-    startBrowserSync('dist');
-})
+gulp.task('build', ['optimize', 'copy'], function() {})
 
 gulp.task('serve-dist', function() {
     gulp.run('build');
+})
+
+gulp.task('serve-dist', ['optimize', 'copy'], function() {
+    startBrowserSync('dist');
 })
 
 gulp.task('serve-docs', ['jade-docs'], function() {
@@ -271,5 +273,3 @@ function startBrowserSync(opt) {
     }
 
 }
-
-

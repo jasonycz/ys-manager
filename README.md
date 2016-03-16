@@ -1,11 +1,14 @@
 # YS Manager System
 
-## Usage
+## Dev
 
 ```
-gulp serve
+npm install
+npm run start
 ```
 
-## TODO
+## Deploy
 
-- anything...
+```
+npm run online
+```
