@@ -1,31 +1,79 @@
 <div class="page page-profile">
 
   <div class="row ui-section">
-      <div class="col-lg-8 clearfix">
-          <h2 class="section-header">创建玉石</h2>
-      </div>
-      <div class="col-md-12">
-          <div class="row" data-ng-controller="TabsDemo" ng-cloak>
-              <div class="col-md-12">
-                  <section class="panel panel-default">
-                      <div class="panel-body no-padding">
-                          <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect class="demo-tabs">
-                              <md-tab label="基本资料">
-                                  <div class="demo-tab" style="padding: 25px; text-align: center;">
-                                      qqq
-                                  </div>
-                              </md-tab>
-                              <md-tab label="流程处理">
-                                  <div class="demo-tab" style="padding: 25px; text-align: center;">
-                                      hahaha
-                                  </div>
-                              </md-tab>
-                          </md-tabs>
+    <div class="col-lg-8 clearfix">
+      <h2 class="section-header">创建玉石</h2>
+    </div>
+    <div class="col-md-12">
+      <div class="row" data-ng-controller="CreatJadeCtrl as vm" ng-cloak>
+        <div class="col-md-12">
+          <section class="panel panel-default">
+            <div class="panel-body no-padding">
+              <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom md-autoselect>
+                <md-tab label="基本资料">
+                  <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                      <div layout="column" class="md-inline-form inputdemoBasicUsage layout-column">
+                        <form layout-padding=""
+                              class="form-horizontal"
+                              ng-submit="vm.submit()"
+                              role="form">
+                          <fieldset>
+
+                            <md-input-container class="md-block">
+                              <label>请输入标题</label>
+                              <input type="text" id="articleTitle">
+                            </md-input-container>
+
+                            <div class="divider"></div>
+
+                            <md-input-container class="md-block">
+                              <label>请选择类型</label>
+                              <md-select ng-model="vm.form.jadeType" id="jadeType" required>
+                                <md-option
+                                  ng-repeat="item in vm.jadeType track by $index"
+                                  value="{{item.id}}">
+                                  {{item.text}}
+                                </md-option>
+                              </md-select>
+                              <div class="errors" ng-messages="vm.form.jadeType.$error" ng-if="vm.form.jadeType.$dirty">
+                                <div ng-message="required">必填项</div>
+                              </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block">
+
+                              <div text-angular
+                                   ng-model="vm.form.details"
+                                   class="ui-editor"
+                                   ></div>
+                              <div class="errors" ng-messages="vm.form.jadeType.$error" ng-if="vm.form.jadeType.$dirty">
+                                <div ng-message="required">必填项</div>
+                              </div>
+                            </md-input-container>
+
+                            <md-button
+                              type="submit"
+                              class="md-raised md-primary btn-w-md">提交
+                            </md-button>
+                          </fieldset>
+                        </form>
                       </div>
-                  </section>
-              </div>
-          </div>
+                    </div>
+                  </div>
+
+                </md-tab>
+                <md-tab label="流程处理">
+                  <div class="demo-tab" style="padding: 25px; text-align: center;">
+                    hahaha
+                  </div>
+                </md-tab>
+              </md-tabs>
+            </div>
+          </section>
+        </div>
       </div>
+    </div>
   </div>
 
 </div>
