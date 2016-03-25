@@ -5,7 +5,7 @@
     .module('app.ui')
     .controller('ChipsBasicDemoCtrl', ChipsBasicDemoCtrl)
     .controller('DialogDemo', ['$scope', '$mdDialog', DialogDemo])
-    .controller('CreatJadeCtrl', ['$scope', '$log', CreatJadeCtrl])
+    .controller('CreatJadeCtrl', ['$scope', CreatJadeCtrl])
     .controller('ProgressCircularDemo', ['$scope', '$interval', ProgressCircularDemo])
     .controller('ProgressLinearDemo', ['$scope', '$interval', ProgressLinearDemo])
     .controller('ToastDemo', ['$scope', '$mdToast', '$document', ToastDemo])
@@ -131,12 +131,10 @@
    * @param $log
    * @constructor
    */
-  function CreatJadeCtrl($scope, $log) {
+  function CreatJadeCtrl($scope) {
     var self = this;
-    self.form={
-      jadeType:0
-    };
 
+    //下拉框
     self.jadeType=[
       {id:1,text:'真玉'},
       {id:2,text:'翡翠'},
@@ -145,6 +143,23 @@
       {id:5,text:'岫山玉'}
     ];
 
+    self.tabs={
+      selectedIndex:0
+    };
+
+    self.form={
+
+    };
+
+    self.canSubmit=function () {
+      return $scope.form.$valid && !angular.equals(self.form, original);
+    };
+
+    //
+    self.submit= function () {
+      //ajax
+      self.tabs.selectedIndex=1;
+    }
   }
 
   function ProgressCircularDemo($scope, $interval) {

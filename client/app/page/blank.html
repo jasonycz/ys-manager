@@ -9,55 +9,98 @@
         <div class="col-md-12">
           <section class="panel panel-default">
             <div class="panel-body no-padding">
-              <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom md-autoselect>
+
+              <md-tabs md-selected="vm.tabs.selectedIndex" md-dynamic-height md-border-bottom md-autoselect>
                 <md-tab label="基本资料">
                   <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                      <div layout="column" class="md-inline-form inputdemoBasicUsage layout-column">
+                      <div layout="column" class="md-inline-form layout-column">
+
                         <form layout-padding=""
+                              name="myForm"
                               class="form-horizontal"
-                              ng-submit="vm.submit()"
-                              role="form">
+                              ng-submit="myForm.$valid && vm.submit()"
+                              novalidate>
                           <fieldset>
 
-                            <md-input-container class="md-block">
+                            <md-input-container
+                              md-is-error="myForm.articleTitle.$invalid && (myForm.$submitted || myForm.articleTitle.$dirty)"
+                              class="md-block">
                               <label>请输入标题</label>
-                              <input type="text" id="articleTitle">
+
+                              <input
+                                type="text"
+                                ng-required="true"
+                                maxlength="20"
+                                ng-model="vm.form.articleTitle"
+                                autocomplete="off"
+                                name="articleTitle"
+                                id="articleTitle">
+
+                              <div
+                                ng-messages="myForm.articleTitle.$error"
+                                ng-if="myForm.$submitted || myForm.articleTitle.$touched">
+
+                                <div ng-message="'required'">必填项</div>
+
+                              </div>
                             </md-input-container>
 
                             <div class="divider"></div>
 
-                            <md-input-container class="md-block">
+                            <md-input-container
+                              md-is-error="myForm.jadeType.$invalid && (myForm.$submitted || myForm.jadeType.$dirty)"
+                              class="md-block">
+
                               <label>请选择类型</label>
-                              <md-select ng-model="vm.form.jadeType" id="jadeType" required>
+                              <md-select
+                                ng-model="vm.form.jadeType"
+                                md-model-option="{trackBy:$index}"
+                                ng-required="true"
+                                name="jadeType"
+                                id="jadeType">
                                 <md-option
-                                  ng-repeat="item in vm.jadeType track by $index"
+                                  ng-repeat="item in vm.jadeType"
                                   value="{{item.id}}">
                                   {{item.text}}
                                 </md-option>
                               </md-select>
-                              <div class="errors" ng-messages="vm.form.jadeType.$error" ng-if="vm.form.jadeType.$dirty">
+
+                              <div class="errors"
+                                   ng-messages="myForm.jadeType.$error"
+                                   ng-if="myForm.$submitted || myForm.jadeType.$touched">
                                 <div ng-message="required">必填项</div>
                               </div>
+
                             </md-input-container>
 
-                            <md-input-container class="md-block">
-
+                            <md-input-container
+                              md-is-error="myForm.details.$invalid && (myForm.$submitted || myForm.details.$dirty)"
+                              class="md-block">
                               <div text-angular
-                                   ng-model="vm.form.details"
                                    class="ui-editor"
-                                   ></div>
-                              <div class="errors" ng-messages="vm.form.jadeType.$error" ng-if="vm.form.jadeType.$dirty">
+                                   ng-required="true"
+                                   ng-model="vm.form.details"
+                                   id="details"
+                                   name="details"></div>
+
+                              <div class="errors"
+                                   ng-messages="myForm.details.$error"
+                                   ng-if="myForm.$submitted || myForm.details.$touched">
                                 <div ng-message="required">必填项</div>
                               </div>
                             </md-input-container>
 
-                            <md-button
-                              type="submit"
-                              class="md-raised md-primary btn-w-md">提交
-                            </md-button>
+                            <div class="pull-right">
+                              <md-button
+                                type="submit"
+                                class="md-raised btn-w-md"
+                                ng-class="{'md-primary':myForm.$valid}">提交
+                              </md-button>
+                            </div>
                           </fieldset>
                         </form>
+
                       </div>
                     </div>
                   </div>
