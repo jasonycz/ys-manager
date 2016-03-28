@@ -1,4 +1,5 @@
-node_modules
+#删除git服务器里面的node_modules文件夹
+#node_modules
 dist
 .tmp
 .sass-cache
