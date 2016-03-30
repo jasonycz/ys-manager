@@ -71,6 +71,11 @@
         // todo something.....
       })
     }
+
+    vm.forgotPwd= function () {
+      alert(vm.form.email)
+    }
+
   }
 
 })();

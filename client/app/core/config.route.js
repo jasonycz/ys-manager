@@ -1,43 +1,44 @@
 (function () {
-    'use strict';
+  'use strict';
 
-    angular.module('app')
-        .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-            var routes, setRoutes;
+  angular.module('app')
+    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+        var routes, setRoutes;
 
-            routes = [
-                'page/blank',
-                'page/profile',
-                'page/updatepassword',
-                'page/login'
-            ]
+        routes = [
+          'page/blank',
+          'page/profile',
+          'page/forgot-password',
+          'page/updatepassword',
+          'page/login'
+        ];
 
-            setRoutes = function(route) {
-                var config, url;
-                url = '/' + route;
-                config = {
-                    url: url,
-                    templateUrl: 'app/' + route + '.html'
-                };
-                $stateProvider.state(route, config);
-                return $stateProvider;
-            };
+        setRoutes = function (route) {
+          var config, url;
+          url = '/' + route;
+          config = {
+            url: url,
+            templateUrl: 'app/' + route + '.html'
+          };
+          $stateProvider.state(route, config);
+          return $stateProvider;
+        };
 
-            routes.forEach(function(route) {
-            return setRoutes(route);
-            });
+        routes.forEach(function (route) {
+          return setRoutes(route);
+        });
 
-            $urlRouterProvider
-                .when('/', '/dashboard')
-                .otherwise('/dashboard');
+        $urlRouterProvider
+          .when('/', '/dashboard')
+          .otherwise('/dashboard');
 
 
-            $stateProvider.state('dashboard', {
-                url: '/dashboard',
-                templateUrl: 'app/dashboard/dashboard.html'
-            });
+        $stateProvider.state('dashboard', {
+          url: '/dashboard',
+          templateUrl: 'app/dashboard/dashboard.html'
+        });
 
-        }]
+      }]
     );
 
 })();
