@@ -5,7 +5,7 @@
     .module('app.ui')
     .controller('ChipsBasicDemoCtrl', ChipsBasicDemoCtrl)
     .controller('DialogDemo', ['$scope', '$mdDialog', DialogDemo])
-    .controller('CreatJadeCtrl', ['$scope', CreatJadeCtrl])
+    .controller('CreateJadeCtrl', ['$scope','$stateParams', CreateJadeCtrl])
     .controller('ProgressCircularDemo', ['$scope', '$interval', ProgressCircularDemo])
     .controller('ProgressLinearDemo', ['$scope', '$interval', ProgressLinearDemo])
     .controller('ToastDemo', ['$scope', '$mdToast', '$document', ToastDemo])
@@ -131,8 +131,10 @@
    * @param $log
    * @constructor
    */
-  function CreatJadeCtrl($scope) {
+  function CreateJadeCtrl($scope,$stateParams) {
     var self = this;
+
+    alert($stateParams.type)
 
     //下拉框
     self.jadeType=[

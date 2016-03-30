@@ -6,7 +6,7 @@
         var routes, setRoutes;
 
         routes = [
-          'page/blank',
+          'page/createJade',
           'page/profile',
           //'page/forgot-password',
           'page/updatepassword',

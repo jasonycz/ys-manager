@@ -8,7 +8,7 @@
 
   function ProfileController($scope, $state) {
     $scope.create = function () {
-      $state.go('page/blank')
+      $state.go('page/createJade')
     }
   }
 

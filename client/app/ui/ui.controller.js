@@ -20,11 +20,11 @@
 
         $scope.start = function() {
             $rootScope.$broadcast('preloader:active');
-        }
+        };
         $scope.complete = function() {
             $rootScope.$broadcast('preloader:hide');
         }
-    }
+    };
 
     function ListCtrl ($scope, $mdDialog) {
         $scope.toppings = [
@@ -77,8 +77,7 @@
             );
         };
     }
-
-
+  
     function AlertDemoCtrl($scope) {
         $scope.alerts = [
             {
@@ -250,7 +249,7 @@
         $scope.bigCurrentPage = 1;
         }
 
-        function TabsDemoCtrl($scope) {
+    function TabsDemoCtrl($scope) {
         $scope.tabs = [
             {
                 title: "Dynamic Title 1",
