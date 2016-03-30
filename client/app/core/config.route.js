@@ -8,7 +8,7 @@
         routes = [
           'page/blank',
           'page/profile',
-          'page/forgot-password',
+          //'page/forgot-password',
           'page/updatepassword',
           'page/login'
         ];

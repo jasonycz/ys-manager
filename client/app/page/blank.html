@@ -17,14 +17,14 @@
                       <div layout="column" class="md-inline-form layout-column">
 
                         <form layout-padding=""
-                              name="myForm"
+                              name="form"
                               class="form-horizontal"
-                              ng-submit="myForm.$valid && vm.submit()"
+                              ng-submit="form.$valid && vm.submit()"
                               novalidate>
                           <fieldset>
 
                             <md-input-container
-                              md-is-error="myForm.articleTitle.$invalid && (myForm.$submitted || myForm.articleTitle.$dirty)"
+                              md-is-error="form.articleTitle.$invalid && (form.$submitted || form.articleTitle.$dirty)"
                               class="md-block">
                               <label>请输入标题</label>
 
@@ -38,8 +38,8 @@
                                 id="articleTitle">
 
                               <div
-                                ng-messages="myForm.articleTitle.$error"
-                                ng-if="myForm.$submitted || myForm.articleTitle.$touched">
+                                ng-messages="form.articleTitle.$error"
+                                ng-if="form.$submitted || form.articleTitle.$touched">
 
                                 <div ng-message="'required'">必填项</div>
 
@@ -49,7 +49,7 @@
                             <div class="divider"></div>
 
                             <md-input-container
-                              md-is-error="myForm.jadeType.$invalid && (myForm.$submitted || myForm.jadeType.$dirty)"
+                              md-is-error="form.jadeType.$invalid && (form.$submitted || form.jadeType.$dirty)"
                               class="md-block">
 
                               <label>请选择类型</label>
@@ -67,15 +67,15 @@
                               </md-select>
 
                               <div class="errors"
-                                   ng-messages="myForm.jadeType.$error"
-                                   ng-if="myForm.$submitted || myForm.jadeType.$touched">
+                                   ng-messages="form.jadeType.$error"
+                                   ng-if="form.$submitted || form.jadeType.$touched">
                                 <div ng-message="required">必填项</div>
                               </div>
 
                             </md-input-container>
 
                             <md-input-container
-                              md-is-error="myForm.details.$invalid && (myForm.$submitted || myForm.details.$dirty)"
+                              md-is-error="form.details.$invalid && (form.$submitted || form.details.$dirty)"
                               class="md-block">
                               <div text-angular
                                    class="ui-editor"
@@ -85,8 +85,8 @@
                                    name="details"></div>
 
                               <div class="errors"
-                                   ng-messages="myForm.details.$error"
-                                   ng-if="myForm.$submitted || myForm.details.$touched">
+                                   ng-messages="form.details.$error"
+                                   ng-if="form.$submitted || form.details.$touched">
                                 <div ng-message="required">必填项</div>
                               </div>
                             </md-input-container>
@@ -95,7 +95,7 @@
                               <md-button
                                 type="submit"
                                 class="md-raised btn-w-md"
-                                ng-class="{'md-primary':myForm.$valid}">提交
+                                ng-class="{'md-primary':form.$valid}">提交
                               </md-button>
                             </div>
                           </fieldset>

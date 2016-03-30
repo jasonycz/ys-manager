@@ -3,7 +3,7 @@
 
   angular.module('app.page')
     .controller('invoiceCtrl', ['$scope', '$window', invoiceCtrl])
-    .controller('authCtrl', ['$scope', '$http', authCtrl])
+    .controller('authCtrl', ['$scope', '$http','validateReg', authCtrl])
     .controller('ProfileController', ['$scope', '$state', ProfileController]);
 
   function ProfileController($scope, $state) {
@@ -25,11 +25,13 @@
     }
   }
 
-  function authCtrl($scope, $http) {
+  function authCtrl($scope, $http,validateReg) {
 
     var vm = this;
+    vm.validate= validateReg;
     vm.form = {};
 
+    //登录
     vm.login = function ($event) {
       $event.preventDefault();
 
@@ -42,37 +44,21 @@
       alert(2)
     };
 
-    vm.update = function ($event) {
-      $event.preventDefault()
+    //修改密码
+    vm.updatePwd = function () {
 
-      var phone = $scope.phone;
-      var password = $scope.password;
-      var repassword = $scope.repassword;
-
-      if (!phone || phone.length !== 11) {
-        alert('请输入正确的 11 位手机号')
-        return
-      }
-
-      if (!password || password.length < 6) {
-        alert('密码必须大于或等于 6 位')
-        return
-      }
-
-      if (repassword !== password) {
-        alert('两次密码输入必须一致')
-        return
-      }
+      alert(vm.form.phone);
 
       $http.post('/api/updatepassword', {
-        phone: phone,
-        password: password
+        phone: vm.form.phone,
+        password: vm.form.password
       }).then(function () {
         // todo something.....
       })
-    }
+    };
 
-    vm.forgotPwd= function () {
+    //忘记密码
+    vm.forgotPwd = function () {
       alert(vm.form.email)
     }
 
