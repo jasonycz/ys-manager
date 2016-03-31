@@ -5,37 +5,45 @@
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         var routes, setRoutes;
 
-      $urlRouterProvider
-        .when('/', '/dashboard')
-        .otherwise('/dashboard');
+        $urlRouterProvider
+          .when('/', '/dashboard')
+          .otherwise('/dashboard');
 
-      $stateProvider
-        .state('dashboard', {
-        url: '/dashboard',
-        templateUrl: 'app/dashboard/dashboard.html'
-      })
-        .state('page', {
-          abstract: true,
-          url: '/page',
-          template: '<div ui-view class="fade-in-up"></div>'
-        })
-        .state('page.createJade', {
-          url: '/createJade/{type}',
-          templateUrl: 'app/page/createJade.html'
-        })
-        .state('page.profile', {
-          url: '/profile',
-          templateUrl: 'app/page/profile.html'
-        })
-        .state('page.updatepassword', {
-          url: '/updatepassword',
-          templateUrl: 'app/page/updatepassword.html'
-        })
-        .state('page.login', {
-          url: '/login',
-          templateUrl: 'app/page/login.html'
-        })
-      ;
+        $stateProvider
+          .state('dashboard', {
+            url: '/dashboard',
+            templateUrl: 'app/dashboard/dashboard.html',
+            controller: 'DashboardCtrl',
+            controllerAs: 'vm'
+            // resolve: {
+            //   deps: ['$ocLazyLoad',
+            //     function( $ocLazyLoad ){
+            //       return $ocLazyLoad.load(['bower_components/qrcode.js/qrcode.js']);
+            //     }]
+            // }
+          })
+          .state('page', {
+            abstract: true,
+            url: '/page',
+            template: '<div ui-view class="fade-in-up"></div>'
+          })
+          .state('page.createJade', {
+            url: '/createJade/{type}',
+            templateUrl: 'app/page/createJade.html'
+          })
+          .state('page.profile', {
+            url: '/profile',
+            templateUrl: 'app/page/profile.html'
+          })
+          .state('page.updatepassword', {
+            url: '/updatepassword',
+            templateUrl: 'app/page/updatepassword.html'
+          })
+          .state('page.login', {
+            url: '/login',
+            templateUrl: 'app/page/login.html'
+          })
+        ;
         // routes = [
         //   'page/createJade',
         //   'page/profile',

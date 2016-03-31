@@ -1,33 +1,47 @@
 <section class="page">
+
     <section class="row ui-section">
       <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-                <div class="card bg-dark-light">
+                <a class="card bg-dark-light" ui-sref="page.createJade({type:'dashboard',action:'create'})">
                     <div class="card-content">
                         <span class="card-title">创建</span>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="col-md-4">
-                <div class="card bg-primary">
+                <a class="card bg-primary">
                     <div class="card-content">
                         <span class="card-title">未发布</span>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="col-md-4">
-                <div class="card bg-info">
+                <a class="card bg-info">
                     <div class="card-content">
                         <span class="card-title">已发布</span>
                     </div>
-                </div>
+                </a>
             </div>
           </div>
       </div>
     </section>
+
+  <script type="text/ng-template" id="QRcodeCtrl.html">
+    <div class="modal-header">
+      <h3>二维码</h3>
+    </div>
+
+    <div class="modal-body">
+      <qrcode data-options="vm.qrcode" class="dialog-qrcode"></qrcode>
+    </div>
+    <div class="modal-footer">
+      <button ui-wave class="btn btn-flat btn-default" ng-click="vm.cancel()">关闭</button>
+    </div>
+  </script>
 
     <section class="row ui-section">
         <div class="col-md-12">
@@ -45,8 +59,8 @@
                           <p>我是内容二</p>
                       </div>
                       <div class="card-action">
-                          <a href="javascript:;">二维码</a>
-                          <a href="javascript:;">删除</a>
+                          <a ng-click="vm.showQR('https://yingyj.com')">二维码</a>
+                          <a ng-click="vm.delItem()">删除</a>
                       </div>
                   </div>
               </div><div class="col-md-4">
