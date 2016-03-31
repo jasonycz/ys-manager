@@ -7,9 +7,7 @@
     .controller('ProfileController', ['$scope', '$state', ProfileController]);
 
   function ProfileController($scope, $state) {
-    $scope.create = function () {
-      $state.go('page/createJade')
-    }
+
   }
 
   function invoiceCtrl($scope, $window) {

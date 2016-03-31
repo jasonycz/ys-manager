@@ -5,7 +5,14 @@
     border-radius: $border-radius-card;
     @extend .mdl-shadow--2dp;
 }
+a.card{
+  display: block;
+  text-decoration: none;
+  .card-title {
+    color: #fff;
 
+  }
+}
 .card {
     position: relative;
     overflow: hidden;
@@ -67,7 +74,7 @@
             border-radius: 50%;
             width: 100px;
             height: 100px;
-            padding: 5px; 
+            padding: 5px;
             background-color: #fff;
             img {
                 width: 90px;
@@ -79,12 +86,12 @@
                 margin-top: -50px;
                 width: 60px;
                 height: 60px;
-                padding: 2px; 
+                padding: 2px;
                 img {
                     width: 56px;
                     height: 56px;
                     border-radius: 50%;
-                }               
+                }
             }
         }
         .card-button .btn-icon {

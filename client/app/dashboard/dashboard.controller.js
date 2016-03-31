@@ -4,5 +4,8 @@
     angular.module('app')
         .controller('DashboardCtrl', ['$scope', DashboardCtrl])
 
-    function DashboardCtrl($scope) {}
+    function DashboardCtrl($scope) {
+
+
+    }
 })();
