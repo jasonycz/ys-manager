@@ -29,7 +29,15 @@
           })
           .state('page.createJade', {
             url: '/createJade/{type}',
-            templateUrl: 'app/page/createJade.html'
+            templateUrl: 'app/page/createJade.html',
+            controller: 'CreateJadeCtrl',
+            controllerAs: 'vm'
+            // resolve: {
+            //   deps: ['$ocLazyLoad',
+            //     function ($ocLazyLoad) {
+            //       return $ocLazyLoad.load(['bower_components/angular-file-upload/dist/angular-file-upload.min.js']);
+            //     }]
+            // }
           })
           .state('page.profile', {
             url: '/profile',

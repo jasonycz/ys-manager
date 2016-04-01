@@ -3,7 +3,6 @@
 
     angular.module('app.ui', [
       'ngAnimate',
-      'ngAria',
       'ngMaterial',
       'ngMessages'
     ]);

@@ -5,7 +5,7 @@
       <h2 class="section-header">创建玉石</h2>
     </div>
     <div class="col-md-12">
-      <div class="row" data-ng-controller="CreateJadeCtrl as vm" ng-cloak>
+      <div class="row">
         <div class="col-md-12">
           <section class="panel panel-default">
             <div class="panel-body no-padding">
@@ -40,9 +40,7 @@
                               <div
                                 ng-messages="form.articleTitle.$error"
                                 ng-if="form.$submitted || form.articleTitle.$touched">
-
-                                <div ng-message="'required'">必填项</div>
-
+                                <div ng-message="required">必填项</div>
                               </div>
                             </md-input-container>
 
@@ -109,97 +107,85 @@
                 <md-tab label="流程处理">
 
                   <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                      <div layout="column" class="md-inline-form layout-column">
-                        <div class="ui-timline-container">
-                          <section class="ui-timeline">
+                    <div class="col-md-12">
+                      <div layout="column" class="md-inline-form layout-column" layout-padding="">
 
-                            <article class="tl-item">
-                              <div class="tl-body">
-                                <div class="tl-entry">
-
-                                  <!--根据类型设置属性-->
-                                  <div class="tl-caption">
-                                    <a href="javascript:;" class="btn btn-primary btn-block">Today</a>
-                                  </div>
+                        <script type="text/ng-template" id="upload-files.html">
+                          <md-dialog ng-cloak>
+                            <form>
+                              <md-toolbar>
+                                <div class="md-toolbar-tools">
+                                  <h2>上传图片</h2>
+                                  <span flex></span>
+                                  <md-button class="md-icon-button" ng-click="vm.cancel()">
+                                    <i class="zmdi zmdi-close"></i>
+                                  </md-button>
+                                </div>
+                              </md-toolbar>
+                              <md-dialog-content>
+                                <div class="md-dialog-content">
 
                                 </div>
-                              </div>
-                            </article>
+                              </md-dialog-content>
+                              <md-dialog-actions layout="row">
+                                <md-button ng-click="vm.save()">确定</md-button>
+                                <md-button ng-click="vm.cancel()">关闭</md-button>
+                              </md-dialog-actions>
+                            </form>
+                          </md-dialog>
+                        </script>
 
-                            <article class="tl-item">
-                              <div class="tl-body">
-                                <div class="tl-entry">
-                                  <div class="tl-icon btn-icon-round btn-icon btn-icon-thin btn-info"><i
-                                    class="fa fa-asterisk"></i></div>
+                        <div class="col">
+                          <div class="wrapper">
+                            <ul class="timeline">
+                              <li class="tl-header">
+                                <div class="btn btn-info">现在</div>
+                              </li>
+                              <li class="tl-item">
+                                <div class="tl-wrap b-info">
                                   <div class="tl-content">
-                                    <h4 class="tl-tile text-primary">Go hiking</h4>
-                                    <p>Consectetur adipisicing elit. Error, accusantium debitis voluptatem dolore
-                                      excepturi ducimus fugiat nulla perspiciatis quo ipsum non eligendi nisi veniam
-                                      maxime in quas atque omnis cumque!</p>
+                                    ??
                                   </div>
                                 </div>
-                              </div>
-                            </article>
+                              </li>
+                              <li class="tl-item tl-left">
+                                <div class="tl-wrap b-primary">
+                                  <!--<span class="tl-date">04.2014</span>-->
+                                  <div class="tl-content panel padder b-a block">
+                                    <span class="arrow left pull-up hidden-left"></span>
+                                    <span class="arrow right pull-up visible-left"></span>
+                                    <div class="text-lt m-b-sm">Block</div>
+                                    <div class="panel-body pull-in b-t b-light row">
+                                      <p>简单的介绍,How to pass an angular-material list to an angular-material dialog?</p>
+                                      <div class="m-b m-t tl-img-list">
 
-                            <article class="tl-item alt">
-                              <div class="tl-body">
-                                <div class="tl-entry">
-                                  <div class="tl-time">1 hour ago</div>
-                                  <div class="tl-icon btn-icon-round btn-icon btn-icon-thin btn-warning"><i
-                                    class="fa fa-shopping-cart"></i></div>
+                                        <a class="col-md-2">
+                                          <img src="images/assets/600_400-1.jpg" alt="...">
+                                        </a>
+                                        <a class="col-md-2">
+                                          <img src="images/assets/600_400-1.jpg" alt="...">
+                                        </a>
+                                        <a class="col-md-2">
+                                          <img src="images/assets/600_400-1.jpg" alt="...">
+                                        </a>
+                                        <a class="col-md-2">
+                                          <img src="images/assets/600_400-1.jpg" alt="...">
+                                        </a>
+                                        <a class="col-md-2">
+                                          <img src="images/assets/600_400-1.jpg" alt="...">
+                                        </a>
 
-                                </div>
-                              </div>
-                            </article>
+                                        <md-button class="md-fab col-md-2" ng-click="vm.upload()">
+                                          <i class="fa fa-plus"></i>
+                                        </md-button>
 
-                            <article class="tl-item">
-                              <div class="tl-body">
-                                <div class="tl-entry">
-                                  <div class="tl-content">
-                                    <h4 class="tl-tile text-warning">Soluta nihil</h4>
-                                    <p>Incidunt, molestias odio soluta nihil accusantium sit nostrum doloremque.
-                                      Recusandae, ullam, odio consequatur facere totam reiciendis similique dicta
-                                      explicabo!</p>
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </article>
-
-                            <article class="tl-item alt">
-                              <div class="tl-body">
-                                <div class="tl-entry">
-                                  <div class="tl-time">7 hours ago</div>
-                                  <div class="tl-icon btn-icon-round btn-icon btn-icon-thin btn-primary"><i class="fa fa-clock-o"></i></div>
-                                </div>
-                              </div>
-                            </article>
-
-                            <article class="tl-item">
-                              <div class="tl-body">
-                                <div class="tl-entry">
-
-                                  <div class="tl-content">
-                                    <h4 class="tl-tile text-info">Accusantium sint</h4>
-                                    <p>Ipsam, minus, quam, sit officiis accusantium sint voluptates voluptatibus minima
-                                      cum non quos corrupti dolorem eligendi modi eius magnam unde!</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </article>
-
-                            <article class="tl-item">
-                              <div class="tl-body">
-                                <div class="tl-entry">
-                                  <div class="tl-caption">
-                                    <a href="javascript:;" class="btn btn-danger btn-block">Yesterday</a>
-                                  </div>
-                                </div>
-                              </div>
-                            </article>
-
-
-                          </section>
+                              </li>
+                            </ul>
+                          </div>
                         </div>
 
                       </div>

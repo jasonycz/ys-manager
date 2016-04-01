@@ -5,7 +5,6 @@
     .module('app.ui')
     .controller('ChipsBasicDemoCtrl', ChipsBasicDemoCtrl)
     .controller('DialogDemo', ['$scope', '$mdDialog', DialogDemo])
-    .controller('CreateJadeCtrl', ['$stateParams', CreateJadeCtrl])
     .controller('ProgressCircularDemo', ['$scope', '$interval', ProgressCircularDemo])
     .controller('ProgressLinearDemo', ['$scope', '$interval', ProgressLinearDemo])
     .controller('ToastDemo', ['$scope', '$mdToast', '$document', ToastDemo])
@@ -123,39 +122,6 @@
     $scope.answer = function (answer) {
       $mdDialog.hide(answer);
     };
-  }
-
-  /**
-   * 创建玉石
-   * @param $scope
-   * @param $log
-   * @constructor
-   */
-  function CreateJadeCtrl( $stateParams) {
-    var self = this;
-
-    alert($stateParams.type)
-
-    //下拉框
-    self.jadeType = [
-      {id: 1, text: '真玉'},
-      {id: 2, text: '翡翠'},
-      {id: 3, text: '内蒙古佘太翠'},
-      {id: 4, text: '新疆和阗玉'},
-      {id: 5, text: '岫山玉'}
-    ];
-
-    self.tabs = {
-      selectedIndex: 0
-    };
-
-    self.form = {};
-
-    //
-    self.submit = function () {
-      //ajax
-      self.tabs.selectedIndex = 1;
-    }
   }
 
   function ProgressCircularDemo($scope, $interval) {
