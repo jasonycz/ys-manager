@@ -15,7 +15,7 @@
         ,'ui.router'
         ,'ui.bootstrap'
         ,'duScroll'
-      ,'angularFileUpload'
+        ,'ngFileUpload'
     ]);
 
 })();
