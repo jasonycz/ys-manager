@@ -4,8 +4,9 @@
     .profile-header {
         position: relative;
         margin: 0 -30px 15px;
-        padding: 50px 30px 90px;
-        background: url('../images/background/1.jpg') no-repeat center center fixed; 
+        //padding: 50px 30px 90px;
+        padding: 50px 30px 60px;
+        background: url('../images/background/1.jpg') no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         background-size: cover;
@@ -47,4 +48,30 @@
     img.media-object {
         border-radius: $border-radius-base;
     }
+}
+.page-partCreateArticle{
+  .list-media-item{
+    position: relative;
+    width: 100%;
+  }
+  .media-item-title{
+
+    position: absolute;
+    bottom:0;
+    width: 100%;
+    height: 2em;
+    background: rgba(0,0,0,0.6);
+    overflow: hidden;
+    padding: 0 8px;
+    line-height: 2em;
+    color: #FFFFFF;
+  }
+  .page-bottom{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    z-index: 999;
+  }
 }

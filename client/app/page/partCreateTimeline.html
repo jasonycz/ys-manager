@@ -1,0 +1,247 @@
+<div class="row">
+  <div class="col-md-12">
+    <div layout="column" class="md-inline-form layout-column" layout-padding="">
+
+      <script type="text/ng-template" id="upload-files.html">
+        <md-dialog>
+          <form>
+            <md-toolbar>
+              <div class="md-toolbar-tools">
+                <h2>上传图片</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.cancel()">
+                  <i class="zmdi zmdi-close"></i>
+                </md-button>
+              </div>
+            </md-toolbar>
+            <md-dialog-content>
+              <div class="md-dialog-content">
+
+                <md-button
+                  ngf-select="vm.uploadFiles($files)"
+                  multiple
+                  accept="image/*"
+                  class="md-raised md-primary btn-w-xs">选择图片
+                </md-button>
+
+                <table class="table no-margin" ng-show="vm.files">
+                  <thead>
+                  <tr>
+                    <th>编号</th>
+                    <th>文件名</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="file in vm.files track by $index">
+                    <td ng-bind="$index"></td>
+                    <td ng-bind="file.name"></td>
+                    <td class="color-success">完成</td>
+                    <td><i class="color-error">x</i></td>
+                  </tr>
+                  </tbody>
+                </table>
+
+
+              </div>
+            </md-dialog-content>
+            <md-dialog-actions layout="row">
+              <md-button ng-click="vm.save()">完成</md-button>
+              <md-button ng-click="vm.cancel()">取消</md-button>
+            </md-dialog-actions>
+          </form>
+        </md-dialog>
+      </script>
+
+      <div class="col">
+        <div class="wrapper">
+          <ul class="timeline">
+
+            <li class="tl-item tl-left">
+              <div class="tl-wrap b-info">
+                <span class="tl-date">开天辟地</span>
+                <div class="tl-content panel padder b-a block">
+                  <span class="arrow left pull-up hidden-left"></span>
+                  <span class="arrow right pull-up visible-left"></span>
+                  <div class="text-lt m-b-sm">
+                    <md-button
+                      ng-click="vm.upload($event)"
+                      class="md-raised md-primary btn-w-xs">添加图片
+                    </md-button>
+                  </div>
+                  <div class="panel-body pull-in b-t b-light row">
+                    <p>简单的介绍,How to pass an angular-material list to an angular-material dialog?</p>
+                    <div class="m-b m-t tl-img-list">
+
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="tl-item tl-left">
+              <div class="tl-wrap b-primary">
+                <span class="tl-date">开天辟地</span>
+                <div class="tl-content panel padder b-a block">
+                  <span class="arrow left pull-up hidden-left"></span>
+                  <span class="arrow right pull-up visible-left"></span>
+                  <div class="text-lt m-b-sm">
+                    <md-button
+                      ng-click="vm.upload($event)"
+                      class="md-raised md-primary btn-w-xs">添加图片
+                    </md-button>
+                  </div>
+                  <div class="panel-body pull-in b-t b-light row">
+                    <p>简单的介绍,How to pass an angular-material list to an angular-material dialog?</p>
+                    <div class="m-b m-t tl-img-list">
+
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="tl-item tl-left">
+              <div class="tl-wrap">
+                <span class="tl-date">开天辟地</span>
+                <div class="tl-content panel padder b-a block">
+                  <span class="arrow left pull-up hidden-left"></span>
+                  <span class="arrow right pull-up visible-left"></span>
+                  <div class="text-lt m-b-sm">
+                    <md-button
+                      ng-click="vm.upload($event)"
+                      class="md-raised md-primary btn-w-xs">添加图片
+                    </md-button>
+                  </div>
+                  <div class="panel-body pull-in b-t b-light row">
+                    <p>简单的介绍,How to pass an angular-material list to an angular-material dialog?</p>
+                    <div class="m-b m-t tl-img-list">
+
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="tl-item tl-left">
+              <div class="tl-wrap b-white">
+                <span class="tl-date">开天辟地</span>
+                <div class="tl-content panel padder b-a block">
+                  <span class="arrow left pull-up hidden-left"></span>
+                  <span class="arrow right pull-up visible-left"></span>
+                  <div class="text-lt m-b-sm">
+                    <md-button
+                      ng-click="vm.upload($event)"
+                      class="md-raised md-primary btn-w-xs">添加图片
+                    </md-button>
+                  </div>
+                  <div class="panel-body pull-in b-t b-light row">
+                    <p>简单的介绍,How to pass an angular-material list to an angular-material dialog?</p>
+                    <div class="m-b m-t tl-img-list">
+
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="tl-item tl-left">
+              <div class="tl-wrap">
+                <span class="tl-date">开天辟地</span>
+                <div class="tl-content panel padder b-a block">
+                  <span class="arrow left pull-up hidden-left"></span>
+                  <span class="arrow right pull-up visible-left"></span>
+                  <div class="text-lt m-b-sm">
+                    <md-button
+                      ng-click="vm.upload($event)"
+                      class="md-raised md-primary btn-w-xs">添加图片
+                    </md-button>
+                  </div>
+                  <div class="panel-body pull-in b-t b-light row">
+                    <p>简单的介绍,How to pass an angular-material list to an angular-material dialog?</p>
+                    <div class="m-b m-t tl-img-list">
+
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                      <a class="col-md-2">
+                        <img src="images/assets/600_400-1.jpg" alt="...">
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

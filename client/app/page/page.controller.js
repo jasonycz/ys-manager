@@ -7,9 +7,9 @@
     .controller('ProfileController', ['$scope', '$state', ProfileController])
     .controller('uploadCtrl', ['$mdDialog', 'items', 'Upload', uploadCtrl])
     .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', CreateJadeCtrl])
-    .controller('GoodDetailsJadeCtrl', ['$stateParams','$mdDialog', GoodDetailsJadeCtrl])
-    .controller('showBigImgCtrl', ['$mdDialog','items', showBigImgCtrl])
-
+    .controller('GoodDetailsJadeCtrl', ['$stateParams', '$mdDialog', GoodDetailsJadeCtrl])
+    .controller('showBigImgCtrl', ['$mdDialog', 'items', showBigImgCtrl]) //显示大图
+    .controller('photoAlbumCtrl', ['$mdDialog', 'items', photoAlbumCtrl]) //在线相册
   ;
 
   function ProfileController($scope, $state) {
@@ -89,17 +89,55 @@
       {id: 5, text: '岫山玉'}
     ];
 
+    self.jadeSize = [
+      {id: 1, text: '超小'},
+      {id: 2, text: '小'},
+      {id: 3, text: '中'},
+      {id: 4, text: '略大'},
+      {id: 5, text: '大'}
+    ];
+
     self.tabs = {
       selectedIndex: 0
     };
 
     self.form = {};
 
+
+    //基本资料部分
     //
     self.submit = function () {
       //ajax
       self.tabs.selectedIndex = 1;
     };
+
+    //打开在线相册
+    self.showPhotoAlbum = function ($event) {
+
+      $mdDialog.show({
+        controller: 'photoAlbumCtrl',
+        controllerAs: 'vm',
+        templateUrl: 'photoAlbum.html',
+        parent: angular.element(document.body),
+        targetEvent: $event,
+        locals: {
+          items: {}
+        }
+        //clickOutsideToClose: true
+      }).then(function(items) {
+         //选中了
+        if(angular.isArray(items)){
+          alert('选中了'+items.length+'个');
+        }
+
+      }, function() {
+        //取消
+      });;
+
+
+    };
+
+    //流程处理(时间轴)部分
 
     //upload img
     self.upload = function ($event) {
@@ -115,9 +153,9 @@
         }
         //clickOutsideToClose: true
       });
-
-
     }
+
+
   };
 
   function uploadCtrl($mdDialog, items, Upload) {
@@ -155,13 +193,13 @@
 
   }
 
-  function GoodDetailsJadeCtrl($stateParams,$mdDialog) {
+  function GoodDetailsJadeCtrl($stateParams, $mdDialog) {
     var vm = this;
 
     vm.items = [
       {
         name: '开天辟地',
-        css:'',
+        css: '',
         introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
         photos: [
           'images/assets/600_400-1.jpg',
@@ -172,7 +210,7 @@
       },
       {
         name: '二',
-        css:'b-primary',
+        css: 'b-primary',
         introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
         photos: [
           'images/assets/600_400-1.jpg',
@@ -183,7 +221,7 @@
       },
       {
         name: '3',
-        css:'b-info',
+        css: 'b-info',
         introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
         photos: [
           'images/assets/600_400-1.jpg',
@@ -194,7 +232,7 @@
       },
       {
         name: '4',
-        css:'b-white',
+        css: 'b-white',
         introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
         photos: [
           'images/assets/600_400-1.jpg',
@@ -205,7 +243,7 @@
       },
       {
         name: '5',
-        css:'b-success',
+        css: 'b-success',
         introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
         photos: [
           'images/assets/600_400-1.jpg',
@@ -214,9 +252,9 @@
           'images/assets/600_400-4.jpg',
           'images/assets/600_400-5.jpg']
       }
-    ]
+    ];
 
-    vm.showBigImg=function (imgUrl,$event) {
+    vm.showBigImg = function (imgUrl, $event) {
 
       $mdDialog.show({
         controller: 'showBigImgCtrl',
@@ -235,14 +273,51 @@
   }
 
   function showBigImgCtrl($mdDialog, items) {
-     var vm=this;
+    var vm = this;
     vm.cancel = function () {
       $mdDialog.hide();
     };
 
-    vm.item=items;
+    vm.item = items;
 
-     console.log(vm.item,items);
+    console.log(vm.item, items);
+  }
+
+  function photoAlbumCtrl($mdDialog, items) {
+    var vm = this;
+    vm.selectItem=[];
+    vm.items=[
+      {id:1,url:'images/assets/600_400-1.jpg'},
+      {id:1,url:'images/assets/600_400-2.jpg'},
+      {id:1,url:'images/assets/600_400-3.jpg'},
+      {id:1,url:'images/assets/600_400-4.jpg'},
+      {id:1,url:'images/assets/600_400-5.jpg'},
+      {id:1,url:'images/assets/600_400-6.jpg'}
+    ];
+
+    vm.selectItemFun=function (item) {
+
+     //  var index= vm.selectItem.indexOf(item);
+     // if(index>-1){
+     //   vm.selectItem.push(item);
+     // } else{
+     //   vm.selectItem.slice(index,1);
+     // }
+     if(item.active){
+       vm.selectItem.slice(index,1);
+     } else{
+       item.active=true;
+       vm.selectItem.push(item);
+     }
+
+    };
+
+    vm.cancel = function () {
+      $mdDialog.hide();
+    };
+    vm.save = function () {
+      $mdDialog.hide(vm.selectItem);
+    };
 
   }
 

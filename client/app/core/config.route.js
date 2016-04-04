@@ -41,7 +41,8 @@
           })
           .state('page.profile', {
             url: '/profile',
-            templateUrl: 'app/page/profile.html'
+            templateUrl: 'app/page/profile.html',
+            controller:'ProfileController'
           })
           .state('page.updatepassword', {
             url: '/updatepassword',
