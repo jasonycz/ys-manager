@@ -1,0 +1,73 @@
+<!--class="page page-profile"-->
+<div>
+  <md-content>
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="时间轴">
+        <md-content class="md-padding">
+
+          <ul class="timeline">
+            <li class="tl-item tl-left" ng-repeat="item in vm.items track by $index">
+              <div class="tl-wrap {{::item.css}}">
+                <span class="tl-date" ng-bind="::item.name"></span>
+                <div class="tl-content panel padder b-a block">
+                  <span class="arrow left pull-up hidden-left"></span>
+                  <span class="arrow right pull-up visible-left"></span>
+                  <!--<div class="text-lt m-b-sm"></div>-->
+                  <div class="panel-body pull-in b-light row">
+                    <p ng-bind="item.introduce"></p>
+
+                    <div class="m-b m-t tl-img-list">
+                      <a class="col-md-2" ng-repeat="photo in item.photos track by $index">
+                        <img ng-src="{{::photo}}"
+                             ng-click="vm.showBigImg(photo,$event)"
+                             alt="...">
+                      </a>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+        </md-content>
+      </md-tab>
+
+      <md-tab label="介绍">
+        <md-content class="md-padding">
+
+
+        </md-content>
+      </md-tab>
+
+    </md-tabs>
+  </md-content>
+
+</div>
+<!--大图片弹框-->
+<script type="text/ng-template" id="showBigImg.html">
+  <md-dialog>
+
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <h2>图片详情</h2>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-click="vm.cancel()">
+            <i class="zmdi zmdi-close"></i>
+          </md-button>
+        </div>
+      </md-toolbar>
+      <md-dialog-content>
+        <div class="md-dialog-content">
+          <img ng-src="{{vm.item.url}}" alt="..." class="img-responsive">
+        </div>
+      </md-dialog-content>
+      <!--<md-dialog-actions layout="row">-->
+      <!--<md-button ng-click=" vm.cancel()">关闭</md-button>-->
+      <!--</md-dialog-actions>-->
+
+  </md-dialog>
+
+</script>
+
+

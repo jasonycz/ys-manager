@@ -6,7 +6,11 @@
     .controller('authCtrl', ['$scope', '$http', 'validateReg', authCtrl])
     .controller('ProfileController', ['$scope', '$state', ProfileController])
     .controller('uploadCtrl', ['$mdDialog', 'items', 'Upload', uploadCtrl])
-    .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', CreateJadeCtrl]);
+    .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', CreateJadeCtrl])
+    .controller('GoodDetailsJadeCtrl', ['$stateParams','$mdDialog', GoodDetailsJadeCtrl])
+    .controller('showBigImgCtrl', ['$mdDialog','items', showBigImgCtrl])
+
+  ;
 
   function ProfileController($scope, $state) {
 
@@ -124,7 +128,7 @@
     };
 
     self.uploadFiles = function ($files) {
-      self.files= $files;
+      self.files = $files;
 
       if (self.files && self.files.length) {
         Upload.upload({
@@ -148,6 +152,97 @@
 
 
     }
+
+  }
+
+  function GoodDetailsJadeCtrl($stateParams,$mdDialog) {
+    var vm = this;
+
+    vm.items = [
+      {
+        name: '开天辟地',
+        css:'',
+        introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
+        photos: [
+          'images/assets/600_400-1.jpg',
+          'images/assets/600_400-2.jpg',
+          'images/assets/600_400-3.jpg',
+          'images/assets/600_400-4.jpg',
+          'images/assets/600_400-5.jpg']
+      },
+      {
+        name: '二',
+        css:'b-primary',
+        introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
+        photos: [
+          'images/assets/600_400-1.jpg',
+          'images/assets/600_400-2.jpg',
+          'images/assets/600_400-3.jpg',
+          'images/assets/600_400-4.jpg',
+          'images/assets/600_400-5.jpg']
+      },
+      {
+        name: '3',
+        css:'b-info',
+        introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
+        photos: [
+          'images/assets/600_400-1.jpg',
+          'images/assets/600_400-2.jpg',
+          'images/assets/600_400-3.jpg',
+          'images/assets/600_400-4.jpg',
+          'images/assets/600_400-5.jpg']
+      },
+      {
+        name: '4',
+        css:'b-white',
+        introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
+        photos: [
+          'images/assets/600_400-1.jpg',
+          'images/assets/600_400-2.jpg',
+          'images/assets/600_400-3.jpg',
+          'images/assets/600_400-4.jpg',
+          'images/assets/600_400-5.jpg']
+      },
+      {
+        name: '5',
+        css:'b-white',
+        introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
+        photos: [
+          'images/assets/600_400-1.jpg',
+          'images/assets/600_400-2.jpg',
+          'images/assets/600_400-3.jpg',
+          'images/assets/600_400-4.jpg',
+          'images/assets/600_400-5.jpg']
+      }
+    ]
+
+    vm.showBigImg=function (imgUrl,$event) {
+
+      $mdDialog.show({
+        controller: 'showBigImgCtrl',
+        controllerAs: 'vm',
+        templateUrl: 'showBigImg.html',
+        parent: angular.element(document.body),
+        targetEvent: $event,
+        locals: {
+          items: {url: imgUrl}
+        }
+        //clickOutsideToClose: true
+      });
+
+    }
+
+  }
+
+  function showBigImgCtrl($mdDialog, items) {
+     var vm=this;
+    vm.cancel = function () {
+      $mdDialog.hide();
+    };
+
+    vm.item=items;
+
+     console.log(vm.item,items);
 
   }
 

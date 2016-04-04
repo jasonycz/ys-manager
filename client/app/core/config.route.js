@@ -28,7 +28,7 @@
             template: '<div ui-view class="fade-in-up"></div>'
           })
           .state('page.createJade', {
-            url: '/createJade/{type}',
+            url: '/createJade/:type',
             templateUrl: 'app/page/createJade.html',
             controller: 'CreateJadeCtrl',
             controllerAs: 'vm'
@@ -51,6 +51,13 @@
             url: '/login',
             templateUrl: 'app/page/login.html'
           })
+          .state('page.goodsDetails', {
+            url: '/goodsDetails/:id',
+            templateUrl: 'app/page/goodsDetails.html',
+            controller:'GoodDetailsJadeCtrl',
+            controllerAs:'vm'
+          })
+
         ;
         // routes = [
         //   'page/createJade',
