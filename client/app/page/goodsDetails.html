@@ -1,4 +1,5 @@
 <!--class="page page-profile"-->
+<div ng-include="app/page/previewArticle.html"></div>
 <div>
   <md-content>
     <md-tabs md-dynamic-height md-border-bottom>
@@ -34,10 +35,7 @@
       </md-tab>
 
       <md-tab label="介绍">
-        <md-content class="md-padding">
-
-
-        </md-content>
+        <md-content class="md-padding" ng-include="'app/page/previewArticle.html'"></md-content>
       </md-tab>
 
     </md-tabs>
@@ -62,12 +60,7 @@
           <img ng-src="{{vm.item.url}}" alt="..." class="img-responsive">
         </div>
       </md-dialog-content>
-      <!--<md-dialog-actions layout="row">-->
-      <!--<md-button ng-click=" vm.cancel()">关闭</md-button>-->
-      <!--</md-dialog-actions>-->
-
   </md-dialog>
-
 </script>
 
 

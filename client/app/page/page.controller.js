@@ -205,7 +205,7 @@
       },
       {
         name: '5',
-        css:'b-white',
+        css:'b-success',
         introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
         photos: [
           'images/assets/600_400-1.jpg',

@@ -159,6 +159,60 @@ $TL_content_bg: rgba(255, 255, 255, .9);
     }
   }
 }
+//
+.hbox {
+  display: table;
+  width: 100%;
+  height: 100%;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.arrow {
+  z-index: 10;
+  border-width: 9px;
+
+  &:after {
+    border-width: 8px;
+    content: "";
+  }
+
+  &.left {
+    top: 50%;
+    left: -9px;
+    margin-top: -9px;
+    border-right-color: rgba(0, 0, 0, 0.1);
+    border-left-width: 0;
+
+    &:after {
+      bottom: -8px;
+      left: 1px;
+      border-right-color: #ffffff;
+      border-left-width: 0;
+    }
+  }
+  &.left.arrow-success:after {
+    border-right-color: #27c24c;
+  }
+
+  &.pull-up {
+    top: 19px;
+  }
+}
+.arrow, .arrow:after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+
+//颜色
+.bg-light {
+  color: #58666e;
+  background-color: #edf1f2;
+}
 
 .b-info {
   border-color: #23b7e5;
