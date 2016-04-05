@@ -1,7 +1,8 @@
 (function () {
   'use strict';
 
-  angular.module('app.page')
+  angular
+    .module('app.page')
     .controller('invoiceCtrl', ['$scope', '$window', invoiceCtrl])
     .controller('authCtrl', ['$scope', '$http', 'validateReg', authCtrl])
     .controller('ProfileController', ['$scope', '$state', ProfileController])
@@ -29,6 +30,12 @@
     }
   }
 
+  /**
+   * 身份验证
+   * @param $scope
+   * @param $http
+   * @param validateReg
+   */
   function authCtrl($scope, $http, validateReg) {
 
     var vm = this;
@@ -124,15 +131,15 @@
           items: {}
         }
         //clickOutsideToClose: true
-      }).then(function(items) {
-         //选中了
-        if(angular.isArray(items)){
-          alert('选中了'+items.length+'个');
+      }).then(function (items) {
+        //选中了
+        if (angular.isArray(items)) {
+          alert('选中了' + items.length + '个');
         }
 
-      }, function() {
+      }, function () {
         //取消
-      });;
+      });
 
 
     };
@@ -158,6 +165,12 @@
 
   };
 
+  /**
+   * 上传弹框
+   * @param $mdDialog
+   * @param items
+   * @param Upload
+   */
   function uploadCtrl($mdDialog, items, Upload) {
     var self = this;
 
@@ -193,6 +206,12 @@
 
   }
 
+  /**
+   * 预览-文章和时间轴
+   * @param $stateParams
+   * @param $mdDialog
+   * @constructor
+   */
   function GoodDetailsJadeCtrl($stateParams, $mdDialog) {
     var vm = this;
 
@@ -272,6 +291,11 @@
 
   }
 
+  /**
+   * 显示大图片弹框
+   * @param $mdDialog
+   * @param items
+   */
   function showBigImgCtrl($mdDialog, items) {
     var vm = this;
     vm.cancel = function () {
@@ -283,32 +307,37 @@
     console.log(vm.item, items);
   }
 
+  /**
+   * 显示在线相册
+   * @param $mdDialog
+   * @param items
+   */
   function photoAlbumCtrl($mdDialog, items) {
     var vm = this;
-    vm.selectItem=[];
-    vm.items=[
-      {id:1,url:'images/assets/600_400-1.jpg'},
-      {id:1,url:'images/assets/600_400-2.jpg'},
-      {id:1,url:'images/assets/600_400-3.jpg'},
-      {id:1,url:'images/assets/600_400-4.jpg'},
-      {id:1,url:'images/assets/600_400-5.jpg'},
-      {id:1,url:'images/assets/600_400-6.jpg'}
+    vm.selectItem = [];
+    vm.items = [
+      {id: 1, url: 'images/assets/600_400-1.jpg'},
+      {id: 1, url: 'images/assets/600_400-2.jpg'},
+      {id: 1, url: 'images/assets/600_400-3.jpg'},
+      {id: 1, url: 'images/assets/600_400-4.jpg'},
+      {id: 1, url: 'images/assets/600_400-5.jpg'},
+      {id: 1, url: 'images/assets/600_400-6.jpg'}
     ];
 
-    vm.selectItemFun=function (item) {
+    vm.selectItemFun = function (item) {
 
-     //  var index= vm.selectItem.indexOf(item);
-     // if(index>-1){
-     //   vm.selectItem.push(item);
-     // } else{
-     //   vm.selectItem.slice(index,1);
-     // }
-     if(item.active){
-       vm.selectItem.slice(index,1);
-     } else{
-       item.active=true;
-       vm.selectItem.push(item);
-     }
+      //  var index= vm.selectItem.indexOf(item);
+      // if(index>-1){
+      //   vm.selectItem.push(item);
+      // } else{
+      //   vm.selectItem.slice(index,1);
+      // }
+      if (item.active) {
+        vm.selectItem.slice(index, 1);
+      } else {
+        item.active = true;
+        vm.selectItem.push(item);
+      }
 
     };
 
