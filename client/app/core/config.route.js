@@ -42,15 +42,20 @@
           .state('page.profile', {
             url: '/profile',
             templateUrl: 'app/page/profile.html',
-            controller:'ProfileController'
+            controller:'ProfileCtrl',
+            controllerAs:'vm'
           })
           .state('page.updatepassword', {
             url: '/updatepassword',
-            templateUrl: 'app/page/updatepassword.html'
+            templateUrl: 'app/page/updatepassword.html',
+            controller:'AuthCtrl',
+            controllerAs:'vm'
           })
           .state('page.login', {
             url: '/login',
-            templateUrl: 'app/page/login.html'
+            templateUrl: 'app/page/login.html',
+            controller:'AuthCtrl',
+            controllerAs:'vm'
           })
           .state('page.goodsDetails', {
             url: '/goodsDetails/:id',

@@ -4,8 +4,8 @@
   angular
     .module('app.page')
     .controller('invoiceCtrl', ['$scope', '$window', invoiceCtrl])
-    .controller('authCtrl', ['$scope', '$http', 'validateReg', authCtrl])
-    .controller('ProfileController', ['$scope', '$state', ProfileController])
+    .controller('AuthCtrl', ['$scope', '$http', 'validateReg', authCtrl])
+    .controller('ProfileCtrl', ['$scope', '$state', ProfileCtrl])
     .controller('uploadCtrl', ['$mdDialog', 'items', 'Upload', uploadCtrl])
     .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', CreateJadeCtrl])
     .controller('GoodDetailsJadeCtrl', ['$stateParams', '$mdDialog', GoodDetailsJadeCtrl])
@@ -13,7 +13,7 @@
     .controller('photoAlbumCtrl', ['$mdDialog', 'items', photoAlbumCtrl]) //在线相册
   ;
 
-  function ProfileController($scope, $state) {
+  function ProfileCtrl($scope, $state) {
 
   }
 
