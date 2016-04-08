@@ -15,7 +15,7 @@
 
   function api($http) {
 
-    var baseUrl = 'http://101.201.198.27/api';
+    var baseUrl = 'http://localhost/api';
     var api = {
       studio: {},
       user: {},
@@ -34,22 +34,17 @@
      * 检查用户名是否存在
      * @param uname 用户名
      */
-    api.user.exists = function (uname) {
-      return $http.post({
-        url: baseUrl + '/studio/exists',
-        data: {uname: uname}
-      })
+    api.user.exists = function (data) {
+      return $http.post(baseUrl + '/studio/exists', data);
     };
 
     /**
      * 用户登录
+     * @param data
      * @returns {*}
      */
-    api.user.login = function () {
-      return $http.post({
-        url: baseUrl + '/user/login',
-        data: data
-      })
+    api.user.login = function (data) {
+      return $http.post(baseUrl + '/user/login', data)
     };
 
     /**
@@ -57,10 +52,7 @@
      * @returns {*}
      */
     api.user.resetpwd = function (data) {
-      return $http.post({
-        url: baseUrl + '/user/resetpwd',
-        data: data
-      })
+      return $http.post(baseUrl + '/user/resetpwd', data)
     };
 
     /**
@@ -69,10 +61,7 @@
      * @returns {*}
      */
     api.user.resetbyphone = function (data) {
-      return $http.post({
-        url: baseUrl + '/user/resetbyphone  ',
-        data: data
-      })
+      return $http.post(baseUrl + '/user/resetbyphone  ', data)
     };
 
     /**
@@ -81,10 +70,7 @@
      * @returns {*}
      */
     api.user.getverify = function (data) {
-      return $http.post({
-        url: baseUrl + '/user/getverify   ',
-        data: data
-      })
+      return $http.post(baseUrl + '/user/getverify   ', data)
     };
 
     /**
@@ -93,32 +79,23 @@
      * @returns {*}
      */
     api.user.setpower = function (data) {
-      return $http.post({
-        url: baseUrl + '/user/setpower   ',
-        data: data
-      })
+      return $http.post(baseUrl + '/user/setpower   ', data)
     };
 
     /**
      * 工作室申请
      * @returns {*}
      */
-    api.studio.apply = function () {
-      return $http.post({
-        url: baseUrl + '/studio/apply',
-        data: data
-      })
+    api.studio.apily = function () {
+      return $http.post(baseUrl + '/studio/apily', data)
     };
 
     /**
      * PC端工作室发布作品展示
      * @returns {*}
      */
-    app.studio.showcraft = function (data) {
-      return $http.get({
-        url: baseUrl + '/studio/showcraft',
-        data: data
-      })
+    api.studio.showcraft = function (data) {
+      return $http.get(baseUrl + '/studio/showcraft', data);
     };
 
     /**
@@ -127,7 +104,7 @@
      * @param {int} type 查看类型
      * @returns {*}
      */
-    app.studio.showonecraft = function (craft_id, type) {
+    api.studio.showonecraft = function (craft_id, type) {
       return $http.get(baseUrl + '/studio/showonecraft')
     };
 
@@ -135,7 +112,7 @@
      * 雕件未发布作品展示
      * @returns {*}
      */
-    app.studio.listnofinish = function () {
+    api.studio.listnofinish = function () {
       return $http.get(baseUrl + '/studio/listnofinish');
     };
 
@@ -145,7 +122,7 @@
      * @param type
      * @returns {*}
      */
-    app.studio.getcid = function () {
+    api.studio.getcid = function () {
       return $http.get(baseUrl + '/studio/getcid')
     };
 
@@ -155,10 +132,7 @@
      * @returns {*}
      */
     api.studio.upData = function (data) {
-      return $http.post({
-        url: baseUrl + '/studio/upData',
-        data: data
-      });
+      return $http.post(baseUrl + '/studio/upData', data);
     };
 
     /**
@@ -166,11 +140,8 @@
      * @param data
      * @returns {*}
      */
-    app.studio.delcraft= function (data) {
-      return $http.post({
-        url: baseUrl + '/studio/delcraft',
-        data: data
-      });
+    api.studio.delcraft = function (data) {
+      return $http.post(baseUrl + '/studio/delcraft', data);
     };
 
     /**
@@ -184,12 +155,8 @@
      * @param publish 1：发布,0预览
      * @returns {*}
      */
-    app.studio.upTimeData = function (data) {
-
-      return $http.post({
-        url: baseUrl + '/studio/upTimeData',
-        data: data
-      })
+    api.studio.upTimeData = function (data) {
+      return $http.post(baseUrl + '/studio/upTimeData', data)
     };
 
     /**
@@ -205,11 +172,8 @@
      * @param data {aid 文章id,craft_id雕件id}
      * @returns {*}
      */
-    app.studio.modifyArticle = function (data) {
-      return $http.get({
-        url: baseUrl + '/studio/modifyArticle',
-        data: data
-      })
+    api.studio.modifyArticle = function (data) {
+      return $http.get(baseUrl + '/studio/modifyArticle', data)
     };
 
     /**
@@ -217,11 +181,8 @@
      * @param url
      * @returns {*}
      */
-    api.studio.modifyTime = function (url) {
-      return $http.get({
-        url: baseUrl + '/studio/modifyTime',
-        data: {img_url: url}
-      })
+    api.studio.modifyTime = function (data) {
+      return $http.get(baseUrl + '/studio/modifyTime', data)
     };
 
     /**
@@ -230,21 +191,15 @@
      * @returns {*}
      */
     api.wap.show = function (data) {
-      return $http.get({
-        url: baseUrl + '/wap/show',
-        data: data
-      })
+      return $http.get(baseUrl + '/wap/show', data)
     };
 
     /**
      * 手机端预览所有发布作品
      * @returns {*}
      */
-    api.wap.showall = function (studioid) {
-      return $http.get({
-        url: baseUrl + '/wap/showall',
-        data: {studioid: studioid}
-      })
+    api.wap.showall = function (data) {
+      return $http.get(baseUrl + '/wap/showall', data)
     };
 
     /**

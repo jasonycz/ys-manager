@@ -3,17 +3,17 @@
   <div class="wrapper">
     <div class="main-body">
       <div class="body-inner">
-        <div class="card bg-white">
+        <form class="card bg-white"
+              name="form"
+              ng-submit="form.$valid && vm.login()"
+              novalidate>
           <div class="card-content">
             <section class="logo text-center">
               <h1><a href="#/">{{main.brand}}</a></h1>
             </section>
 
-            <form layout-padding=""
-                  name="form"
-                  ng-submit="form.$valid && vm.login()"
-                  class="form-horizontal"
-                  novalidate>
+            <div layout-padding=""
+                 class="form-horizontal">
               <fieldset>
 
                 <md-input-container
@@ -27,7 +27,7 @@
                          name="phone"
                          required>
                   <div ng-messages="form.phone.$error"
-                    ng-if="form.$submitted || form.phone.$touched">
+                       ng-if="form.$submitted || form.phone.$touched">
 
                     <div ng-message="required">必填项</div>
                     <div ng-message="pattern">手机格式不正确</div>
@@ -37,30 +37,30 @@
 
 
                 <md-input-container
-                  md-is-error="form.password.$invalid && (form.$submitted || form.password.$dirty)"
+                  md-is-error="form.passwd.$invalid && (form.$submitted || form.passwd.$dirty)"
                   class="md-block">
                   <label>密码</label>
                   <input type="password"
-                           name="password"
-                           ng-model="vm.form.password"
+                         name="passwd"
+                         ng-model="vm.form.passwd"
                          autocomplete="off"
-                           minlength="6"
-                           required>
+                         minlength="6"
+                         required>
 
-                  <div ng-messages="form.password.$error"
-                       ng-if="form.$submitted || form.password.$touched">
+                  <div ng-messages="form.passwd.$error"
+                       ng-if="form.$submitted || form.passwd.$touched">
                     <div ng-message="required">必填项</div>
                     <div ng-message="minlength">密码最少6位</div>
                   </div>
 
                 </md-input-container>
               </fieldset>
-            </form>
+            </div>
           </div>
           <div class="card-action no-border text-right">
-            <a ng-class="{'md-primary':form.$valid}">登录</a>
+            <md-button type="submit" ng-class="{'md-primary':form.$valid}">登录</md-button>
           </div>
-        </div>
+        </form>
 
       </div>
     </div>

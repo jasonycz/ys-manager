@@ -4,7 +4,8 @@
   angular
     .module('app.page')
     .controller('invoiceCtrl', ['$scope', '$window', invoiceCtrl])
-    .controller('AuthCtrl', ['$scope', '$http', 'validateReg', authCtrl])
+    .controller('AuthCtrl', ['api', 'validateReg', authCtrl])
+    .controller('LoginCtrl', ['$state','api', 'validateReg', LoginCtrl])
     .controller('ProfileCtrl', ['$scope', '$state', ProfileCtrl])
     .controller('uploadCtrl', ['$mdDialog', 'items', 'Upload', uploadCtrl])
     .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', CreateJadeCtrl])
@@ -30,13 +31,38 @@
     }
   }
 
+  function LoginCtrl($state,api, validateReg) {
+
+    var vm = this;
+    api.me().then(function (res) {
+      if (res.data.errNo === 0) {//已经登录
+        $state.go('dashboard');
+      }
+    });
+    vm.validate = validateReg;
+    vm.form = {
+      phone: '18514472340',
+      passwd: '123456'
+    };
+    //登录
+    vm.login = function ($event) {
+      //$event.preventDefault();
+      console.log(api);
+
+      api.user.login(vm.form).then(function (res) {
+        console.log(res);
+      });
+    };
+
+  }
+
   /**
    * 身份验证
    * @param $scope
    * @param $http
    * @param validateReg
    */
-  function authCtrl($scope, $http, validateReg) {
+  function authCtrl(api, validateReg) {
 
     var vm = this;
     vm.validate = validateReg;

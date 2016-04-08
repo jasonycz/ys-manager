@@ -54,7 +54,7 @@
           .state('page.login', {
             url: '/login',
             templateUrl: 'app/page/login.html',
-            controller:'AuthCtrl',
+            controller:'LoginCtrl',
             controllerAs:'vm'
           })
           .state('page.goodsDetails', {
