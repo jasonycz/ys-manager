@@ -62,17 +62,17 @@
           <div class="card bg-white">
             <div class="card-image">
               <img ng-src="{{item.img}}">
-              <span class="card-title" ng-bind="item.name"></span>
+              <span class="card-title" ng-bind="item.craft_name"></span>
             </div>
             <div class="card-content">
               <a class="card-button pull-right">
                 <button class="btn btn-icon btn-icon-round btn-floating btn-danger"><i class="fa fa-heart"></i></button>
               </a>
-              <p>我是内容二</p>
+              <p ng-bind="item.describe"></p>
             </div>
             <div class="card-action">
               <a ng-click="vm.showQR('{{item.url}}')">二维码</a>
-              <a ui-sref="page.goodsDetails({id:{{item.id}}})">详情</a>
+              <a ui-sref="page.goodsDetails({id:{{item.craft_id}}})">详情</a>
             </div>
           </div>
         </div>

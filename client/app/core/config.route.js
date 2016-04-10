@@ -12,7 +12,7 @@
         $stateProvider
           .state('dashboard', {
             url: '/dashboard',
-            templateUrl: 'app/dashboard/dashboard.html',
+            templateUrl: 'app/page/dashboard.html',
             controller: 'DashboardCtrl',
             controllerAs: 'vm'
             // resolve: {

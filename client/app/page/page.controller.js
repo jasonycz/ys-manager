@@ -3,16 +3,136 @@
 
   angular
     .module('app.page')
+    .controller('DashboardCtrl', ['$mdDialog','api','toaster', DashboardCtrl])
+    .controller('QRcodeCtrl', ['$mdDialog', 'items', QRcodeCtrl])
     .controller('invoiceCtrl', ['$scope', '$window', invoiceCtrl])
     .controller('AuthCtrl', ['api', 'validateReg', authCtrl])
     .controller('LoginCtrl', ['$state','api', 'validateReg','toaster', LoginCtrl])
     .controller('ProfileCtrl', ['$scope', '$state', ProfileCtrl])
     .controller('uploadCtrl', ['$mdDialog', 'items', 'Upload', uploadCtrl])
     .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', CreateJadeCtrl])
-    .controller('GoodDetailsJadeCtrl', ['$stateParams', '$mdDialog', GoodDetailsJadeCtrl])
+    .controller('GoodDetailsJadeCtrl', ['$stateParams','api', '$mdDialog', GoodDetailsJadeCtrl])
     .controller('showBigImgCtrl', ['$mdDialog', 'items', showBigImgCtrl]) //显示大图
     .controller('photoAlbumCtrl', ['$mdDialog', 'items', photoAlbumCtrl]) //在线相册
   ;
+
+  //面板
+  function DashboardCtrl($mdDialog,api,toaster) {
+    var vm = this;
+    vm.items=[];
+
+    vm.showQR = function (url, $event) {
+
+      $mdDialog.show({
+        controller: 'QRcodeCtrl',
+        controllerAs: 'vm',
+        templateUrl: 'QRcodeCtrl.html',
+        parent: angular.element(document.body),
+        targetEvent: $event,
+        locals: {
+          items: {text: url}
+        }
+      });
+
+    };
+
+    vm.showItems=function (type) {
+      if(type==='unpublished'){
+
+        api.studio.listnofinish().then(function (res) {
+          if(res.data.errNo!==0){
+            toaster.pop('error','数据获取失败',res.data.errMsg)
+          }
+          else{
+            vm.items=res.data.result;
+          }
+        });
+      }
+      else if(type==='published'){
+
+        api.studio.showcraft().then(function (res) {
+
+          if(res.data.errNo!==0){
+            toaster.pop('error','数据获取失败',res.data.errMsg)
+          }
+          else{
+            vm.items=res.data.result;
+          }
+
+        });
+
+      }
+    };
+
+    vm.showItems('published');
+
+    // vm.items = [
+    //   {
+    //     id:1,
+    //     img:'images/assets/600_400-1.jpg',
+    //     name:'我是名字一',
+    //     url:'https://yingyj.com',
+    //     details:'#'
+    //   },
+    //   {
+    //     id:2,
+    //     img:'images/assets/600_400-2.jpg',
+    //     name:'我是名字二',
+    //     url:'https://yingyj.com',
+    //     details:'#'
+    //   },
+    //   {
+    //     id:3,
+    //     img:'images/assets/600_400-3.jpg',
+    //     name:'我是名字3',
+    //     url:'https://yingyj.com',
+    //     details:'#'
+    //   },
+    //   {
+    //     id:4,
+    //     img:'images/assets/600_400-4.jpg',
+    //     name:'我是名字3',
+    //     url:'https://yingyj.com',
+    //     details:'#'
+    //   },
+    //   {
+    //     id:5,
+    //     img:'images/assets/600_400-5.jpg',
+    //     name:'我是名字3',
+    //     url:'https://yingyj.com',
+    //     details:'#'
+    //   },
+    //   {
+    //     id:6,
+    //     img:'images/assets/600_400-6.jpg',
+    //     name:'我是名字3',
+    //     url:'https://yingyj.com',
+    //     details:'#'
+    //   }
+    // ];
+  }
+
+  /**
+   * 二维码
+   * @param $mdDialog
+   * @param items
+   * @constructor
+   */
+  function QRcodeCtrl($mdDialog, items) {
+    console.log(items);
+
+    var vm = this;
+    vm.qrcode = {
+      width: 120,
+      height: 120,
+      text: items.text
+    };
+    vm.cancel = function () {
+      $mdDialog.hide();
+    };
+
+  }
+
 
   function ProfileCtrl($scope, $state) {
 
@@ -31,6 +151,7 @@
     }
   }
 
+  //登陆页
   function LoginCtrl($state,api, validateReg,toaster) {
     var vm = this;
     vm.loginable=true;
@@ -245,9 +366,16 @@
    * @param $mdDialog
    * @constructor
    */
-  function GoodDetailsJadeCtrl($stateParams, $mdDialog) {
+  function GoodDetailsJadeCtrl($stateParams,api, $mdDialog) {
     var vm = this;
+    vm.items=[];
 
+    api.studio.showonecraft({
+      craft_id:$stateParams.id,
+      type:''
+    }).then(function (res) {
+      vm.items=res.data.result;
+    });
     vm.items = [
       {
         name: '开天辟地',
