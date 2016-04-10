@@ -11,11 +11,12 @@
 
   angular
     .module('app.page')
+    .config(['$httpProvider', preAjax])
     .factory('api', ['$http', api]);
 
   function api($http) {
 
-    var baseUrl = 'http://localhost/api';
+    var baseUrl = 'http://101.201.198.27/';
     var api = {
       studio: {},
       user: {},
@@ -27,7 +28,7 @@
      * @returns {*}
      */
     api.me = function () {
-      return $http.post(baseUrl + '/me')
+      return $http.post(baseUrl + '/api/me');
     };
 
     /**
@@ -44,7 +45,7 @@
      * @returns {*}
      */
     api.user.login = function (data) {
-      return $http.post(baseUrl + '/user/login', data)
+      return $http.post(baseUrl + '/user/login', data);
     };
 
     /**
@@ -213,4 +214,48 @@
     return api;
 
   }
+
+  function preAjax($httpProvider) {
+    $httpProvider.interceptors.push(function () {
+      return {
+        request: function (config) {
+
+          //如果是请求api,就改成post
+
+          //form 表单提交方式
+          if (config.method === 'post') {
+            //config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+            //config.headers['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
+            //config.headers['Cache-Control']='no-cache';
+            //config.headers['Pragma']='no-cache';
+
+
+          }
+
+
+          return config;
+        },
+        response: function (response) {
+
+          //console.log(response);
+
+          if(response.config.method==='post'){
+
+            if(response.data.errNo==100012){
+              //console.log('没登陆');
+
+            }
+
+          }
+
+          return response;
+        },
+        responseError: function (response) {
+
+          return response;
+        }
+      }
+    });
+  }
+
 })();

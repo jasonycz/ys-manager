@@ -5,7 +5,7 @@
     .module('app.page')
     .controller('invoiceCtrl', ['$scope', '$window', invoiceCtrl])
     .controller('AuthCtrl', ['api', 'validateReg', authCtrl])
-    .controller('LoginCtrl', ['$state','api', 'validateReg', LoginCtrl])
+    .controller('LoginCtrl', ['$state','api', 'validateReg','toaster', LoginCtrl])
     .controller('ProfileCtrl', ['$scope', '$state', ProfileCtrl])
     .controller('uploadCtrl', ['$mdDialog', 'items', 'Upload', uploadCtrl])
     .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', CreateJadeCtrl])
@@ -31,9 +31,9 @@
     }
   }
 
-  function LoginCtrl($state,api, validateReg) {
-
+  function LoginCtrl($state,api, validateReg,toaster) {
     var vm = this;
+    vm.loginable=true;
     api.me().then(function (res) {
       if (res.data.errNo === 0) {//已经登录
         $state.go('dashboard');
@@ -41,16 +41,23 @@
     });
     vm.validate = validateReg;
     vm.form = {
-      phone: '18514472340',
+      phone: '15212345698',
       passwd: '123456'
     };
     //登录
-    vm.login = function ($event) {
-      //$event.preventDefault();
-      console.log(api);
+    vm.login = function () {
 
+      vm.loginable=false;
       api.user.login(vm.form).then(function (res) {
-        console.log(res);
+        vm.loginable=true;
+
+        if(res.data.errNo===0){
+          $state.go('dashboard');
+        }
+        else{
+          toaster.pop('error', "出错了", res.data.errMsg);
+        }
+
       });
     };
 

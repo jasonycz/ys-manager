@@ -17,6 +17,7 @@
 
         <!-- build:css({.tmp,client}) styles/main.css -->
         <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+        <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.min.css">
         <link rel="stylesheet" href="styles/bootstrap.css">
         <link rel="stylesheet" href="styles/ui.css">
         <link rel="stylesheet" href="styles/main.css">
@@ -38,7 +39,7 @@
             </div>
         <![endif]-->
 
-        <div id="loader-container"></div>
+        <div id="loader-container" ng-class="{'hide':!app.loading.hide}"></div>
 
         <header data-ng-include=" 'app/layout/header.html' "
                  id="header"
@@ -71,6 +72,7 @@
                          class="view-container {{main.pageTransition.class}}"></section>
             </div>
         </div>
+      <toaster-container></toaster-container>
 
         <!-- build:js scripts/vendor.js -->
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -104,6 +106,7 @@
         <script src="bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
         <!--<script src="bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>-->
         <script src="bower_components/qrcode.js/qrcode.js"></script>
+        <script src="bower_components/AngularJS-Toaster/toaster.min.js"></script>
         <!-- endbuild -->
 
 
@@ -111,9 +114,9 @@
         <!-- inject:js -->
         <script src="app/app.module.js"></script>
         <script src="app/core/core.module.js"></script>
+        <script src="app/layout/layout.module.js"></script>
         <script src="app/form/form.module.js"></script>
         <script src="app/form/formValidation.module.js"></script>
-        <script src="app/layout/layout.module.js"></script>
         <script src="app/page/page.module.js"></script>
         <script src="app/table/table.module.js"></script>
         <script src="app/ui/ui.module.js"></script>
@@ -123,14 +126,14 @@
         <script src="app/core/i18n.js"></script>
         <script src="app/dashboard/dashboard.controller.js"></script>
         <script src="app/dashboard/dashboard.directive.js"></script>
-        <script src="app/form/form.controller.js"></script>
-        <script src="app/form/form.directive.js"></script>
-        <script src="app/form/formValidation.controller.js"></script>
-        <script src="app/form/wizard.controller.js"></script>
         <script src="app/layout/layout.controller.js"></script>
         <script src="app/layout/layout.diretive.js"></script>
         <script src="app/layout/loader.js"></script>
         <script src="app/layout/sidebar.directive.js"></script>
+        <script src="app/form/form.controller.js"></script>
+        <script src="app/form/form.directive.js"></script>
+        <script src="app/form/formValidation.controller.js"></script>
+        <script src="app/form/wizard.controller.js"></script>
         <script src="app/page/page.config.js"></script>
         <script src="app/page/page.controller.js"></script>
         <script src="app/page/page.directive.js"></script>
