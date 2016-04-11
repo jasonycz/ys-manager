@@ -3,25 +3,25 @@
 
   angular
     .module('app.page')
-    .controller('DashboardCtrl', ['$mdDialog','api','toaster', DashboardCtrl])
+    .controller('DashboardCtrl', ['$mdDialog', 'api', 'toaster', DashboardCtrl])
     .controller('QRcodeCtrl', ['$mdDialog', 'items', QRcodeCtrl])
     .controller('invoiceCtrl', ['$scope', '$window', invoiceCtrl])
     .controller('AuthCtrl', ['api', 'validateReg', authCtrl])
-    .controller('LoginCtrl', ['$state','api', 'validateReg','toaster', LoginCtrl])
+    .controller('LoginCtrl', ['$state', 'api', 'validateReg', 'toaster', LoginCtrl])
     .controller('ProfileCtrl', ['$scope', '$state', ProfileCtrl])
-    .controller('uploadCtrl', ['$mdDialog', 'items', 'Upload', uploadCtrl])
-    .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', CreateJadeCtrl])
-    .controller('GoodDetailsJadeCtrl', ['$stateParams','api', '$mdDialog', GoodDetailsJadeCtrl])
+    .controller('uploadCtrl', ['$mdDialog', 'items', 'Upload', 'api', uploadCtrl])
+    .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog','api','toaster', CreateJadeCtrl])
+    .controller('GoodDetailsJadeCtrl', ['$stateParams', 'api', '$mdDialog', GoodDetailsJadeCtrl])
     .controller('showBigImgCtrl', ['$mdDialog', 'items', showBigImgCtrl]) //显示大图
     .controller('photoAlbumCtrl', ['$mdDialog', 'items', photoAlbumCtrl]) //在线相册
   ;
 
   //面板
-  function DashboardCtrl($mdDialog,api,toaster) {
+  function DashboardCtrl($mdDialog, api, toaster) {
     var vm = this;
-    vm.items=[];
+    vm.items = [];
 
-    vm.showQR = function (url, $event) {
+    vm.showQR = function (item, $event) {
 
       $mdDialog.show({
         controller: 'QRcodeCtrl',
@@ -30,86 +30,94 @@
         parent: angular.element(document.body),
         targetEvent: $event,
         locals: {
-          items: {text: url}
+          items: {text: item.url}
         }
       });
 
     };
 
-    vm.showItems=function (type) {
-      if(type==='unpublished'){
+    vm.showItems = function (type) {
 
-        api.studio.listnofinish().then(function (res) {
-          if(res.data.errNo!==0){
-            toaster.pop('error','数据获取失败',res.data.errMsg)
-          }
-          else{
-            vm.items=res.data.result;
-          }
-        });
-      }
-      else if(type==='published'){
+      // if(type==='unpublished'){
+      //
+      //   api.studio.listnofinish().then(function (res) {
+      //     if(res.data.errNo!==0){
+      //       toaster.pop('error','数据获取失败',res.data.errMsg)
+      //     }
+      //     else{
+      //       vm.items=res.data.result;
+      //     }
+      //   });
+      // }
+      // else if(type==='published'){
+      //
+      //   api.studio.showcraft().then(function (res) {
+      //
+      //     if(res.data.errNo!==0){
+      //       toaster.pop('error','数据获取失败',res.data.errMsg)
+      //     }
+      //     else{
+      //       vm.items=res.data.result;
+      //     }
+      //
+      //   });
+      //
+      // }
 
-        api.studio.showcraft().then(function (res) {
-
-          if(res.data.errNo!==0){
-            toaster.pop('error','数据获取失败',res.data.errMsg)
-          }
-          else{
-            vm.items=res.data.result;
-          }
-
-        });
-
-      }
     };
 
     vm.showItems('published');
 
-    // vm.items = [
-    //   {
-    //     id:1,
-    //     img:'images/assets/600_400-1.jpg',
-    //     name:'我是名字一',
-    //     url:'https://yingyj.com',
-    //     details:'#'
-    //   },
-    //   {
-    //     id:2,
-    //     img:'images/assets/600_400-2.jpg',
-    //     name:'我是名字二',
-    //     url:'https://yingyj.com',
-    //     details:'#'
-    //   },
-    //   {
-    //     id:3,
-    //     img:'images/assets/600_400-3.jpg',
-    //     name:'我是名字3',
-    //     url:'https://yingyj.com',
-    //     details:'#'
-    //   },
-    //   {
-    //     id:4,
-    //     img:'images/assets/600_400-4.jpg',
-    //     name:'我是名字3',
-    //     url:'https://yingyj.com',
-    //     details:'#'
-    //   },
-    //   {
-    //     id:5,
-    //     img:'images/assets/600_400-5.jpg',
-    //     name:'我是名字3',
-    //     url:'https://yingyj.com',
-    //     details:'#'
-    //   },
-    //   {
-    //     id:6,
-    //     img:'images/assets/600_400-6.jpg',
-    //     name:'我是名字3',
-    //     url:'https://yingyj.com',
-    //     details:'#'
-    //   }
-    // ];
+    vm.items = [
+      {
+        craft_id: 1,
+        img: 'images/assets/600_400-1.jpg',
+        craft_name: '我是名字一',
+        describe: '详细',
+        url: 'https://yingyj.com',
+        details: '#'
+      },
+      {
+        craft_id: 2,
+        img: 'images/assets/600_400-2.jpg',
+        craft_name: '我是名字二',
+        url: 'https://yingyj.com',
+        describe: '详细',
+        details: '#'
+      },
+      {
+        craft_id: 3,
+        img: 'images/assets/600_400-3.jpg',
+        craft_name: '我是名字3',
+        url: 'https://yingyj.com',
+        describe: '详细',
+        details: '#'
+      },
+      {
+        craft_id: 4,
+        img: 'images/assets/600_400-4.jpg',
+        craft_name: '我是名字3',
+        url: 'https://yingyj.com',
+        describe: '详细',
+        details: '#'
+      },
+      {
+        craft_id: 5,
+        img: 'images/assets/600_400-5.jpg',
+        craft_name: '我是名字3',
+        url: 'https://yingyj.com',
+        describe: '详细',
+        details: '#'
+      },
+      {
+        craft_id: 6,
+        img: 'images/assets/600_400-6.jpg',
+        craft_name: '我是名字3',
+        url: 'https://yingyj.com',
+        describe: '详细',
+        details: '#'
+      }
+    ];
   }
 
   /**
@@ -119,7 +127,6 @@
    * @constructor
    */
   function QRcodeCtrl($mdDialog, items) {
-    console.log(items);
 
     var vm = this;
     vm.qrcode = {
@@ -130,7 +137,6 @@
     vm.cancel = function () {
       $mdDialog.hide();
     };
-
   }
 
 
@@ -152,9 +158,9 @@
   }
 
   //登陆页
-  function LoginCtrl($state,api, validateReg,toaster) {
+  function LoginCtrl($state, api, validateReg, toaster) {
     var vm = this;
-    vm.loginable=true;
+    vm.loginable = true;
     api.me().then(function (res) {
       if (res.data.errNo === 0) {//已经登录
         $state.go('dashboard');
@@ -168,14 +174,14 @@
     //登录
     vm.login = function () {
 
-      vm.loginable=false;
+      vm.loginable = false;
       api.user.login(vm.form).then(function (res) {
-        vm.loginable=true;
+        vm.loginable = true;
 
-        if(res.data.errNo===0){
+        if (res.data.errNo === 0) {
           $state.go('dashboard');
         }
-        else{
+        else {
           toaster.pop('error', "出错了", res.data.errMsg);
         }
 
@@ -235,11 +241,9 @@
    * @param $log
    * @constructor
    */
-  function CreateJadeCtrl($stateParams, $mdDialog) {
+  function CreateJadeCtrl($stateParams, $mdDialog,api,toaster) {
 
     var self = this;
-
-    //alert($stateParams.type)
 
     //下拉框
     self.jadeType = [
@@ -264,10 +268,22 @@
 
     self.form = {};
 
-
     //基本资料部分
     //
     self.submit = function () {
+
+      if(vm.form.Aid){
+        api.studio.upData({
+
+        }).then(function (res) {
+          toaster.pop('success','','添加成功');
+
+        })
+      }
+      else{
+
+      }
+
       //ajax
       self.tabs.selectedIndex = 1;
     };
@@ -316,7 +332,6 @@
       });
     }
 
-
   };
 
   /**
@@ -325,7 +340,7 @@
    * @param items
    * @param Upload
    */
-  function uploadCtrl($mdDialog, items, Upload) {
+  function uploadCtrl($mdDialog, items, Upload, api) {
     var self = this;
 
     self.cancel = function () {
@@ -337,7 +352,7 @@
 
       if (self.files && self.files.length) {
         Upload.upload({
-          url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+          url: api.studio.uploaduyimg(),
           data: {
             files: self.files
           }
@@ -366,16 +381,10 @@
    * @param $mdDialog
    * @constructor
    */
-  function GoodDetailsJadeCtrl($stateParams,api, $mdDialog) {
+  function GoodDetailsJadeCtrl($stateParams, api, $mdDialog) {
     var vm = this;
-    vm.items=[];
+    vm.items = [];
 
-    api.studio.showonecraft({
-      craft_id:$stateParams.id,
-      type:''
-    }).then(function (res) {
-      vm.items=res.data.result;
-    });
     vm.items = [
       {
         name: '开天辟地',
@@ -434,6 +443,13 @@
       }
     ];
 
+    api.studio.showonecraft({
+      craft_id: $stateParams.id,
+      type: '1'//时间轴
+    }).then(function (res) {
+      vm.items = res.data.result;
+    });
+
     vm.showBigImg = function (imgUrl, $event) {
 
       $mdDialog.show({
@@ -449,7 +465,6 @@
       });
 
     }
-
   }
 
   /**
@@ -512,3 +527,4 @@
   }
 
 })();
+;

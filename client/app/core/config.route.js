@@ -63,7 +63,6 @@
             controller:'GoodDetailsJadeCtrl',
             controllerAs:'vm'
           })
-
         ;
         // routes = [
         //   'page/createJade',

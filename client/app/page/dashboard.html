@@ -30,30 +30,6 @@
     </div>
   </section>
 
-  <script type="text/ng-template" id="QRcodeCtrl.html">
-    <md-dialog ng-cloak>
-      <form>
-        <md-toolbar>
-          <div class="md-toolbar-tools">
-            <h2>二维码</h2>
-            <span flex></span>
-            <md-button class="md-icon-button" ng-click="vm.cancel()">
-              <i class="zmdi zmdi-close"></i>
-            </md-button>
-          </div>
-        </md-toolbar>
-        <md-dialog-content>
-          <div class="md-dialog-content">
-            <qrcode data-options="vm.qrcode" class="dialog-qrcode"></qrcode>
-          </div>
-        </md-dialog-content>
-        <!--<md-dialog-actions layout="row">-->
-        <!--<md-button ng-click=" vm.cancel()">关闭</md-button>-->
-        <!--</md-dialog-actions>-->
-      </form>
-    </md-dialog>
-  </script>
-
   <section class="row ui-section">
     <div class="col-md-12">
       <div class="row">
@@ -71,7 +47,7 @@
               <p ng-bind="item.describe"></p>
             </div>
             <div class="card-action">
-              <a ng-click="vm.showQR('{{item.url}}')">二维码</a>
+              <a ng-click="vm.showQR(item,$event)">二维码</a>
               <a ui-sref="page.goodsDetails({id:{{item.craft_id}}})">详情</a>
             </div>
           </div>
@@ -81,4 +57,23 @@
     </div>
   </section>
 
+  <script type="text/ng-template" id="QRcodeCtrl.html">
+    <md-dialog>
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <h2>二维码</h2>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-click="vm.cancel()">
+            <i class="zmdi zmdi-close"></i>
+          </md-button>
+        </div>
+      </md-toolbar>
+      <md-dialog-content>
+        <div class="md-dialog-content">
+          <qrcode data-options="vm.qrcode" class="dialog-qrcode"></qrcode>
+        </div>
+      </md-dialog-content>
+
+    </md-dialog>
+  </script>
 </section>

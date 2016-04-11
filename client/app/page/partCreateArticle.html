@@ -18,33 +18,58 @@
       ng-submit="form.$valid && vm.submit()"
       novalidate>
       <fieldset>
+        <input type="hidden" ng-model="vm.form.Aid">
+        <input type="hidden" ng-model="vm.form.craft_id">
 
         <md-input-container
           class="md-block"
-          md-is-error="form.articleTitle.$invalid && (form.$submitted || form.articleTitle.$dirty)">
-          <label>请输入标题</label>
+          md-is-error="form.Title.$invalid && (form.$submitted || form.Title.$dirty)">
+          <label>标题</label>
 
           <input
             type="text"
             ng-required="true"
             maxlength="20"
-            ng-model="vm.form.articleTitle"
+            ng-model="vm.form.Title"
             autocomplete="off"
-            name="articleTitle"
-            id="articleTitle">
+            name="Title"
+            id="Title">
 
           <div
-            ng-messages="form.articleTitle.$error"
-            ng-if="form.$submitted || form.articleTitle.$touched">
+            ng-messages="form.Title.$error"
+            ng-if="form.$submitted || form.Title.$touched">
+            <div ng-message="required">必填项</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container
+          class="md-block"
+          md-is-error="form.author.$invalid && (form.$submitted || form.author.$dirty)">
+          <label>作者</label>
+
+          <input
+            type="text"
+            ng-required="true"
+            maxlength="20"
+            ng-model="vm.form.author"
+            autocomplete="off"
+            name="author"
+            id="author">
+
+          <div
+            ng-messages="form.author.$error"
+            ng-if="form.$submitted || form.author.$touched">
             <div ng-message="required">必填项</div>
           </div>
         </md-input-container>
 
         <div layout-gt-sm="row">
+
           <md-datepicker
-            ng-model="vm.form.creatTime"
-            md-placeholder="时间"
+            ng-model="vm.form.createdate"
+            md-placeholder="创建时间"
             flex-gt-sm></md-datepicker>
+
           <div flex="5" hide-xs hide-sm></div>
           <md-input-container
             class="md-block"
@@ -129,22 +154,21 @@
         </div>
 
         <md-input-container
-          md-is-error="form.details.$invalid && (form.$submitted || form.details.$dirty)"
+          md-is-error="form.content.$invalid && (form.$submitted || form.content.$dirty)"
           class="md-block">
           <div text-angular
                class="ui-editor"
                ng-required="true"
-               ng-model="vm.form.details"
+               ng-model="vm.form.content"
                id="details"
                name="details"></div>
 
           <div class="errors"
-               ng-messages="form.details.$error"
-               ng-if="form.$submitted || form.details.$touched">
+               ng-messages="form.content.$error"
+               ng-if="form.$submitted || form.content.$touched">
             <div ng-message="required">必填项</div>
           </div>
         </md-input-container>
-
 
         <div class="page-bottom bg-white b-t row panel-body">
           <div class="col-md-8"></div>

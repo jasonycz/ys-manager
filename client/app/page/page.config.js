@@ -216,7 +216,7 @@
   }
 
   function preAjax($httpProvider) {
-    $httpProvider.interceptors.push(function () {
+    $httpProvider.interceptors.push(['$rootScope', 'toaster', function ($rootScope,toaster) {
       return {
         request: function (config) {
 
@@ -229,7 +229,7 @@
             //config.headers['Cache-Control']='no-cache';
             //config.headers['Pragma']='no-cache';
 
-
+            $rootScope.$broadcast('preloader:active');
           }
 
 
@@ -238,12 +238,12 @@
         response: function (response) {
 
           //console.log(response);
+          $rootScope.$broadcast('preloader:hide');
 
-          if(response.config.method==='post'){
+          if (response.config.method === 'post') {
 
-            if(response.data.errNo==100012){
-              //console.log('没登陆');
-
+            if (response.data.errNo !== 0) {
+              toaster.pop('error', '出错了', response.data.errMsg);
             }
 
           }
@@ -255,7 +255,7 @@
           return response;
         }
       }
-    });
+    }]);
   }
 
 })();

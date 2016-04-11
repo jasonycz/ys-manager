@@ -5,7 +5,7 @@
     .directive('customPage', customPage)
     .directive('qrcode', ['$window', qrcode]);
 
-  var qrcode = function ($window) {
+   function qrcode($window) {
 
     return {
       restrict: 'E',
@@ -13,7 +13,7 @@
         options: '='
       },
       link: function (scope, ele, attrs) {
-
+        console.log(ele,scope.options);
         new QRCode(ele[0], scope.options);
 
       }
