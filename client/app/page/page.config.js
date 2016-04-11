@@ -16,7 +16,8 @@
 
   function api($http) {
 
-    var baseUrl = 'http://101.201.198.27/';
+    //var baseUrl = 'http://101.201.198.27';
+    var baseUrl = 'http://localhost:8000/api';
     var api = {
       studio: {},
       user: {},
@@ -216,6 +217,7 @@
   }
 
   function preAjax($httpProvider) {
+    $httpProvider.defaults.withCredentials = true;
     $httpProvider.interceptors.push(['$rootScope', 'toaster', function ($rootScope,toaster) {
       return {
         request: function (config) {
