@@ -42,7 +42,7 @@
 
         api.studio.listnofinish().then(function (res) {
           if (res.data.errNo !== 0) {
-            toaster.pop('error', '数据获取失败', res.data.errMsg)
+            //toaster.pop('error', '数据获取失败', res.data.errMsg)
           }
           else {
             vm.items = res.data.result;
@@ -54,7 +54,7 @@
         api.studio.showcraft().then(function (res) {
 
           if (res.data.errNo !== 0) {
-            toaster.pop('error', '数据获取失败', res.data.errMsg)
+            //toaster.pop('error', '数据获取失败', res.data.errMsg)
           }
           else {
             vm.items = res.data.result;
@@ -279,7 +279,7 @@
           }
           else {
             toaster.pop('error', '获取雕件id失败', '正在重新获取,错误信息:' + res.data.errMsg);
-            
+
             if(res.data.errNo!==100012){
               setTimeout(function () {
                 getcid();
