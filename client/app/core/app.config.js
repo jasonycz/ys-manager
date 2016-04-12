@@ -308,7 +308,7 @@
 
   function preAjax($httpProvider) {
     $httpProvider.defaults.withCredentials = true;
-    $httpProvider.interceptors.push(['$rootScope', 'toaster', function ($rootScope,toaster) {
+    $httpProvider.interceptors.push(['$rootScope', 'toaster', function ($rootScope, toaster) {
       return {
         request: function (config) {
 
@@ -332,12 +332,15 @@
           //console.log(response);
           $rootScope.$broadcast('preloader:hide');
 
-          if (response.config.method === 'post') {
+          //不是请求 api/me 的时候,出现未登陆错误
+          if (response.data.errNo && response.data.errNo !== 0 && response.config.url.indexOf('/api/me') === -1) {
+            console.log(response);
+            toaster.pop('error', '出错了', response.data.errMsg);
+          }
 
-            if (response.data.errNo !== 0) {
-              toaster.pop('error', '出错了', response.data.errMsg);
-            }
+          if (response.data.errNo === 100012) {
 
+            window.location.href = '/#/page/login';
           }
 
           return response;

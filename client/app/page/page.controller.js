@@ -272,15 +272,20 @@
       api.studio
         .getcid()
         .then(function (res) {
-          console.log(res.data.result.craft_id);
           if (res.data.errNo === 0) {
+
+            console.log(res.data.result.craft_id);
             vm.form.craft_id = res.data.result.craft_id;
           }
           else {
             toaster.pop('error', '获取雕件id失败', '正在重新获取,错误信息:' + res.data.errMsg);
-            setTimeout(function () {
-              getcid();
-            }, 200);
+            
+            if(res.data.errNo!==100012){
+              setTimeout(function () {
+                getcid();
+              }, 200);
+            }
+
           }
 
         });
