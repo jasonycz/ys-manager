@@ -37,9 +37,15 @@
     }, true);
 
     $rootScope.app.loading = false;
-    $rootScope.$on("$stateChangeSuccess", function (event, currentRoute, previousRoute) {
+
+
+    $rootScope.$on("$stateChangeStart", function () {
+      $rootScope.$broadcast('preloader:active');
+    });
+    $rootScope.$on("$stateChangeSuccess", function () {
       $document.scrollTo(0, 0);
       $rootScope.app.loading = false;
+      $rootScope.$broadcast('preloader:hide');
     });
   }
 

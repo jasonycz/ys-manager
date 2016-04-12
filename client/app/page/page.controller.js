@@ -38,86 +38,86 @@
 
     vm.showItems = function (type) {
 
-      // if(type==='unpublished'){
-      //
-      //   api.studio.listnofinish().then(function (res) {
-      //     if(res.data.errNo!==0){
-      //       toaster.pop('error','数据获取失败',res.data.errMsg)
-      //     }
-      //     else{
-      //       vm.items=res.data.result;
-      //     }
-      //   });
-      // }
-      // else if(type==='published'){
-      //
-      //   api.studio.showcraft().then(function (res) {
-      //
-      //     if(res.data.errNo!==0){
-      //       toaster.pop('error','数据获取失败',res.data.errMsg)
-      //     }
-      //     else{
-      //       vm.items=res.data.result;
-      //     }
-      //
-      //   });
-      //
-      // }
+      if(type==='unpublished'){
+
+        api.studio.listnofinish().then(function (res) {
+          if(res.data.errNo!==0){
+            toaster.pop('error','数据获取失败',res.data.errMsg)
+          }
+          else{
+            vm.items=res.data.result;
+          }
+        });
+      }
+      else if(type==='published'){
+
+        api.studio.showcraft().then(function (res) {
+
+          if(res.data.errNo!==0){
+            toaster.pop('error','数据获取失败',res.data.errMsg)
+          }
+          else{
+            vm.items=res.data.result;
+          }
+
+        });
+
+      }
 
     };
 
     vm.showItems('published');
 
-    vm.items = [
-      {
-        craft_id: 1,
-        img: 'images/assets/600_400-1.jpg',
-        craft_name: '我是名字一',
-        describe: '详细',
-        url: 'https://yingyj.com',
-        details: '#'
-      },
-      {
-        craft_id: 2,
-        img: 'images/assets/600_400-2.jpg',
-        craft_name: '我是名字二',
-        url: 'https://yingyj.com',
-        describe: '详细',
-        details: '#'
-      },
-      {
-        craft_id: 3,
-        img: 'images/assets/600_400-3.jpg',
-        craft_name: '我是名字3',
-        url: 'https://yingyj.com',
-        describe: '详细',
-        details: '#'
-      },
-      {
-        craft_id: 4,
-        img: 'images/assets/600_400-4.jpg',
-        craft_name: '我是名字3',
-        url: 'https://yingyj.com',
-        describe: '详细',
-        details: '#'
-      },
-      {
-        craft_id: 5,
-        img: 'images/assets/600_400-5.jpg',
-        craft_name: '我是名字3',
-        url: 'https://yingyj.com',
-        describe: '详细',
-        details: '#'
-      },
-      {
-        craft_id: 6,
-        img: 'images/assets/600_400-6.jpg',
-        craft_name: '我是名字3',
-        url: 'https://yingyj.com',
-        describe: '详细',
-        details: '#'
-      }
-    ];
+    // vm.items = [
+    //   {
+    //     craft_id: 1,
+    //     img: 'images/assets/600_400-1.jpg',
+    //     craft_name: '我是名字一',
+    //     describe: '详细',
+    //     url: 'https://yingyj.com',
+    //     details: '#'
+    //   },
+    //   {
+    //     craft_id: 2,
+    //     img: 'images/assets/600_400-2.jpg',
+    //     craft_name: '我是名字二',
+    //     url: 'https://yingyj.com',
+    //     describe: '详细',
+    //     details: '#'
+    //   },
+    //   {
+    //     craft_id: 3,
+    //     img: 'images/assets/600_400-3.jpg',
+    //     craft_name: '我是名字3',
+    //     url: 'https://yingyj.com',
+    //     describe: '详细',
+    //     details: '#'
+    //   },
+    //   {
+    //     craft_id: 4,
+    //     img: 'images/assets/600_400-4.jpg',
+    //     craft_name: '我是名字3',
+    //     url: 'https://yingyj.com',
+    //     describe: '详细',
+    //     details: '#'
+    //   },
+    //   {
+    //     craft_id: 5,
+    //     img: 'images/assets/600_400-5.jpg',
+    //     craft_name: '我是名字3',
+    //     url: 'https://yingyj.com',
+    //     describe: '详细',
+    //     details: '#'
+    //   },
+    //   {
+    //     craft_id: 6,
+    //     img: 'images/assets/600_400-6.jpg',
+    //     craft_name: '我是名字3',
+    //     url: 'https://yingyj.com',
+    //     describe: '详细',
+    //     details: '#'
+    //   }
+    // ];
   }
 
   /**
