@@ -10,7 +10,7 @@
     .controller('LoginCtrl', ['$state', 'api', 'validateReg', 'toaster', LoginCtrl])
     .controller('ProfileCtrl', ['$scope', '$state', ProfileCtrl])
     .controller('uploadCtrl', ['$mdDialog', 'items', 'Upload', 'api', uploadCtrl])
-    .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog','api','toaster', CreateJadeCtrl])
+    .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', 'api', 'toaster', CreateJadeCtrl])
     .controller('GoodDetailsJadeCtrl', ['$stateParams', 'api', '$mdDialog', GoodDetailsJadeCtrl])
     .controller('showBigImgCtrl', ['$mdDialog', 'items', showBigImgCtrl]) //显示大图
     .controller('photoAlbumCtrl', ['$mdDialog', 'items', photoAlbumCtrl]) //在线相册
@@ -38,26 +38,26 @@
 
     vm.showItems = function (type) {
 
-      if(type==='unpublished'){
+      if (type === 'unpublished') {
 
         api.studio.listnofinish().then(function (res) {
-          if(res.data.errNo!==0){
-            toaster.pop('error','数据获取失败',res.data.errMsg)
+          if (res.data.errNo !== 0) {
+            toaster.pop('error', '数据获取失败', res.data.errMsg)
           }
-          else{
-            vm.items=res.data.result;
+          else {
+            vm.items = res.data.result;
           }
         });
       }
-      else if(type==='published'){
+      else if (type === 'published') {
 
         api.studio.showcraft().then(function (res) {
 
-          if(res.data.errNo!==0){
-            toaster.pop('error','数据获取失败',res.data.errMsg)
+          if (res.data.errNo !== 0) {
+            toaster.pop('error', '数据获取失败', res.data.errMsg)
           }
-          else{
-            vm.items=res.data.result;
+          else {
+            vm.items = res.data.result;
           }
 
         });
@@ -241,12 +241,13 @@
    * @param $log
    * @constructor
    */
-  function CreateJadeCtrl($stateParams, $mdDialog,api,toaster) {
+  function CreateJadeCtrl($stateParams, $mdDialog, api, toaster) {
 
-    var self = this;
+    var vm = this;
+    vm.form = {};
 
     //下拉框
-    self.jadeType = [
+    vm.jadeType = [
       {id: 1, text: '真玉'},
       {id: 2, text: '翡翠'},
       {id: 3, text: '内蒙古佘太翠'},
@@ -254,7 +255,7 @@
       {id: 5, text: '岫山玉'}
     ];
 
-    self.jadeSize = [
+    vm.jadeSize = [
       {id: 1, text: '超小'},
       {id: 2, text: '小'},
       {id: 3, text: '中'},
@@ -262,34 +263,57 @@
       {id: 5, text: '大'}
     ];
 
-    self.tabs = {
+    vm.tabs = {
       selectedIndex: 0
     };
 
-    self.form = {};
+    //获取雕件id
+    var getcid = function () {
+      api.studio
+        .getcid()
+        .then(function (res) {
+          console.log(res.data.result.craft_id);
+          if (res.data.errNo === 0) {
+            vm.form.craft_id = res.data.result.craft_id;
+          }
+          else {
+            toaster.pop('error', '获取雕件id失败', '正在重新获取,错误信息:' + res.data.errMsg);
+            setTimeout(function () {
+              getcid();
+            }, 200);
+          }
+
+        });
+    };
+    getcid();
 
     //基本资料部分
-    //
-    self.submit = function () {
-
-      if(vm.form.Aid){
-        api.studio.upData({
-
-        }).then(function (res) {
-          toaster.pop('success','','添加成功');
-
-        })
+    vm.submit = function () {
+      var msg = '';
+      if (vm.form.Aid) {//修改
+        //1:发布   0:预览
+        vm.form.publish = 1;
+        msg = '修改成功';
       }
-      else{
-
+      else {
+        msg = '添加成功';
       }
 
-      //ajax
-      self.tabs.selectedIndex = 1;
+      api.studio
+        .upData(vm.form)
+        .then(function (res) {
+          if (res.data.errNo === 0) {
+            toaster.pop('success', '成功', msg);
+
+            vm.tabs.selectedIndex = 1;
+            vm.form = {};//reset
+          }
+        });
+
     };
 
     //打开在线相册
-    self.showPhotoAlbum = function ($event) {
+    vm.showPhotoAlbum = function ($event) {
 
       $mdDialog.show({
         controller: 'photoAlbumCtrl',
@@ -317,7 +341,7 @@
     //流程处理(时间轴)部分
 
     //upload img
-    self.upload = function ($event) {
+    vm.upload = function ($event) {
 
       $mdDialog.show({
         controller: 'uploadCtrl',
@@ -341,20 +365,20 @@
    * @param Upload
    */
   function uploadCtrl($mdDialog, items, Upload, api) {
-    var self = this;
+    var vm = this;
 
-    self.cancel = function () {
+    vm.cancel = function () {
       $mdDialog.hide();
     };
 
-    self.uploadFiles = function ($files) {
-      self.files = $files;
+    vm.uploadFiles = function ($files) {
+      vm.files = $files;
 
-      if (self.files && self.files.length) {
+      if (vm.files && vm.files.length) {
         Upload.upload({
           url: api.studio.uploaduyimg(),
           data: {
-            files: self.files
+            files: vm.files
           }
         }).then(function (response) {
           $timeout(function () {
@@ -365,7 +389,7 @@
             $scope.errorMsg = response.status + ': ' + response.data;
           }
         }, function (evt) {
-          self.progress =
+          vm.progress =
             Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
         });
       }

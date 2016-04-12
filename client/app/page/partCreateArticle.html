@@ -85,8 +85,7 @@
               id="jadeType">
               <md-option
                 ng-repeat="item in vm.jadeType"
-                value="{{item.id}}">
-                {{item.text}}
+                value="{{item.id}}" ng-bind="item.text">
               </md-option>
             </md-select>
 
