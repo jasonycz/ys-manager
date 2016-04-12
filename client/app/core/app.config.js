@@ -35,6 +35,7 @@
         "class": 'animate-flip-y'
       }
     ];
+
     var main = {
       brand: '工作室后台',
       name: 'Lisa',
@@ -45,8 +46,18 @@
       fixedHeader: true,                              // true, false
       fixedSidebar: true,                             // true, false
       pageTransition: pageTransitionOpts[0],          // 0, 1, 2, 3... and build your own
-      skin: '12'                                      // 11,12,13,14,15,16; 21,22,23,24,25,26; 31,32,33,34,35,36
+      skin: 'bg-white'
     };
+    /*
+     bg-white
+     bg-dark
+     bg-primary
+     bg-success
+     bg-info
+     bg-warning
+     bg-danger
+     */
+
     var color = {
       primary: '#009688',
       success: '#8BC34A',

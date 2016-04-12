@@ -1,15 +1,8 @@
-<header class="top-header clearfix">
+<header class="top-header clearfix" ng-controller="layoutHeaderCtrl as vm">
     <div ui-preloader></div>
 
     <!-- Logo -->
-    <div class="logo"
-         ng-class="{ 'bg-dark': ['11','31'].indexOf(main.skin) >= 0,
-                     'bg-white': main.skin === '21',
-                     'bg-primary': ['12','22','32'].indexOf(main.skin) >= 0,
-                     'bg-success': ['13','23','33'].indexOf(main.skin) >= 0,
-                     'bg-info': ['14','24','34'].indexOf(main.skin) >= 0,
-                     'bg-warning': ['15','25','35'].indexOf(main.skin) >= 0,
-                     'bg-danger': ['16','26','36'].indexOf(main.skin) >= 0 }">
+    <div class="logo {{main.skin}}">
         <a href="#/">
             <span class="logo-icon zmdi zmdi-view-dashboard"></span>
             <span class="logo-text">{{main.brand}}</span>
@@ -46,7 +39,7 @@
                             <i class="zmdi zmdi-forward"></i>
                             <span data-translate="修改密码"></span>
                         </a>
-                        <a ui-sref="page.login">
+                        <a ng-click="vm.logout()">
                             <i class="zmdi zmdi-forward"></i>
                             <span data-translate="退出登录"></span>
                         </a>
