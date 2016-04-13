@@ -42,7 +42,9 @@
     $rootScope.$on("$stateChangeStart", function () {
       $rootScope.$broadcast('preloader:active');
     });
-    $rootScope.$on("$stateChangeSuccess", function () {
+    $rootScope.$on("$stateChangeSuccess", function (event,toState,toParams,fromState,fromParams) {
+
+      $rootScope.app.title= toState.title;
       $document.scrollTo(0, 0);
       $rootScope.app.loading = false;
       $rootScope.$broadcast('preloader:hide');

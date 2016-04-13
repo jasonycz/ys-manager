@@ -77,17 +77,11 @@
             flex-gt-sm>
 
             <label>玉石类型</label>
-            <md-select
+            <input
               ng-model="vm.form.jadeType"
-              md-model-option="{trackBy:$index}"
               ng-required="true"
               name="jadeType"
               id="jadeType">
-              <md-option
-                ng-repeat="item in vm.jadeType"
-                value="{{item.id}}" ng-bind="item.text">
-              </md-option>
-            </md-select>
 
             <div class="errors"
                  ng-messages="form.jadeType.$error"
@@ -129,18 +123,11 @@
             flex-gt-sm>
 
             <label>玉石尺寸</label>
-            <md-select
+            <input
               ng-model="vm.form.jadeSize"
-              md-model-option="{trackBy:$index}"
               ng-required="true"
               name="jadeSize"
               id="jadeSize">
-              <md-option
-                ng-repeat="item in vm.jadeSize"
-                value="{{item.id}}">
-                {{item.text}}
-              </md-option>
-            </md-select>
 
             <div class="errors"
                  ng-messages="form.jadeSize.$error"

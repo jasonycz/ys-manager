@@ -2,11 +2,11 @@
 <!--[if lt IE 8]>
 <html class="no-js lt-ie8"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js"> <!--<![endif]-->
+<html class="no-js" ng-controller="AppCtrl"> <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <title>Web Application</title>
+  <title ng-bind="app.title"></title>
   <meta name="description" content="">
   <meta name="keywords" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -31,10 +31,7 @@
       id="app"
       class="app"
       data-custom-page
-      data-ng-controller="AppCtrl"
-      data-ng-class=" { 'layout-boxed': main.layout === 'boxed',
-                            'nav-collapsed-min': main.isMenuCollapsed
-          } ">
+      data-ng-class="{'layout-boxed': main.layout === 'boxed','nav-collapsed-min': main.isMenuCollapsed}">
   <!--[if lt IE 9]>
   <div class="lt-ie9-bg">
     <p class="browsehappy">You are using an <strong>outdated</strong> browser.</p>
@@ -91,7 +88,8 @@
   <script src="bower_components/textAngular/dist/textAngular-sanitize.min.js"></script>
 
   <script src="bower_components/angular-translate/angular-translate.min.js"></script>
-  <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+  <script
+    src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
 
   <script src="bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
   <script src="bower_components/qrcode.js/qrcode.js"></script>
@@ -103,9 +101,9 @@
   <!-- inject:js -->
   <script src="app/app.module.js"></script>
   <script src="app/core/core.module.js"></script>
+  <script src="app/layout/layout.module.js"></script>
   <script src="app/form/form.module.js"></script>
   <script src="app/form/formValidation.module.js"></script>
-  <script src="app/layout/layout.module.js"></script>
   <script src="app/page/page.module.js"></script>
   <script src="app/table/table.module.js"></script>
   <script src="app/ui/ui.module.js"></script>
@@ -113,14 +111,14 @@
   <script src="app/core/app.controller.js"></script>
   <script src="app/core/config.route.js"></script>
   <script src="app/core/i18n.js"></script>
-  <script src="app/form/form.controller.js"></script>
-  <script src="app/form/form.directive.js"></script>
-  <script src="app/form/formValidation.controller.js"></script>
-  <script src="app/form/wizard.controller.js"></script>
   <script src="app/layout/layout.controller.js"></script>
   <script src="app/layout/layout.directive.js"></script>
   <script src="app/layout/loader.js"></script>
   <script src="app/layout/sidebar.directive.js"></script>
+  <script src="app/form/form.controller.js"></script>
+  <script src="app/form/form.directive.js"></script>
+  <script src="app/form/formValidation.controller.js"></script>
+  <script src="app/form/wizard.controller.js"></script>
   <script src="app/page/page.config.js"></script>
   <script src="app/page/page.controller.js"></script>
   <script src="app/page/page.directive.js"></script>

@@ -9,7 +9,8 @@
     .controller('AuthCtrl', ['api', 'validateReg', authCtrl])
     .controller('LoginCtrl', ['$state', 'api', 'validateReg', 'toaster', LoginCtrl])
     .controller('ProfileCtrl', ['$scope', '$state', ProfileCtrl])
-    .controller('uploadCtrl', ['$mdDialog', 'items', 'Upload', 'api', uploadCtrl])
+    .controller('uploadCtrl', ['$timeout', '$mdDialog', 'items', 'Upload', 'api', uploadCtrl]) //时间轴添加照片弹框
+    .controller('addTxtCtrl', ['$mdDialog', 'items', uploadCtrl]) //时间轴添加介绍弹框
     .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', 'api', 'toaster', CreateJadeCtrl])
     .controller('GoodDetailsJadeCtrl', ['$stateParams', 'api', '$mdDialog', GoodDetailsJadeCtrl])
     .controller('showBigImgCtrl', ['$mdDialog', 'items', showBigImgCtrl]) //显示大图
@@ -244,23 +245,43 @@
   function CreateJadeCtrl($stateParams, $mdDialog, api, toaster) {
 
     var vm = this;
-    vm.form = {};
-
-    //下拉框
-    vm.jadeType = [
-      {id: 1, text: '真玉'},
-      {id: 2, text: '翡翠'},
-      {id: 3, text: '内蒙古佘太翠'},
-      {id: 4, text: '新疆和阗玉'},
-      {id: 5, text: '岫山玉'}
-    ];
-
-    vm.jadeSize = [
-      {id: 1, text: '超小'},
-      {id: 2, text: '小'},
-      {id: 3, text: '中'},
-      {id: 4, text: '略大'},
-      {id: 5, text: '大'}
+    vm.form = [
+      {
+        name: '原石',
+        description: '',
+        img: ['images/assets/600_400-1.jpg'],
+        className:'b-info'
+      },
+      {
+        name: '设计',
+        img: ['images/assets/600_400-1.jpg','images/assets/600_400-1.jpg'],
+        className:''
+      },
+      {
+        name: '粗绘',
+        img: ['images/assets/600_400-1.jpg','images/assets/600_400-1.jpg','images/assets/600_400-1.jpg'],
+        className:'b-primary'
+      },
+      {
+        name: '细绘',
+        img: ['images/assets/600_400-1.jpg','images/assets/600_400-1.jpg','images/assets/600_400-1.jpg','images/assets/600_400-1.jpg'],
+        className:'b-white'
+      },
+      {
+        name: '打磨抛光',
+        img: ['images/assets/600_400-1.jpg','images/assets/600_400-1.jpg','images/assets/600_400-1.jpg','images/assets/600_400-1.jpg','images/assets/600_400-1.jpg'],
+        className:'b-white'
+      },
+      {
+        name: '落款证书',
+        img: ['images/assets/600_400-1.jpg'],
+        className:'b-white'
+      },
+      {
+        name: '结束（物流）',
+        img: ['images/assets/600_400-1.jpg','images/assets/600_400-1.jpg'],
+        className:'b-white'
+      }
     ];
 
     vm.tabs = {
@@ -273,14 +294,12 @@
         .getcid()
         .then(function (res) {
           if (res.data.errNo === 0) {
-
-            console.log(res.data.result.craft_id);
             vm.form.craft_id = res.data.result.craft_id;
           }
           else {
             toaster.pop('error', '获取雕件id失败', '正在重新获取,错误信息:' + res.data.errMsg);
 
-            if(res.data.errNo!==100012){
+            if (res.data.errNo !== 100012) {
               setTimeout(function () {
                 getcid();
               }, 200);
@@ -346,8 +365,7 @@
     //流程处理(时间轴)部分
 
     //upload img
-    vm.upload = function ($event) {
-
+    vm.upload = function (index, $event) {
       $mdDialog.show({
         controller: 'uploadCtrl',
         controllerAs: 'vm',
@@ -355,25 +373,42 @@
         parent: angular.element(document.body),
         targetEvent: $event,
         locals: {
-          items: {}
+          items: {index: index}
         }
         //clickOutsideToClose: true
       });
-    }
+    };
 
+    vm.addDescription = function (index, $event) {
+
+      $mdDialog.show({
+        controller: 'addTxtCtrl',
+        controllerAs: 'vm',
+        templateUrl: 'add-txt.html',
+        parent: angular.element(document.body),
+        targetEvent: $event,
+        fullscreen: true,
+        locals: {
+          items: {}
+        }
+        //clickOutsideToClose: true
+      }).then(function (answer) {
+        vm.form[index].description = answer;
+      }, function () {
+
+      });
+
+    }
   };
 
-  /**
-   * 上传弹框
-   * @param $mdDialog
-   * @param items
-   * @param Upload
-   */
-  function uploadCtrl($mdDialog, items, Upload, api) {
+  //上传弹框
+  function uploadCtrl($timeout, $mdDialog, items, Upload, api) {
+
     var vm = this;
+    vm.form = [];
 
     vm.cancel = function () {
-      $mdDialog.hide();
+      $mdDialog.hide(vm.form);
     };
 
     vm.uploadFiles = function ($files) {
@@ -387,21 +422,34 @@
           }
         }).then(function (response) {
           $timeout(function () {
-            $scope.result = response.data;
+            vm.result = response.data;
           });
         }, function (response) {
           if (response.status > 0) {
-            $scope.errorMsg = response.status + ': ' + response.data;
+            vm.errorMsg = response.status + ': ' + response.data;
           }
         }, function (evt) {
           vm.progress =
             Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
         });
       }
-
-
     }
 
+  }
+
+  //时间轴添加介绍弹框
+  function addTxtCtrl($mdDialog, items) {
+    console.log($mdDialog)
+    var vm = this;
+    vm.form = {};
+
+    vm.save = function () {
+      $mdDialog.hide(vm.form);
+    };
+
+    vm.cancel = function () {
+      $mdDialog.hide();
+    };
   }
 
   /**

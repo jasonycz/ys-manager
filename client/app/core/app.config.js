@@ -13,7 +13,8 @@
           $rootScope.$stateParams = $stateParams;
 
           $rootScope.app = {
-            loading: true
+            loading: true,
+            title:'工作室'
           };
         }
       ]
