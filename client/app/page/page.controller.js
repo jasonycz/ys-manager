@@ -245,44 +245,47 @@
   function CreateJadeCtrl($stateParams, $mdDialog, api, toaster) {
 
     var vm = this;
-    vm.form = [
+    vm.timeline=[
       {
         name: '原石',
         description: '',
         img: ['images/assets/600_400-1.jpg'],
-        className:'b-info'
+        className: 'b-info'
       },
       {
         name: '设计',
-        img: ['images/assets/600_400-1.jpg','images/assets/600_400-1.jpg'],
-        className:''
+        img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
+        className: ''
       },
       {
         name: '粗绘',
-        img: ['images/assets/600_400-1.jpg','images/assets/600_400-1.jpg','images/assets/600_400-1.jpg'],
-        className:'b-primary'
+        img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
+        className: 'b-primary'
       },
       {
         name: '细绘',
-        img: ['images/assets/600_400-1.jpg','images/assets/600_400-1.jpg','images/assets/600_400-1.jpg','images/assets/600_400-1.jpg'],
-        className:'b-white'
+        img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
+        className: 'b-white'
       },
       {
         name: '打磨抛光',
-        img: ['images/assets/600_400-1.jpg','images/assets/600_400-1.jpg','images/assets/600_400-1.jpg','images/assets/600_400-1.jpg','images/assets/600_400-1.jpg'],
-        className:'b-white'
+        img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
+        className: 'b-white'
       },
       {
         name: '落款证书',
         img: ['images/assets/600_400-1.jpg'],
-        className:'b-white'
+        className: 'b-white'
       },
       {
         name: '结束（物流）',
-        img: ['images/assets/600_400-1.jpg','images/assets/600_400-1.jpg'],
-        className:'b-white'
+        img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
+        className: 'b-white'
       }
     ];
+    vm.form = {
+      publish:0
+    };
 
     vm.tabs = {
       selectedIndex: 0
@@ -398,8 +401,9 @@
 
       });
 
-    }
-  };
+    };
+
+  }
 
   //上传弹框
   function uploadCtrl($timeout, $mdDialog, items, Upload, api) {
@@ -604,4 +608,3 @@
   }
 
 })();
-;

@@ -23,20 +23,20 @@
 
         <md-input-container
           class="md-block"
-          md-is-error="form.Title.$invalid && (form.$submitted || form.Title.$dirty)">
+          md-is-error="form.title.$invalid && (form.$submitted || form.title.$dirty)">
           <label>标题</label>
 
           <input
             type="text"
             ng-required="true"
             maxlength="20"
-            ng-model="vm.form.Title"
+            ng-model="vm.form.title"
             autocomplete="off"
-            name="Title"
-            id="Title">
+            name="title"
+            id="title">
 
           <div
-            ng-messages="form.Title.$error"
+            ng-messages="form.title.$error"
             ng-if="form.$submitted || form.Title.$touched">
             <div ng-message="required">必填项</div>
           </div>
@@ -66,26 +66,26 @@
         <div layout-gt-sm="row">
 
           <md-datepicker
-            ng-model="vm.form.createdate"
+            ng-model="vm.form.createDate"
             md-placeholder="创建时间"
             flex-gt-sm></md-datepicker>
 
           <div flex="5" hide-xs hide-sm></div>
           <md-input-container
             class="md-block"
-            md-is-error="form.jadeType.$invalid && (form.$submitted || form.jadeType.$dirty)"
+            md-is-error="form.measurement.$invalid && (form.$submitted || form.measurement.$dirty)"
             flex-gt-sm>
 
             <label>玉石类型</label>
             <input
-              ng-model="vm.form.jadeType"
+              ng-model="vm.form.measurement"
               ng-required="true"
-              name="jadeType"
-              id="jadeType">
+              name="measurement"
+              id="measurement">
 
             <div class="errors"
-                 ng-messages="form.jadeType.$error"
-                 ng-if="form.$submitted || form.jadeType.$touched">
+                 ng-messages="form.measurement.$error"
+                 ng-if="form.$submitted || form.measurement.$touched">
               <div ng-message="required">必填项</div>
             </div>
 
@@ -102,7 +102,7 @@
 
             <input
               type="text"
-              ng-required="true"
+              ng-required="true"                                                                                            .
               ng-model="vm.form.goodsName"
               autocomplete="off"
               name="goodsName"
@@ -174,13 +174,10 @@
   </div>
 
   <md-content layout="column" flex="20" class="md-padding">
-
-
     <div class="list-group no-margin">
       <a class="list-group-item" ng-click="vm.showPhotoAlbum($event)"><i class="zmdi zmdi-image"></i> 图片 </a>
       <!--<a href="javascript:;" class="list-group-item"><i class="zmdi zmdi-videocam"></i> 视频 </a>-->
     </div>
-
   </md-content>
 
 
