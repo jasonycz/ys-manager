@@ -37,7 +37,7 @@
         <div class="col-md-4" ng-repeat="item in vm.items track by $index">
           <div class="card bg-white">
             <div class="card-image">
-              <img ng-src="{{item.img}}">
+              <img ng-src="{{item.img.url}}">
               <span class="card-title" ng-bind="item.craft_name"></span>
             </div>
             <div class="card-content">

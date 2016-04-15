@@ -5,6 +5,8 @@
     .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$document', 'appConfig', AppCtrl]) // overall control
 
   function AppCtrl($scope, $rootScope, $state, $document, appConfig) {
+    var vm=this;
+
 
     $scope.pageTransitionOpts = appConfig.pageTransitionOpts;
     $scope.main = appConfig.main;
