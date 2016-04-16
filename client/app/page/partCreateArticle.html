@@ -1,0 +1,235 @@
+<div layout="row" class="page-partCreateArticle">
+  <!--col-md-8 col-md-offset-2 -->
+
+  <md-content layout="column" flex="20" class="md-padding">
+    <a class="list-media-item">
+      <img src="images/assets/600_400-4.jpg" alt="" class="img-responsive">
+      <div class="media-item-title">标题</div>
+    </a>
+  </md-content>
+
+  <div class="md-inline-form" layout-padding=""
+       flex="60"
+       layout="column">
+
+    <form
+      name="form"
+      class="form-horizontal"
+      ng-submit="form.$valid && vm.submit()"
+      novalidate>
+      <fieldset>
+        <input type="hidden" ng-model="vm.form.Aid">
+        <input type="hidden" ng-model="vm.form.craft_id">
+
+        <md-input-container
+          class="md-block"
+          md-is-error="form.title.$invalid && (form.$submitted || form.title.$dirty)">
+          <label>标题</label>
+
+          <input
+            type="text"
+            ng-required="true"
+            maxlength="20"
+            ng-model="vm.form.title"
+            autocomplete="off"
+            name="title"
+            id="title">
+
+          <div
+            ng-messages="form.title.$error"
+            ng-if="form.$submitted || form.Title.$touched">
+            <div ng-message="required">必填项</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container
+          class="md-block"
+          md-is-error="form.author.$invalid && (form.$submitted || form.author.$dirty)">
+          <label>作者</label>
+
+          <input
+            type="text"
+            ng-required="true"
+            maxlength="20"
+            ng-model="vm.form.author"
+            autocomplete="off"
+            name="author"
+            id="author">
+
+          <div
+            ng-messages="form.author.$error"
+            ng-if="form.$submitted || form.author.$touched">
+            <div ng-message="required">必填项</div>
+          </div>
+        </md-input-container>
+
+        <div layout-gt-sm="row">
+
+          <md-datepicker
+            ng-model="vm.form.createDate"
+            md-placeholder="创建时间"
+            flex-gt-sm></md-datepicker>
+
+          <div flex="5" hide-xs hide-sm></div>
+          <md-input-container
+            class="md-block"
+            md-is-error="form.measurement.$invalid && (form.$submitted || form.measurement.$dirty)"
+            flex-gt-sm>
+
+            <label>玉石类型</label>
+            <input
+              ng-model="vm.form.measurement"
+              ng-required="true"
+              name="measurement"
+              id="measurement">
+
+            <div class="errors"
+                 ng-messages="form.measurement.$error"
+                 ng-if="form.$submitted || form.measurement.$touched">
+              <div ng-message="required">必填项</div>
+            </div>
+
+          </md-input-container>
+        </div>
+
+        <div layout-gt-sm="row">
+
+          <md-input-container
+            class="md-block"
+            flex-gt-sm
+            md-is-error="form.articleTitle.$invalid && (form.$submitted || form.articleTitle.$dirty)">
+            <label>玉石名称</label>
+
+            <input
+              type="text"
+              ng-required="true"                                                                                            .
+              ng-model="vm.form.goodsName"
+              autocomplete="off"
+              name="goodsName"
+              id="goodsName">
+
+            <div
+              ng-messages="form.goodsName.$error"
+              ng-if="form.$submitted || form.goodsName.$touched">
+              <div ng-message="required">必填项</div>
+            </div>
+          </md-input-container>
+
+          <div flex="5" hide-xs hide-sm></div>
+
+          <md-input-container
+            class="md-block"
+            md-is-error="form.jadeSize.$invalid && (form.$submitted || form.jadeSize.$dirty)"
+            flex-gt-sm>
+
+            <label>玉石尺寸</label>
+            <input
+              ng-model="vm.form.jadeSize"
+              ng-required="true"
+              name="jadeSize"
+              id="jadeSize">
+
+            <div class="errors"
+                 ng-messages="form.jadeSize.$error"
+                 ng-if="form.$submitted || form.jadeSize.$touched">
+              <div ng-message="required">必填项</div>
+            </div>
+
+          </md-input-container>
+
+        </div>
+
+        <md-input-container
+          md-is-error="form.content.$invalid && (form.$submitted || form.content.$dirty)"
+          class="md-block">
+          <div text-angular
+               class="ui-editor"
+               ng-required="true"
+               ng-model="vm.form.content"
+               id="details"
+               name="details"></div>
+
+          <div class="errors"
+               ng-messages="form.content.$error"
+               ng-if="form.$submitted || form.content.$touched">
+            <div ng-message="required">必填项</div>
+          </div>
+        </md-input-container>
+
+        <div class="page-bottom bg-white b-t row panel-body">
+          <div class="col-md-8"></div>
+
+          <div class="center-block col-md-4">
+            <md-button
+              type="submit"
+              class="md-raised btn-w-md"
+              ng-class="{'md-primary':form.$valid}">提交
+            </md-button>
+          </div>
+        </div>
+
+      </fieldset>
+    </form>
+
+  </div>
+
+  <md-content layout="column" flex="20" class="md-padding">
+    <div class="list-group no-margin">
+      <a class="list-group-item" ng-click="vm.showPhotoAlbum($event)"><i class="zmdi zmdi-image"></i> 图片 </a>
+      <!--<a href="javascript:;" class="list-group-item"><i class="zmdi zmdi-videocam"></i> 视频 </a>-->
+    </div>
+  </md-content>
+
+
+</div>
+
+<script type="text/ng-template" id="photoAlbum.html">
+  <md-dialog>
+    <form>
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <h2>选择图片</h2>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-click="vm.cancel()">
+            <i class="zmdi zmdi-close"></i>
+          </md-button>
+        </div>
+      </md-toolbar>
+      <md-dialog-content>
+        <div class="md-dialog-content">
+
+          <div class="row">
+
+            <div class="col-md-4" ng-repeat="item in vm.items track by $index">
+              <div class="ih-item ih-material select-item">
+
+                <a
+                  ng-class="{'active':item.active}"
+                  ng-click="vm.selectItemFun(item)">
+                  <div class="img">
+                    <img ng-src="{{item.url}}" alt="">
+                  </div>
+                  <div class="info">
+                    <div class="info-mask bg-primary"></div>
+                    <div class="info-content">
+                      <div class="info-inner">
+                        <h2 class="zmdi zmdi-check"></h2>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+      </md-dialog-content>
+      <md-dialog-actions layout="row">
+        <md-button class="md-primary" ng-click="vm.save()">确定</md-button>
+      </md-dialog-actions>
+    </form>
+  </md-dialog>
+</script>
+

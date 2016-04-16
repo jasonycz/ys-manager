@@ -20,11 +20,11 @@
 
         $scope.start = function() {
             $rootScope.$broadcast('preloader:active');
-        }
+        };
         $scope.complete = function() {
             $rootScope.$broadcast('preloader:hide');
         }
-    }
+    };
 
     function ListCtrl ($scope, $mdDialog) {
         $scope.toppings = [
@@ -45,7 +45,7 @@
             { name: 'Janet Perkins', img: 'img/100-0.jpeg', newMessage: true },
             { name: 'Mary Johnson', img: 'img/100-1.jpeg', newMessage: false },
             { name: 'Peter Carlsson', img: 'img/100-2.jpeg', newMessage: false }
-        ];        
+        ];
         $scope.goToPerson = function(person, event) {
             $mdDialog.show(
                 $mdDialog.alert()
@@ -78,8 +78,8 @@
         };
     }
 
-
     function AlertDemoCtrl($scope) {
+
         $scope.alerts = [
             {
                 type: 'success',
@@ -125,6 +125,7 @@
         $scope.closeAlert = function(index) {
             return $scope.alerts.splice(index, 1);
         };
+
     }
 
     function ProgressDemoCtrl($scope) {
@@ -250,7 +251,7 @@
         $scope.bigCurrentPage = 1;
         }
 
-        function TabsDemoCtrl($scope) {
+    function TabsDemoCtrl($scope) {
         $scope.tabs = [
             {
                 title: "Dynamic Title 1",
@@ -267,7 +268,7 @@
 
     function TreeDemoCtrl($scope) {
         $scope.list = [
-            {id: 1, title: "Item 1", items: [] }, 
+            {id: 1, title: "Item 1", items: [] },
             {id: 2, title: "Item 2", items: [{id: 21, title: "Item 2.1", items: [{id: 211, title: "Item 2.1.1", items: [] }, {id: 212, title: "Item 2.1.2", items: [] } ] } ] },
             {id: 3, title: "Item 3", items: [] },
             {id: 4, title: "Item 4", items: [{id: 41, title: "Item 4.1", items: [] } ] },
@@ -329,5 +330,5 @@
 
         $interval($scope.GenerateMapMarkers, 2000);
     }
-    
-})(); 
+
+})();

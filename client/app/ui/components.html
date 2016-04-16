@@ -63,7 +63,7 @@
                                  </md-radio-group>
                             </md-content>
                         </div>
-                    
+
                     </div>
                 </div>
             </section>
@@ -85,7 +85,9 @@
                                 <span class="text-small">Notice the 'Show Custom' toast will not nudge the FABs positions since a custom parent was specified.</span>
                             </div>
 
-                            <div layout="row" layout-sm="column" layout-align="space-around">
+                            <div layout="row"
+                                 layout-sm="column"
+                                 layout-align="space-around">
                                 <md-button ng-click="showSimpleToast()">
                                     Show Simple
                                 </md-button>
@@ -112,9 +114,9 @@
 
                             <div class="callout callout-success">
                                 <span>NOTE: The toast will show at the corner of the admin app</span>
-                            </div>    
+                            </div>
                         </div>
-                    
+
                     </div>
                 </div>
             </section>
@@ -249,11 +251,11 @@
         <div class="col-lg-8 clearfix">
             <h2 class="section-header">Material Tab</h2>
         </div>
-        <div class="col-md-12">        
+        <div class="col-md-12">
             <div class="row" data-ng-controller="TabsDemo" ng-cloak>
                 <div class="col-md-6">
                     <section class="panel panel-default">
-                        <div class="panel-body no-padding">                
+                        <div class="panel-body no-padding">
                             <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
                                 <md-tab ng-repeat="tab in tabs"
                                         ng-disabled="tab.disabled"
@@ -264,13 +266,13 @@
                                         <md-button class="md-primary md-raised" ng-click="removeTab( tab )" ng-disabled="tabs.length <= 1">Remove Tab</md-button>
                                     </div>
                                 </md-tab>
-                            </md-tabs> 
+                            </md-tabs>
                         </div>
                     </section>
                 </div>
                 <div class="col-md-6">
                     <section class="panel panel-default">
-                        <div class="panel-body no-padding" >        
+                        <div class="panel-body no-padding" >
                             <form ng-submit="addTab(tTitle,tContent)" layout="column" class="md-padding" style="padding-top: 0;">
                                 <h4 style="transform: uppercase;">Add a new Tab:</h4>
 
@@ -285,9 +287,9 @@
                                 <md-button class=" md-primary md-raised" ng-disabled="!tTitle || !tContent" type="submit">Add Tab</md-button>
                             </form>
                         </div>
-                    </section>                    
+                    </section>
                 </div>
-            </div> 
+            </div>
         </div>
     </div>
 
@@ -317,7 +319,7 @@
                                         </div>
                                     </div>
                                 </a>
-                            </div>                            
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <div class="ih-item ih-material">
@@ -335,7 +337,7 @@
                                         </div>
                                     </div>
                                 </a>
-                            </div>                                
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <div class="ih-item ih-material">
@@ -353,7 +355,7 @@
                                         </div>
                                     </div>
                                 </a>
-                            </div>                                
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -386,7 +388,7 @@
                     <md-progress-linear md-mode="{{vm.modes[1]}}"></md-progress-linear>
 
                 </div>
-            </section>            
+            </section>
         </div>
         <div class="col-md-6">
             <h2 class="section-header">Material Progressbar Circular</h2>
@@ -400,9 +402,9 @@
                         </div>
                         <div class="col-md-6">
                             <h4>Indeterminate</h4>
-                            <md-progress-circular md-mode="indeterminate"></md-progress-circular>                            
+                            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
                         </div>
-                    </div>                
+                    </div>
                     <div class="divider divider-lg divider-dashed"></div>
 
                     <h4>Theming </h4>
@@ -415,8 +417,8 @@
                     </div>
 
                 </div>
-            </section>            
-        </div>        
+            </section>
+        </div>
     </div>
 
 
@@ -482,9 +484,9 @@
                             <uib-pagination class="pagination-lg" total-items="totalItems" ng-model="currentPage" previous-text="&lsaquo;" next-text="&rsaquo;"></uib-pagination>
                             <br>
                             <md-button class="md-raised btn-w-md md-primary" ng-click="setPage(3)">Set page to: 3</md-button><div class="divider"></div>
-                            <span class="panel-label">Sizing</span>             
+                            <span class="panel-label">Sizing</span>
                         </div>
-                    </section>                    
+                    </section>
                 </div>
                 <div class="col-md-6">
                     <section class="panel panel-default panel-labeled">
@@ -497,7 +499,7 @@
                                 <span class="panel-label">Limit the Maximum Visible Buttons</span>
                             </div>
                         </div>
-                    </section>                    
+                    </section>
                 </div>
             </div>
         </div>
@@ -557,7 +559,7 @@
                                         <p>Quod ea vel dolores earum veritatis quae sunt tempore odit molestias sit optio quaerat cupiditate iure repudiandae illum doloremque consectetur incidunt!</p>
                                     </uib-tab>
                                 </uib-tabset>
-                            </div>                     
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="section-header">
@@ -581,7 +583,7 @@
                                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, aspernatur, eum fugit officiis numquam iste aut illo quos pariatur Eligendi, veniam, accusamus.</p>
                                     </uib-tab>
                                 </uib-tabset>
-                            </div>                     
+                            </div>
                         </div>
                     </div>
 
@@ -613,10 +615,10 @@
                                 <span class="space"></span>
                                 <span class="label label-warning">Warning</span>
                                 <span class="space"></span>
-                                <span class="label label-danger">Danger</span> 
+                                <span class="label label-danger">Danger</span>
                             </p>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="panel panel-default panel-labeled">
@@ -633,11 +635,11 @@
                                 <span class="space"></span>
                                 <span class="badge badge-warning">8</span>
                                 <span class="space"></span>
-                                <span class="badge badge-danger">16</span>                                 
+                                <span class="badge badge-danger">16</span>
                             </p>
                             <span class="panel-label">Badges</span>
                         </div>
-                    </div>    
+                    </div>
                 </div>
             </div>
         </div>
@@ -717,7 +719,7 @@
                 </div>
                 <div class="col-md-6">
                     <section class="panel panel-default panel-labeled">
-                        <div class="panel-body">                
+                        <div class="panel-body">
                             <uib-accordion close-others="!oneAtATime" class="ui-accordion">
                                 <uib-accordion-group heading="Static Header, initially expanded" is-open="status.isFirstOpen1">
                                 This content is straight in the template.
@@ -747,9 +749,9 @@
                         <md-button class="md-raised btn-w-md md-primary" ng-click="isCollapsed = !isCollapsed">Toggle collapse</md-button>
                         <div class="divider divider-md"></div>
                         <div uib-collapse="isCollapsed">
-                            <div class="well well-lg">Some content</div> 
-                        </div>  
-                    </div>          
+                            <div class="well well-lg">Some content</div>
+                        </div>
+                    </div>
                 </div>
             </section>
 

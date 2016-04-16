@@ -1,39 +1,68 @@
-<div class="page-signup" ng-controller="authCtrl">
+<div class="page-signup">
 
-    <div class="wrapper">
-        <div class="main-body">
-            <div class="body-inner">
-                <div class="card bg-white">
-                    <div class="card-content">
-                        <section class="logo text-center">
-                            <h1><a href="#/">{{main.brand}}</a></h1>
-                        </section>
+  <div class="wrapper">
+    <div class="main-body">
+      <div class="body-inner">
+        <form class="card bg-white"
+              name="form"
+              ng-submit="form.$valid && vm.loginable && vm.login()"
+              novalidate>
+          <div class="card-content">
+            <section class="logo text-center">
+              <h1><a href="#/">{{main.brand}}</a></h1>
+            </section>
 
-                        <form class="form-horizontal">
-                            <fieldset>
-                                <div class="form-group">
-                                    <div class="ui-input-group">
-                                        <input type="text" required class="form-control">
-                                        <span class="input-bar"></span>
-                                        <label>手机</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="ui-input-group">
-                                        <input type="password" required class="form-control">
-                                        <span class="input-bar"></span>
-                                        <label>密码</label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                    <div class="card-action no-border text-right">
-                        <a href="#/" class="color-primary" ng-click="login($event)">登录</a>
-                    </div>
-                </div>
+            <div layout-padding=""
+                 class="form-horizontal">
+              <fieldset>
 
+                <md-input-container
+                  md-is-error="form.phone.$invalid && (form.$submitted || form.phone.$dirty)"
+                  class="md-block">
+                  <label>手机</label>
+
+                  <input type="text"
+                         ng-model="vm.form.phone"
+                         ng-pattern="/^1[3|4|5|7|8]\d{9}$/"
+                         name="phone"
+                         required>
+                  <div ng-messages="form.phone.$error"
+                       ng-if="form.$submitted || form.phone.$touched">
+
+                    <div ng-message="required">必填项</div>
+                    <div ng-message="pattern">手机格式不正确</div>
+
+                  </div>
+                </md-input-container>
+
+
+                <md-input-container
+                  md-is-error="form.passwd.$invalid && (form.$submitted || form.passwd.$dirty)"
+                  class="md-block">
+                  <label>密码</label>
+                  <input type="password"
+                         name="passwd"
+                         ng-model="vm.form.passwd"
+                         autocomplete="off"
+                         minlength="6"
+                         required>
+
+                  <div ng-messages="form.passwd.$error"
+                       ng-if="form.$submitted || form.passwd.$touched">
+                    <div ng-message="required">必填项</div>
+                    <div ng-message="minlength">密码最少6位</div>
+                  </div>
+
+                </md-input-container>
+              </fieldset>
             </div>
-        </div>
+          </div>
+          <div class="card-action no-border text-right">
+            <md-button type="submit" ng-class="{'md-primary':form.$valid}">登录</md-button>
+          </div>
+        </form>
+
+      </div>
     </div>
+  </div>
 </div>

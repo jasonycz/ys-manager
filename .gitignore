@@ -15,3 +15,5 @@ documentation/layout.html
 .DS_Store
 npm-debug.log
 /preview/preview.zip
+
+.idea

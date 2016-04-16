@@ -1,0 +1,24 @@
+<div class="page-profile">
+
+  <div ng-include="'app/page/profile_header.html'"></div>
+
+  <div class="row ui-section">
+
+    <!--<div class="col-lg-8 clearfix">-->
+    <!--<h2 class="section-header">创建玉石</h2>-->
+    <!--</div>-->
+    <div class="col-md-12">
+      <section class="panel panel-default">
+        <md-tabs md-selected="vm.tabs.selectedIndex" md-dynamic-height md-border-bottom md-autoselect>
+          <md-tab label="基本资料">
+            <div ng-include="'app/page/partCreateArticle.html'"></div>
+          </md-tab>
+          <md-tab label="流程处理">
+            <div ng-include="'app/page/partCreateTimeline.html'"></div>
+          </md-tab>
+        </md-tabs>
+      </section>
+    </div>
+  </div>
+
+</div>

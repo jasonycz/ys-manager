@@ -1,3 +1,10 @@
+.dialog-qrcode{
+  >img{
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 .page-dashboard {
 
     h3 {
@@ -13,7 +20,7 @@
 
     .box-stats {
         text-align: center;
-        padding-top: 20px; 
+        padding-top: 20px;
         padding-bottom: 20px;
         &.no-border {
             .box-num {
@@ -57,7 +64,7 @@
         margin-bottom: 25px;
     }
 
-    // 
+    //
     .panel-box {
         position: relative;
         border-radius: $border-radius-large;
@@ -98,6 +105,6 @@
         .bg-light {
             background-color: #f9f9f9;
         }
-    }    
+    }
 
 }

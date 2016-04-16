@@ -1,0 +1,79 @@
+<section class="page">
+
+  <section class="row ui-section">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-4">
+          <a class="card bg-dark-light" ui-sref="page.createJade({type:'dashboard',action:'create'})">
+            <div class="card-content">
+              <span class="card-title">创建</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a class="card bg-primary" ng-click="vm.showItems('unpublished')">
+            <div class="card-content">
+              <span class="card-title">未发布</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a class="card bg-info" ng-click="vm.showItems('published')">
+            <div class="card-content">
+              <span class="card-title">已发布</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="row ui-section">
+    <div class="col-md-12">
+      <div class="row">
+
+        <div class="col-md-4" ng-repeat="item in vm.items track by $index">
+          <div class="card bg-white">
+            <div class="card-image">
+              <img ng-src="{{item.img.url}}">
+              <span class="card-title" ng-bind="item.craft_name"></span>
+            </div>
+            <div class="card-content">
+              <a class="card-button pull-right">
+                <button class="btn btn-icon btn-icon-round btn-floating btn-danger"><i class="fa fa-heart"></i></button>
+              </a>
+              <p ng-bind="item.describe"></p>
+            </div>
+            <div class="card-action">
+              <a ng-click="vm.showQR(item,$event)">二维码</a>
+              <a ui-sref="page.goodsDetails({id:{{item.craft_id}}})">详情</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script type="text/ng-template" id="QRcodeCtrl.html">
+    <md-dialog>
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <h2>二维码</h2>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-click="vm.cancel()">
+            <i class="zmdi zmdi-close"></i>
+          </md-button>
+        </div>
+      </md-toolbar>
+      <md-dialog-content>
+        <div class="md-dialog-content">
+          <qrcode data-options="vm.qrcode" class="dialog-qrcode"></qrcode>
+        </div>
+      </md-dialog-content>
+
+    </md-dialog>
+  </script>
+</section>

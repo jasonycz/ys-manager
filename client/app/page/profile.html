@@ -1,31 +1,33 @@
 
-<div class="page page-profile" ng-controller="ProfileController">
+
+<div class="page page-profile">
+  <div ng-include="'app/page/profile_header.html'"></div>
+
     <div class="divider divider-lg"></div>
     <section class="row ui-section">
       <div class="col-md-12">
           <div class="row">
             <div class="col-md-4">
-                <div class="card bg-dark-light" ng-click="create()">
+                <a class="card bg-dark-light" ui-sref="page.createJade({type:1})">
                     <div class="card-content">
                         <span class="card-title">创建</span>
                     </div>
-                </div>
+                </a>
             </div>
-
             <div class="col-md-4">
-                <div class="card bg-primary">
+                <a class="card bg-primary">
                     <div class="card-content">
                         <span class="card-title">未发布</span>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="col-md-4">
-                <div class="card bg-info">
+                <a class="card bg-info">
                     <div class="card-content">
                         <span class="card-title">已发布</span>
                     </div>
-                </div>
+                </a>
             </div>
           </div>
       </div>

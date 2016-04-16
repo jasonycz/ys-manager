@@ -23,6 +23,7 @@ $brand-info:            #00BCD4 !default; // Cyan 500
 $brand-info-alt:        #7E57C2 !default; // Deep Purple 400
 $brand-warning:         #FFCA28 !default; // Amber 400
 $brand-danger:          #F44336 !default; // Red 500
+$brand-light:           #edf1f2 !default;
 
 $skin:                  $brand-primary;
 $skin-light:            #5C6BC0;
@@ -33,14 +34,15 @@ $skin-gray:             #EDF0F1;
 
 $dark:                  #262B33;
 $dark-light:            #3D4051;
-$dark-lighter:          #A0A2AA; 
-$bright:                #fafafa; 
+$dark-lighter:          #A0A2AA;
+$bright:                #fafafa;
 $reverse:               #ffffff;
 
 $state-default-bg:              #F2F7F7; // also: flat button bg, pagination bg
-$state-default-border:          darken(adjust-hue($state-default-bg, -10), 5%); 
-$state-default-border-light:    #f3f3f3; 
+$state-default-border:          darken(adjust-hue($state-default-bg, -10), 5%);
+$state-default-border-light:    #f3f3f3;
 
+$border-color:#dee5e7;
 
 //== Scaffolding
 //
