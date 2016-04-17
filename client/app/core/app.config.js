@@ -1,4 +1,4 @@
-(function () {
+(function (window) {
   'use strict';
 
   angular.module('app.core')
@@ -353,4 +353,30 @@
       }
     }]);
   }
-})();
+
+})(window);
+
+(function (window) {
+  //存放全局数据
+  window.dataStorage={};
+
+  dataStorage.user={
+    data:undefined,
+    init:function () {
+      var data=window.sessionStorage.getItem('ys-user');
+       if(data){
+         dataStorage.user.data=JSON.parse(data)
+       }
+    },
+    save:function (data) {
+      dataStorage.user.data=data;
+      window.sessionStorage.setItem('ys-user',JSON.stringify(data));
+    },
+    clear:function () {
+      dataStorage.user.data=undefined;
+      window.sessionStorage.removeItem('ys-user');
+    }
+  };
+
+  window.dataStorage.user.init();
+})(window);

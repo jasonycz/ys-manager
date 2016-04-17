@@ -37,7 +37,7 @@
         <div class="col-md-4" ng-repeat="item in vm.items track by $index">
           <div class="card bg-white">
             <div class="card-image">
-              <img ng-src="{{item.img.url}}">
+              <img ng-src="{{item.img.url}}" alt="{{item.img.imgdesc}}">
               <span class="card-title" ng-bind="item.craft_name"></span>
             </div>
             <div class="card-content">
@@ -47,7 +47,7 @@
               <p ng-bind="item.describe"></p>
             </div>
             <div class="card-action">
-              <a ng-click="vm.showQR(item,$event)">二维码</a>
+              <a ng-click="vm.showQR('http://101.201.198.27/studio/showonecraft?studioid=&craftid=&type=1',$event)">二维码</a>
               <a ui-sref="page.goodsDetails({id:{{item.craft_id}}})">详情</a>
             </div>
           </div>

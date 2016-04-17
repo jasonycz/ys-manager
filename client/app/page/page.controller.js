@@ -31,7 +31,7 @@
         parent: angular.element(document.body),
         targetEvent: $event,
         locals: {
-          items: {text: item.url}
+          items: item
         }
       });
 
@@ -133,7 +133,7 @@
     vm.qrcode = {
       width: 120,
       height: 120,
-      text: items.text
+      text: 'http://101.201.198.27/studio/showonecraft?studioid=&craftid=&type=1'
     };
     vm.cancel = function () {
       $mdDialog.hide();
@@ -180,6 +180,9 @@
         vm.loginable = true;
 
         if (res.data.errNo === 0) {
+
+          window.dataStorage.user.save(res.data.result);
+
           $state.go('dashboard');
         }
         else {
