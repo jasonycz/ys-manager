@@ -108,7 +108,7 @@
   function api($http) {
 
     //var baseUrl = 'http://101.201.198.27';
-    var baseUrl = 'http://localhost/api';
+    var baseUrl = location.protocol+'//'+location.hostname+'/api';
     var api = {
       studio: {},
       user: {},
@@ -356,8 +356,8 @@
 
 })(window);
 
+//存放全局数据
 (function (window) {
-  //存放全局数据
   window.dataStorage={};
 
   dataStorage.user={

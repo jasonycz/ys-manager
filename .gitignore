@@ -17,3 +17,7 @@ npm-debug.log
 /preview/preview.zip
 
 .idea
+
+
+# vscode typings
+typings

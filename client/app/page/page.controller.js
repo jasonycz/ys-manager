@@ -23,7 +23,7 @@
     vm.items = [];
 
     vm.showQR = function (item, $event) {
-
+     
       $mdDialog.show({
         controller: 'QRcodeCtrl',
         controllerAs: 'vm',
@@ -133,7 +133,7 @@
     vm.qrcode = {
       width: 120,
       height: 120,
-      text: 'http://101.201.198.27/studio/showonecraft?studioid=&craftid=&type=1'
+      text: 'http://101.201.198.27/studio/showonecraft?studioid='+window.dataStorage.user.data.studio_id+'&craftid='+items.craft_id+'&type=1'
     };
     vm.cancel = function () {
       $mdDialog.hide();
