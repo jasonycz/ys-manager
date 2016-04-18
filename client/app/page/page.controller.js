@@ -123,7 +123,7 @@
 
   /**
    * 二维码
-   * @param $mdDialog
+   * @param $mdDialogå
    * @param items
    * @constructor
    */
@@ -141,9 +141,7 @@
   }
 
 
-  function ProfileCtrl($scope, $state) {
-
-  }
+  function ProfileCtrl($scope, $state) {}
 
   function invoiceCtrl($scope, $window) {
     var printContents, originalContents, popupWin;
