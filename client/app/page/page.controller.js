@@ -9,13 +9,13 @@
     .controller('AuthCtrl', ['api', 'validateReg', authCtrl])
     .controller('LoginCtrl', ['$state', 'api', 'validateReg', 'toaster', LoginCtrl])
     .controller('ProfileCtrl', ['$scope', '$state', ProfileCtrl])
-    .controller('uploadCtrl', ['$timeout', '$mdDialog', 'items', 'Upload', 'api', uploadCtrl]) //时间轴添加照片弹框
-    .controller('addTxtCtrl', ['$mdDialog', 'items', uploadCtrl]) //时间轴添加介绍弹框
+    .controller('uploadCtrl', ['$timeout', '$mdDialog', 'items', 'Upload', 'api', 'toaster', uploadCtrl]) //时间轴添加照片弹框
+    .controller('addTxtCtrl', ['$mdDialog', 'items', addTxtCtrl]) //时间轴添加介绍弹框
     .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', 'api', 'toaster', CreateJadeCtrl])
     .controller('GoodDetailsJadeCtrl', ['$stateParams', 'api', '$mdDialog', GoodDetailsJadeCtrl])
     .controller('showBigImgCtrl', ['$mdDialog', 'items', showBigImgCtrl]) //显示大图
     .controller('photoAlbumCtrl', ['$mdDialog', 'items', photoAlbumCtrl]) //在线相册
-  ;
+    ;
 
   //面板
   function DashboardCtrl($mdDialog, api, toaster) {
@@ -23,7 +23,7 @@
     vm.items = [];
 
     vm.showQR = function (item, $event) {
-     
+
       $mdDialog.show({
         controller: 'QRcodeCtrl',
         controllerAs: 'vm',
@@ -52,73 +52,24 @@
       }
       else if (type === 'published') {
 
-        api.studio.showcraft().then(function (res) {
+        api
+          .studio
+          .showcraft()
+          .then(function (res) {
+            if (res.data.errNo !== 0) {
+              //toaster.pop('error', '数据获取失败', res.data.errMsg)
+            }
+            else {
+              vm.items = res.data.result;
+            }
 
-          if (res.data.errNo !== 0) {
-            //toaster.pop('error', '数据获取失败', res.data.errMsg)
-          }
-          else {
-            vm.items = res.data.result;
-          }
-
-        });
+          });
 
       }
 
     };
 
     vm.showItems('published');
-
-    // vm.items = [
-    //   {
-    //     craft_id: 1,
-    //     img: 'images/assets/600_400-1.jpg',
-    //     craft_name: '我是名字一',
-    //     describe: '详细',
-    //     url: 'https://yingyj.com',
-    //     details: '#'
-    //   },
-    //   {
-    //     craft_id: 2,
-    //     img: 'images/assets/600_400-2.jpg',
-    //     craft_name: '我是名字二',
-    //     url: 'https://yingyj.com',
-    //     describe: '详细',
-    //     details: '#'
-    //   },
-    //   {
-    //     craft_id: 3,
-    //     img: 'images/assets/600_400-3.jpg',
-    //     craft_name: '我是名字3',
-    //     url: 'https://yingyj.com',
-    //     describe: '详细',
-    //     details: '#'
-    //   },
-    //   {
-    //     craft_id: 4,
-    //     img: 'images/assets/600_400-4.jpg',
-    //     craft_name: '我是名字3',
-    //     url: 'https://yingyj.com',
-    //     describe: '详细',
-    //     details: '#'
-    //   },
-    //   {
-    //     craft_id: 5,
-    //     img: 'images/assets/600_400-5.jpg',
-    //     craft_name: '我是名字3',
-    //     url: 'https://yingyj.com',
-    //     describe: '详细',
-    //     details: '#'
-    //   },
-    //   {
-    //     craft_id: 6,
-    //     img: 'images/assets/600_400-6.jpg',
-    //     craft_name: '我是名字3',
-    //     url: 'https://yingyj.com',
-    //     describe: '详细',
-    //     details: '#'
-    //   }
-    // ];
   }
 
   /**
@@ -133,7 +84,7 @@
     vm.qrcode = {
       width: 120,
       height: 120,
-      text: 'http://101.201.198.27/studio/showonecraft?studioid='+window.dataStorage.user.data.studio_id+'&craftid='+items.craft_id+'&type=1'
+      text: 'http://101.201.198.27/studio/showonecraft?studioid=' + window.dataStorage.user.data.studio_id + '&craftid=' + items.craft_id + '&type=1'
     };
     vm.cancel = function () {
       $mdDialog.hide();
@@ -141,7 +92,7 @@
   }
 
 
-  function ProfileCtrl($scope, $state) {}
+  function ProfileCtrl($scope, $state) { }
 
   function invoiceCtrl($scope, $window) {
     var printContents, originalContents, popupWin;
@@ -246,7 +197,7 @@
   function CreateJadeCtrl($stateParams, $mdDialog, api, toaster) {
 
     var vm = this;
-    vm.timeline=[
+    vm.timeline = [
       {
         name: '原石',
         description: '',
@@ -285,7 +236,7 @@
       }
     ];
     vm.form = {
-      publish:0
+      publish: 0
     };
 
     vm.tabs = {
@@ -377,7 +328,7 @@
         parent: angular.element(document.body),
         targetEvent: $event,
         locals: {
-          items: {index: index}
+          items: { index: index }
         }
         //clickOutsideToClose: true
       });
@@ -407,7 +358,7 @@
   }
 
   //上传弹框
-  function uploadCtrl($timeout, $mdDialog, items, Upload, api) {
+  function uploadCtrl($timeout, $mdDialog, items, Upload, api, toaster) {
 
     var vm = this;
     vm.form = [];
@@ -422,20 +373,19 @@
       if (vm.files && vm.files.length) {
         Upload.upload({
           url: api.studio.uploaduyimg(),
-          data: {
-            files: vm.files
-          }
+          file: vm.files[0],
+          sendFieldsAs:'form'
         }).then(function (response) {
-          $timeout(function () {
-            vm.result = response.data;
-          });
+          if (response.data.errNo === 0) {
+            vm.form.push(response.data.result.img_url);
+            //vm.result = response.data;
+          }
         }, function (response) {
           if (response.status > 0) {
-            vm.errorMsg = response.status + ': ' + response.data;
+            toaster.pop('error', '图片上传失败', response.status + ': ' + response.data) ;
           }
         }, function (evt) {
-          vm.progress =
-            Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+          vm.progress =Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
         });
       }
     }
@@ -541,7 +491,7 @@
         parent: angular.element(document.body),
         targetEvent: $event,
         locals: {
-          items: {url: imgUrl}
+          items: { url: imgUrl }
         }
         //clickOutsideToClose: true
       });
@@ -574,12 +524,12 @@
     var vm = this;
     vm.selectItem = [];
     vm.items = [
-      {id: 1, url: 'images/assets/600_400-1.jpg'},
-      {id: 1, url: 'images/assets/600_400-2.jpg'},
-      {id: 1, url: 'images/assets/600_400-3.jpg'},
-      {id: 1, url: 'images/assets/600_400-4.jpg'},
-      {id: 1, url: 'images/assets/600_400-5.jpg'},
-      {id: 1, url: 'images/assets/600_400-6.jpg'}
+      { id: 1, url: 'images/assets/600_400-1.jpg' },
+      { id: 1, url: 'images/assets/600_400-2.jpg' },
+      { id: 1, url: 'images/assets/600_400-3.jpg' },
+      { id: 1, url: 'images/assets/600_400-4.jpg' },
+      { id: 1, url: 'images/assets/600_400-5.jpg' },
+      { id: 1, url: 'images/assets/600_400-6.jpg' }
     ];
 
     vm.selectItemFun = function (item) {
