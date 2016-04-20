@@ -34,7 +34,6 @@
           items: item
         }
       });
-
     };
 
     vm.showItems = function (type) {
@@ -374,7 +373,7 @@
         Upload.upload({
           url: api.studio.uploaduyimg(),
           file: vm.files[0],
-          sendFieldsAs:'form'
+          sendFieldsAs: 'form'
         }).then(function (response) {
           if (response.data.errNo === 0) {
             vm.form.push(response.data.result.img_url);
@@ -382,10 +381,10 @@
           }
         }, function (response) {
           if (response.status > 0) {
-            toaster.pop('error', '图片上传失败', response.status + ': ' + response.data) ;
+            toaster.pop('error', '图片上传失败', response.status + ': ' + response.data);
           }
         }, function (evt) {
-          vm.progress =Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+          vm.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
         });
       }
     }
@@ -415,86 +414,75 @@
    */
   function GoodDetailsJadeCtrl($stateParams, api, $mdDialog) {
     var vm = this;
-    vm.items = [];
-
-    vm.items = [
+    vm.article = {};
+    vm.timeLine = [
       {
         name: '开天辟地',
         css: '',
-        introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
-        photos: [
-          'images/assets/600_400-1.jpg',
-          'images/assets/600_400-2.jpg',
-          'images/assets/600_400-3.jpg',
-          'images/assets/600_400-4.jpg',
-          'images/assets/600_400-5.jpg']
+        introduce: '',
+        photos: []
       },
       {
         name: '二',
         css: 'b-primary',
-        introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
-        photos: [
-          'images/assets/600_400-1.jpg',
-          'images/assets/600_400-2.jpg',
-          'images/assets/600_400-3.jpg',
-          'images/assets/600_400-4.jpg',
-          'images/assets/600_400-5.jpg']
+        introduce: '',
+        photos: []
       },
       {
         name: '3',
         css: 'b-info',
-        introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
-        photos: [
-          'images/assets/600_400-1.jpg',
-          'images/assets/600_400-2.jpg',
-          'images/assets/600_400-3.jpg',
-          'images/assets/600_400-4.jpg',
-          'images/assets/600_400-5.jpg']
+        introduce: '',
+        photos: []
       },
       {
         name: '4',
         css: 'b-white',
-        introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
-        photos: [
-          'images/assets/600_400-1.jpg',
-          'images/assets/600_400-2.jpg',
-          'images/assets/600_400-3.jpg',
-          'images/assets/600_400-4.jpg',
-          'images/assets/600_400-5.jpg']
+        introduce: '',
+        photos: []
       },
       {
         name: '5',
         css: 'b-success',
-        introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
-        photos: [
-          'images/assets/600_400-1.jpg',
-          'images/assets/600_400-2.jpg',
-          'images/assets/600_400-3.jpg',
-          'images/assets/600_400-4.jpg',
-          'images/assets/600_400-5.jpg']
+        introduce: '',
+        photos: []
       }
     ];
+    //get data
+    api
+      .studio
+      .showonecraft({
+        params: {
+          craft_id: $stateParams.id,
+          type: 1 //时间轴
+        }
+      }).then(function (res) {
+        vm.timeLine = res.data.result;
+      });
 
-    api.studio.showonecraft({
-      craft_id: $stateParams.id,
-      type: '1'//时间轴
-    }).then(function (res) {
-      vm.items = res.data.result;
-    });
-
+    api
+      .studio
+      .showonecraft({
+        params: {
+          craft_id: $stateParams.id,
+          type: 2 //时间轴
+        }
+      }).then(function (res) {
+        vm.article = res.data.result[0];
+      });
+    //显示大图片
     vm.showBigImg = function (imgUrl, $event) {
 
-      $mdDialog.show({
-        controller: 'showBigImgCtrl',
-        controllerAs: 'vm',
-        templateUrl: 'showBigImg.html',
-        parent: angular.element(document.body),
-        targetEvent: $event,
-        locals: {
-          items: { url: imgUrl }
-        }
-        //clickOutsideToClose: true
-      });
+    $mdDialog.show({
+      controller: 'showBigImgCtrl',
+      controllerAs: 'vm',
+      templateUrl: 'showBigImg.html',
+      parent: angular.element(document.body),
+      targetEvent: $event,
+      locals: {
+        items: { url: imgUrl }
+      }
+      //clickOutsideToClose: true
+    });
 
     }
   }

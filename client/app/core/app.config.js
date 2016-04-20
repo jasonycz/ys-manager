@@ -7,17 +7,17 @@
     .config(['$httpProvider', preAjax])
     .config(['$mdThemingProvider', mdConfig])
     .run(
-      ['$rootScope', '$state', '$stateParams',
-        function ($rootScope, $state, $stateParams) {
-          $rootScope.$state = $state;
-          $rootScope.$stateParams = $stateParams;
+    ['$rootScope', '$state', '$stateParams',
+      function ($rootScope, $state, $stateParams) {
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
 
-          $rootScope.app = {
-            loading: true,
-            title:'工作室'
-          };
-        }
-      ]
+        $rootScope.app = {
+          loading: true,
+          title: '工作室'
+        };
+      }
+    ]
     );
 
   function appConfig() {
@@ -108,7 +108,7 @@
   function api($http) {
 
     //var baseUrl = 'http://101.201.198.27';
-    var baseUrl = location.protocol+'//'+location.hostname+'/api';
+    var baseUrl = location.protocol + '//' + location.hostname + '/api';
     var api = {
       studio: {},
       user: {},
@@ -154,7 +154,7 @@
      * @returns {*}
      */
     api.user.resetbyphone = function (data) {
-      return $http.post(baseUrl + '/user/resetbyphone  ', data)
+      return $http.post(baseUrl + '/user/resetbyphone  ', data);
     };
 
     /**
@@ -163,7 +163,7 @@
      * @returns {*}
      */
     api.user.getverify = function (data) {
-      return $http.post(baseUrl + '/user/getverify   ', data)
+      return $http.post(baseUrl + '/user/getverify   ', data);
     };
 
     /**
@@ -172,7 +172,7 @@
      * @returns {*}
      */
     api.user.setpower = function (data) {
-      return $http.post(baseUrl + '/user/setpower   ', data)
+      return $http.post(baseUrl + '/user/setpower   ', data);
     };
 
     /**
@@ -180,7 +180,7 @@
      * @returns {*}
      */
     api.studio.apily = function () {
-      return $http.post(baseUrl + '/studio/apily', data)
+      return $http.post(baseUrl + '/studio/apily', data);
     };
 
     /**
@@ -195,10 +195,10 @@
      * PC端查看单个作品
      * @param {int} craft_id 雕件id
      * @param {int} type 查看类型
-     * @returns {*}
+     * @returns {any}
      */
-    api.studio.showonecraft = function (craft_id, type) {
-      return $http.get(baseUrl + '/studio/showonecraft')
+    api.studio.showonecraft = function (data) {
+      return $http.get(baseUrl + '/studio/showonecraft', data);
     };
 
     /**
@@ -358,25 +358,29 @@
 
 //存放全局数据
 (function (window) {
-  window.dataStorage={};
+  window.dataStorage = {};
 
-  dataStorage.user={
-    data:undefined,
-    init:function () {
-      var data=window.sessionStorage.getItem('ys-user');
-       if(data){
-         dataStorage.user.data=JSON.parse(data)
-       }
+  dataStorage.user = {
+    data: undefined,
+    init: function () {
+      var data = window.sessionStorage.getItem('ys-user');
+      if (data) {
+        dataStorage.user.data = JSON.parse(data)
+      }
     },
-    save:function (data) {
-      dataStorage.user.data=data;
-      window.sessionStorage.setItem('ys-user',JSON.stringify(data));
+    save: function (data) {
+      dataStorage.user.data = data;
+      window.sessionStorage.setItem('ys-user', JSON.stringify(data));
     },
-    clear:function () {
-      dataStorage.user.data=undefined;
+    clear: function () {
+      dataStorage.user.data = undefined;
       window.sessionStorage.removeItem('ys-user');
     }
   };
+  
+  dataStorage.init = function () {
+    dataStorage.user.init()
+  };
 
-  window.dataStorage.user.init();
+  window.dataStorage.init();
 })(window);
