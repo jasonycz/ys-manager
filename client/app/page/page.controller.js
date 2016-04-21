@@ -90,7 +90,6 @@
     };
   }
 
-
   function ProfileCtrl($scope, $state) { }
 
   function invoiceCtrl($scope, $window) {
@@ -139,7 +138,6 @@
 
       });
     };
-
   }
 
   /**
@@ -235,16 +233,16 @@
       }
     ];
     vm.form = {
+      craft_id: $stateParams.id,
       publish: 0
     };
 
     vm.tabs = {
       selectedIndex: 0
     };
-
-    //获取雕件id
     var getcid = function () {
-      api.studio
+      api
+        .studio
         .getcid()
         .then(function (res) {
           if (res.data.errNo === 0) {
@@ -263,7 +261,29 @@
 
         });
     };
-    getcid();
+    if (vm.form.craft_id) {
+      api
+        .studio
+        .modifyArticle({
+          params: {
+            aid: 0,
+            craft_id: vm.form.craft_id
+          }
+        }).then(function (res) {
+          if (res.data.errNo === 0) {
+            vm.form = res.data.result;
+          }
+          else {
+            toaster.pop('error', '出错了', res.data.errMsg);
+          }
+        }, function (err) {
+
+        })
+    }
+    else {
+      //获取雕件id
+      getcid();
+    }
 
     //基本资料部分
     vm.submit = function () {
@@ -472,17 +492,17 @@
     //显示大图片
     vm.showBigImg = function (imgUrl, $event) {
 
-    $mdDialog.show({
-      controller: 'showBigImgCtrl',
-      controllerAs: 'vm',
-      templateUrl: 'showBigImg.html',
-      parent: angular.element(document.body),
-      targetEvent: $event,
-      locals: {
-        items: { url: imgUrl }
-      }
-      //clickOutsideToClose: true
-    });
+      $mdDialog.show({
+        controller: 'showBigImgCtrl',
+        controllerAs: 'vm',
+        templateUrl: 'showBigImg.html',
+        parent: angular.element(document.body),
+        targetEvent: $event,
+        locals: {
+          items: { url: imgUrl }
+        }
+        //clickOutsideToClose: true
+      });
 
     }
   }
