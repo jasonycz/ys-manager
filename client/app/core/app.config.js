@@ -335,7 +335,7 @@
 
           //不是请求 api/me 的时候,出现未登陆错误
           if (response.data.errNo && response.data.errNo !== 0 && response.config.url.indexOf('/api/me') === -1) {
-            console.log(response);
+            //console.log(response);
             toaster.pop('error', '出错了', response.data.errMsg);
           }
 

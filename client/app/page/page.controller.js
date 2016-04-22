@@ -58,7 +58,9 @@
             //toaster.pop('error', '数据获取失败', res.data.errMsg)
           }
           else {
+            // console.log(res.data.result);
             vm.items = res.data.result;
+            // console.log(vm.items);
           }
 
         });
@@ -68,57 +70,7 @@
     };
 
     vm.showItems('published');
-
-    // vm.items = [
-    //   {
-    //     craft_id: 1,
-    //     img: 'images/assets/600_400-1.jpg',
-    //     craft_name: '我是名字一',
-    //     describe: '详细',
-    //     url: 'https://yingyj.com',
-    //     details: '#'
-    //   },
-    //   {
-    //     craft_id: 2,
-    //     img: 'images/assets/600_400-2.jpg',
-    //     craft_name: '我是名字二',
-    //     url: 'https://yingyj.com',
-    //     describe: '详细',
-    //     details: '#'
-    //   },
-    //   {
-    //     craft_id: 3,
-    //     img: 'images/assets/600_400-3.jpg',
-    //     craft_name: '我是名字3',
-    //     url: 'https://yingyj.com',
-    //     describe: '详细',
-    //     details: '#'
-    //   },
-    //   {
-    //     craft_id: 4,
-    //     img: 'images/assets/600_400-4.jpg',
-    //     craft_name: '我是名字3',
-    //     url: 'https://yingyj.com',
-    //     describe: '详细',
-    //     details: '#'
-    //   },
-    //   {
-    //     craft_id: 5,
-    //     img: 'images/assets/600_400-5.jpg',
-    //     craft_name: '我是名字3',
-    //     url: 'https://yingyj.com',
-    //     describe: '详细',
-    //     details: '#'
-    //   },
-    //   {
-    //     craft_id: 6,
-    //     img: 'images/assets/600_400-6.jpg',
-    //     craft_name: '我是名字3',
-    //     url: 'https://yingyj.com',
-    //     describe: '详细',
-    //     details: '#'
-    //   }
-    // ];
+    
   }
 
   /**
@@ -169,8 +121,8 @@
     });
     vm.validate = validateReg;
     vm.form = {
-      phone: '15212345698',
-      passwd: '123456'
+      phone: '13121902385',
+      passwd: '1234567'
     };
     //登录
     vm.login = function () {
@@ -208,7 +160,7 @@
       $event.preventDefault();
 
       $http.post('/dataefasdfadsf', vm.form).then(function () {
-        console.log(arguments)
+        //console.log(arguments)
       });
     };
 
@@ -216,16 +168,16 @@
       alert(2)
     };
 
-    //修改密码
+    // 修改密码
     vm.updatePwd = function () {
-
-      alert(vm.form.phone);
-
-      $http.post('/api/updatepassword', {
-        phone: vm.form.phone,
-        password: vm.form.password
-      }).then(function () {
+      api.user.resetpwd(vm.form).then(function (res) {
         // todo something.....
+        console.log('dataStorage'+window.dataStorage);
+        // console.log(vm.form);
+        // console.log(res);
+        //alert(vm.form.phone);
+      },function(res){
+        alert('重置密码失败!');
       })
     };
 
@@ -443,7 +395,7 @@
 
   //时间轴添加介绍弹框
   function addTxtCtrl($mdDialog, items) {
-    console.log($mdDialog)
+    //console.log($mdDialog)
     var vm = this;
     vm.form = {};
 
@@ -561,7 +513,7 @@
 
     vm.item = items;
 
-    console.log(vm.item, items);
+    //console.log(vm.item, items);
   }
 
   /**
