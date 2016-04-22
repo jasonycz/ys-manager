@@ -19,7 +19,6 @@
 
               <md-button
                 ngf-select="vm.uploadFiles($files)"
-                multiple
                 accept="image/*"
                 class="md-raised md-primary btn-w-xs">选择图片
               </md-button>
@@ -45,8 +44,8 @@
 
             </md-dialog-content>
             <md-dialog-actions layout="row">
-              <md-button ng-click="vm.save()">完成</md-button>
               <md-button ng-click="vm.cancel()">取消</md-button>
+              <md-button ng-click="vm.save()">完成</md-button>
             </md-dialog-actions>
           </form>
         </md-dialog>
