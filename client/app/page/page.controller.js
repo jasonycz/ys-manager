@@ -9,13 +9,13 @@
     .controller('AuthCtrl', ['api', 'validateReg', authCtrl])
     .controller('LoginCtrl', ['$state', 'api', 'validateReg', 'toaster', LoginCtrl])
     .controller('ProfileCtrl', ['$scope', '$state', ProfileCtrl])
-    .controller('uploadCtrl', ['$timeout', '$mdDialog', 'items', 'Upload', 'api', uploadCtrl]) //时间轴添加照片弹框
-    .controller('addTxtCtrl', ['$mdDialog', 'items', uploadCtrl]) //时间轴添加介绍弹框
+    .controller('uploadCtrl', ['$timeout', '$mdDialog', 'items', 'Upload', 'api', 'toaster', uploadCtrl]) //时间轴添加照片弹框
+    .controller('addTxtCtrl', ['$mdDialog', 'items', addTxtCtrl]) //时间轴添加介绍弹框
     .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', 'api', 'toaster', CreateJadeCtrl])
     .controller('GoodDetailsJadeCtrl', ['$stateParams', 'api', '$mdDialog', GoodDetailsJadeCtrl])
     .controller('showBigImgCtrl', ['$mdDialog', 'items', showBigImgCtrl]) //显示大图
     .controller('photoAlbumCtrl', ['$mdDialog', 'items', photoAlbumCtrl]) //在线相册
-  ;
+    ;
 
   //面板
   function DashboardCtrl($mdDialog, api, toaster) {
@@ -31,10 +31,9 @@
         parent: angular.element(document.body),
         targetEvent: $event,
         locals: {
-          items: {text: item.url}
+          items: item
         }
       });
-
     };
 
     vm.showItems = function (type) {
@@ -52,78 +51,29 @@
       }
       else if (type === 'published') {
 
-        api.studio.showcraft().then(function (res) {
+        api
+          .studio
+          .showcraft()
+          .then(function (res) {
+            if (res.data.errNo !== 0) {
+              //toaster.pop('error', '数据获取失败', res.data.errMsg)
+            }
+            else {
+              vm.items = res.data.result;
+            }
 
-          if (res.data.errNo !== 0) {
-            //toaster.pop('error', '数据获取失败', res.data.errMsg)
-          }
-          else {
-            vm.items = res.data.result;
-          }
-
-        });
+          });
 
       }
 
     };
 
     vm.showItems('published');
-
-    // vm.items = [
-    //   {
-    //     craft_id: 1,
-    //     img: 'images/assets/600_400-1.jpg',
-    //     craft_name: '我是名字一',
-    //     describe: '详细',
-    //     url: 'https://yingyj.com',
-    //     details: '#'
-    //   },
-    //   {
-    //     craft_id: 2,
-    //     img: 'images/assets/600_400-2.jpg',
-    //     craft_name: '我是名字二',
-    //     url: 'https://yingyj.com',
-    //     describe: '详细',
-    //     details: '#'
-    //   },
-    //   {
-    //     craft_id: 3,
-    //     img: 'images/assets/600_400-3.jpg',
-    //     craft_name: '我是名字3',
-    //     url: 'https://yingyj.com',
-    //     describe: '详细',
-    //     details: '#'
-    //   },
-    //   {
-    //     craft_id: 4,
-    //     img: 'images/assets/600_400-4.jpg',
-    //     craft_name: '我是名字3',
-    //     url: 'https://yingyj.com',
-    //     describe: '详细',
-    //     details: '#'
-    //   },
-    //   {
-    //     craft_id: 5,
-    //     img: 'images/assets/600_400-5.jpg',
-    //     craft_name: '我是名字3',
-    //     url: 'https://yingyj.com',
-    //     describe: '详细',
-    //     details: '#'
-    //   },
-    //   {
-    //     craft_id: 6,
-    //     img: 'images/assets/600_400-6.jpg',
-    //     craft_name: '我是名字3',
-    //     url: 'https://yingyj.com',
-    //     describe: '详细',
-    //     details: '#'
-    //   }
-    // ];
   }
 
   /**
    * 二维码
-   * @param $mdDialog
+   * @param $mdDialogå
    * @param items
    * @constructor
    */
@@ -133,17 +83,14 @@
     vm.qrcode = {
       width: 120,
       height: 120,
-      text: items.text
+      text: 'http://101.201.198.27/studio/showonecraft?studioid=' + window.dataStorage.user.data.studio_id + '&craftid=' + items.craft_id + '&type=1'
     };
     vm.cancel = function () {
       $mdDialog.hide();
     };
   }
 
-
-  function ProfileCtrl($scope, $state) {
-
-  }
+  function ProfileCtrl($scope, $state) { }
 
   function invoiceCtrl($scope, $window) {
     var printContents, originalContents, popupWin;
@@ -180,6 +127,9 @@
         vm.loginable = true;
 
         if (res.data.errNo === 0) {
+
+          window.dataStorage.user.save(res.data.result);
+
           $state.go('dashboard');
         }
         else {
@@ -188,7 +138,6 @@
 
       });
     };
-
   }
 
   /**
@@ -245,7 +194,7 @@
   function CreateJadeCtrl($stateParams, $mdDialog, api, toaster) {
 
     var vm = this;
-    vm.timeline=[
+    vm.timeline = [
       {
         name: '原石',
         description: '',
@@ -284,16 +233,16 @@
       }
     ];
     vm.form = {
-      publish:0
+      craft_id: $stateParams.id,
+      publish: 0
     };
 
     vm.tabs = {
       selectedIndex: 0
     };
-
-    //获取雕件id
     var getcid = function () {
-      api.studio
+      api
+        .studio
         .getcid()
         .then(function (res) {
           if (res.data.errNo === 0) {
@@ -312,7 +261,29 @@
 
         });
     };
-    getcid();
+    if (vm.form.craft_id) {
+      api
+        .studio
+        .modifyArticle({
+          params: {
+            aid: 0,
+            craft_id: vm.form.craft_id
+          }
+        }).then(function (res) {
+          if (res.data.errNo === 0) {
+            vm.form = res.data.result;
+          }
+          else {
+            toaster.pop('error', '出错了', res.data.errMsg);
+          }
+        }, function (err) {
+
+        })
+    }
+    else {
+      //获取雕件id
+      getcid();
+    }
 
     //基本资料部分
     vm.submit = function () {
@@ -376,7 +347,7 @@
         parent: angular.element(document.body),
         targetEvent: $event,
         locals: {
-          items: {index: index}
+          items: { index: index }
         }
         //clickOutsideToClose: true
       });
@@ -406,7 +377,7 @@
   }
 
   //上传弹框
-  function uploadCtrl($timeout, $mdDialog, items, Upload, api) {
+  function uploadCtrl($timeout, $mdDialog, items, Upload, api, toaster) {
 
     var vm = this;
     vm.form = [];
@@ -421,20 +392,19 @@
       if (vm.files && vm.files.length) {
         Upload.upload({
           url: api.studio.uploaduyimg(),
-          data: {
-            files: vm.files
-          }
+          file: vm.files[0],
+          sendFieldsAs: 'form'
         }).then(function (response) {
-          $timeout(function () {
-            vm.result = response.data;
-          });
+          if (response.data.errNo === 0) {
+            vm.form.push(response.data.result.img_url);
+            //vm.result = response.data;
+          }
         }, function (response) {
           if (response.status > 0) {
-            vm.errorMsg = response.status + ': ' + response.data;
+            toaster.pop('error', '图片上传失败', response.status + ': ' + response.data);
           }
         }, function (evt) {
-          vm.progress =
-            Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+          vm.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
         });
       }
     }
@@ -464,73 +434,62 @@
    */
   function GoodDetailsJadeCtrl($stateParams, api, $mdDialog) {
     var vm = this;
-    vm.items = [];
-
-    vm.items = [
+    vm.article = {};
+    vm.timeLine = [
       {
         name: '开天辟地',
         css: '',
-        introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
-        photos: [
-          'images/assets/600_400-1.jpg',
-          'images/assets/600_400-2.jpg',
-          'images/assets/600_400-3.jpg',
-          'images/assets/600_400-4.jpg',
-          'images/assets/600_400-5.jpg']
+        introduce: '',
+        photos: []
       },
       {
         name: '二',
         css: 'b-primary',
-        introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
-        photos: [
-          'images/assets/600_400-1.jpg',
-          'images/assets/600_400-2.jpg',
-          'images/assets/600_400-3.jpg',
-          'images/assets/600_400-4.jpg',
-          'images/assets/600_400-5.jpg']
+        introduce: '',
+        photos: []
       },
       {
         name: '3',
         css: 'b-info',
-        introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
-        photos: [
-          'images/assets/600_400-1.jpg',
-          'images/assets/600_400-2.jpg',
-          'images/assets/600_400-3.jpg',
-          'images/assets/600_400-4.jpg',
-          'images/assets/600_400-5.jpg']
+        introduce: '',
+        photos: []
       },
       {
         name: '4',
         css: 'b-white',
-        introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
-        photos: [
-          'images/assets/600_400-1.jpg',
-          'images/assets/600_400-2.jpg',
-          'images/assets/600_400-3.jpg',
-          'images/assets/600_400-4.jpg',
-          'images/assets/600_400-5.jpg']
+        introduce: '',
+        photos: []
       },
       {
         name: '5',
         css: 'b-success',
-        introduce: '简单的介绍,How to pass an angular-material list to an angular-material dialog?',
-        photos: [
-          'images/assets/600_400-1.jpg',
-          'images/assets/600_400-2.jpg',
-          'images/assets/600_400-3.jpg',
-          'images/assets/600_400-4.jpg',
-          'images/assets/600_400-5.jpg']
+        introduce: '',
+        photos: []
       }
     ];
+    //get data
+    api
+      .studio
+      .showonecraft({
+        params: {
+          craft_id: $stateParams.id,
+          type: 1 //时间轴
+        }
+      }).then(function (res) {
+        vm.timeLine = res.data.result;
+      });
 
-    api.studio.showonecraft({
-      craft_id: $stateParams.id,
-      type: '1'//时间轴
-    }).then(function (res) {
-      vm.items = res.data.result;
-    });
-
+    api
+      .studio
+      .showonecraft({
+        params: {
+          craft_id: $stateParams.id,
+          type: 2 //时间轴
+        }
+      }).then(function (res) {
+        vm.article = res.data.result[0];
+      });
+    //显示大图片
     vm.showBigImg = function (imgUrl, $event) {
 
       $mdDialog.show({
@@ -540,7 +499,7 @@
         parent: angular.element(document.body),
         targetEvent: $event,
         locals: {
-          items: {url: imgUrl}
+          items: { url: imgUrl }
         }
         //clickOutsideToClose: true
       });
@@ -573,12 +532,12 @@
     var vm = this;
     vm.selectItem = [];
     vm.items = [
-      {id: 1, url: 'images/assets/600_400-1.jpg'},
-      {id: 1, url: 'images/assets/600_400-2.jpg'},
-      {id: 1, url: 'images/assets/600_400-3.jpg'},
-      {id: 1, url: 'images/assets/600_400-4.jpg'},
-      {id: 1, url: 'images/assets/600_400-5.jpg'},
-      {id: 1, url: 'images/assets/600_400-6.jpg'}
+      { id: 1, url: 'images/assets/600_400-1.jpg' },
+      { id: 1, url: 'images/assets/600_400-2.jpg' },
+      { id: 1, url: 'images/assets/600_400-3.jpg' },
+      { id: 1, url: 'images/assets/600_400-4.jpg' },
+      { id: 1, url: 'images/assets/600_400-5.jpg' },
+      { id: 1, url: 'images/assets/600_400-6.jpg' }
     ];
 
     vm.selectItemFun = function (item) {

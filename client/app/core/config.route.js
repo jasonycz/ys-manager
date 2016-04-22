@@ -28,7 +28,7 @@
             template: '<div ui-view class="fade-in-up"></div>'
           })
           .state('page.createJade', {
-            url: '/createJade/:type',
+            url: '/createJade/:id',
             templateUrl: 'app/page/createJade.html',
             controller: 'CreateJadeCtrl',
             controllerAs: 'vm'
@@ -64,28 +64,6 @@
             controllerAs:'vm'
           })
         ;
-        // routes = [
-        //   'page/createJade',
-        //   'page/profile',
-        //   //'page/forgot-password',
-        //   'page/updatepassword',
-        //   'page/login'
-        // ];
-        //
-        // setRoutes = function (route) {
-        //   var config, url;
-        //   url = '/' + route;
-        //   config = {
-        //     url: url,
-        //     templateUrl: 'app/' + route + '.html'
-        //   };
-        //   $stateProvider.state(route, config);
-        //   return $stateProvider;
-        // };
-        //
-        // routes.forEach(function (route) {
-        //   return setRoutes(route);
-        // });
 
       }]
     );

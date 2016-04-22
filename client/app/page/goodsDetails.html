@@ -2,14 +2,12 @@
 <div>
   <md-content>
     <md-tabs md-dynamic-height md-border-bottom>
-      <md-tab label="时间轴">
-        <md-content class="md-padding" ng-include="'app/page/previewTimeline.html'"></md-content>
-      </md-tab>
-
       <md-tab label="介绍">
         <md-content class="md-padding" ng-include="'app/page/previewArticle.html'"></md-content>
       </md-tab>
-
+      <md-tab label="时间轴">
+        <md-content class="md-padding" ng-include="'app/page/previewTimeline.html'"></md-content>
+      </md-tab>
     </md-tabs>
   </md-content>
 
@@ -18,21 +16,19 @@
 <script type="text/ng-template" id="showBigImg.html">
   <md-dialog>
 
-      <md-toolbar>
-        <div class="md-toolbar-tools">
-          <h2>图片详情</h2>
-          <span flex></span>
-          <md-button class="md-icon-button" ng-click="vm.cancel()">
-            <i class="zmdi zmdi-close"></i>
-          </md-button>
-        </div>
-      </md-toolbar>
-      <md-dialog-content>
-        <div class="md-dialog-content">
-          <img ng-src="{{vm.item.url}}" alt="..." class="img-responsive">
-        </div>
-      </md-dialog-content>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>图片详情</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="vm.cancel()">
+          <i class="zmdi zmdi-close"></i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <img ng-src="{{vm.item.url}}" alt="..." class="img-responsive">
+      </div>
+    </md-dialog-content>
   </md-dialog>
 </script>
-
-
