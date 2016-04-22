@@ -6,7 +6,7 @@
     .controller('DashboardCtrl', ['$mdDialog', 'api', 'toaster', DashboardCtrl])
     .controller('QRcodeCtrl', ['$mdDialog', 'items', QRcodeCtrl])
     .controller('invoiceCtrl', ['$scope', '$window', invoiceCtrl])
-    .controller('AuthCtrl', ['api', 'validateReg', authCtrl])
+    .controller('AuthCtrl', ['$state', 'api', 'validateReg', 'toaster',  authCtrl])
     .controller('LoginCtrl', ['$state', 'api', 'validateReg', 'toaster', LoginCtrl])
     .controller('ProfileCtrl', ['$scope', '$state', ProfileCtrl])
     .controller('uploadCtrl', ['$timeout', '$mdDialog', 'items', 'Upload', 'api', 'toaster', uploadCtrl]) //时间轴添加照片弹框
@@ -68,6 +68,7 @@
     };
 
     vm.showItems('published');
+    // window.dataStorage.user.save("happy");
   }
 
   /**
@@ -111,24 +112,28 @@
     api.me().then(function (res) {
       if (res.data.errNo === 0) {//已经登录
         $state.go('dashboard');
+        // console.log('已经登录');
+        // console.log(window.dataStorage.user);
+        // console.log(res.data);
       }
     });
     vm.validate = validateReg;
-    vm.form = {
-      phone: '13121902385',
-      passwd: '1234567'
-    };
+    // vm.form = {
+    //   phone: '13121902385',
+    //   passwd: '1234567'
+    // };
     //登录
     vm.login = function () {
-
-      vm.loginable = false;
-      api.user.login(vm.form).then(function (res) {
+      // alert('login');
+        vm.loginable = false;
+        api.user.login(vm.form).then(function (res) {
         vm.loginable = true;
 
         if (res.data.errNo === 0) {
-
+          // console.log(res.data.result);
           window.dataStorage.user.save(res.data.result);
-
+          // console.log(window.dataStorage.user);
+          // alert('save');
           $state.go('dashboard');
         }
         else {
@@ -137,6 +142,7 @@
 
       });
     };
+    vm.login();
   }
 
   /**
@@ -145,7 +151,7 @@
    * @param $http
    * @param validateReg
    */
-  function authCtrl(api, validateReg) {
+  function authCtrl($state, api, validateReg, toaster) {
 
     var vm = this;
     vm.validate = validateReg;
@@ -166,12 +172,22 @@
 
     // 修改密码
     vm.updatePwd = function () {
-      api.user.resetpwd(vm.form).then(function (res) {
+
+      var data = new Object();
+      data.user_id = window.dataStorage.user.data.user_id;
+      data.old_password = vm.form.old_password;
+      data.new_password = vm.form.new_password;
+      // console.log(data);
+      api.user.resetpwd(data).then(function (res) {
         // todo something.....
-        console.log('dataStorage'+window.dataStorage);
-        // console.log(vm.form);
-        // console.log(res);
-        //alert(vm.form.phone);
+        // console.log(window.dataStorage.user.data.user_id);
+        if (res.data.errNo === 0) {
+          toaster.pop('success', "重置密码成功");
+          $state.go('dashboard');
+        }
+        else {
+          toaster.pop('error', "出错了", res.data.errMsg);
+        }
       },function(res){
         alert('重置密码失败!');
       })
