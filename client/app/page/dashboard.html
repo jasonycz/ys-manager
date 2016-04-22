@@ -32,7 +32,7 @@
 
   <section class="row ui-section">
     <div class="col-md-12">
-      <div class="row">
+      <div class="row" ng-if="vm.published">
 
         <div class="col-md-4" ng-repeat="item in vm.items track by $index">
           <div class="card bg-white">
@@ -49,10 +49,41 @@
             <div class="card-action">
               <a ng-click="vm.showQR(item,$event)">二维码</a>
               <a ui-sref="page.goodsDetails({id:{{item.craft_id}}})">详情</a>
-              <a ui-sref="page.createJade({id:{{item.craft_id}}})">编辑</a>
             </div>
           </div>
         </div>
+
+      </div>
+
+      <div class="row " ng-if="!vm.published">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <table class="table no-margin">
+              <thead>
+                <tr>
+                  <th>雕件ID</th>
+                  <th>文章ID</th>
+                  <th>雕件名称</th>
+                  <th>状态</th>
+                  <th class="color-success">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in vm.items track by $index">
+                  <td ng-bind="item.craft_id"></td>
+                  <td ng-bind="item.aid"></td>
+                  <td><span class="color-success" ng-bind="item.craft_name"></span></td>
+                  <td><span ng-class="{'color-error':item.status===6||item.status===7}" ng-bind="item.statusText"></span></td>
+                  <td>
+                    <a ui-sref="page.createJade({craft_id:{{item.craft_id}},aid:{{item.aid}}})">编辑</a>
+                    <!--<a ng-click="vm.doAction.publish(item)">发布</a>-->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
 
       </div>
     </div>
@@ -78,3 +109,4 @@
     </md-dialog>
   </script>
 </section>
+</section></section></section>

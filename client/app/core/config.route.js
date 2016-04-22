@@ -28,7 +28,7 @@
             template: '<div ui-view class="fade-in-up"></div>'
           })
           .state('page.createJade', {
-            url: '/createJade/:id',
+            url: '/createJade/:craft_id/:aid',
             templateUrl: 'app/page/createJade.html',
             controller: 'CreateJadeCtrl',
             controllerAs: 'vm'

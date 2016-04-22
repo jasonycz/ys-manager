@@ -356,31 +356,3 @@
 
 })(window);
 
-//存放全局数据
-(function (window) {
-  window.dataStorage = {};
-
-  dataStorage.user = {
-    data: undefined,
-    init: function () {
-      var data = window.sessionStorage.getItem('ys-user');
-      if (data) {
-        dataStorage.user.data = JSON.parse(data)
-      }
-    },
-    save: function (data) {
-      dataStorage.user.data = data;
-      window.sessionStorage.setItem('ys-user', JSON.stringify(data));
-    },
-    clear: function () {
-      dataStorage.user.data = undefined;
-      window.sessionStorage.removeItem('ys-user');
-    }
-  };
-  
-  dataStorage.init = function () {
-    dataStorage.user.init()
-  };
-
-  window.dataStorage.init();
-})(window);

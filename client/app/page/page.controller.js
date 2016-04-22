@@ -21,7 +21,14 @@
   function DashboardCtrl($mdDialog, api, toaster) {
     var vm = this;
     vm.items = [];
-
+    vm.published = true;
+    
+    vm.doAction={
+      publish:function(){
+        alert('发布文章');
+      }
+    };
+    
     vm.showQR = function (item, $event) {
 
       $mdDialog.show({
@@ -40,14 +47,21 @@
 
       if (type === 'unpublished') {
 
-        api.studio.listnofinish().then(function (res) {
-          if (res.data.errNo !== 0) {
-            //toaster.pop('error', '数据获取失败', res.data.errMsg)
-          }
-          else {
-            vm.items = res.data.result;
-          }
-        });
+        api
+          .studio
+          .listnofinish()
+          .then(function (res) {
+            if (res.data.errNo !== 0) {
+              //toaster.pop('error', '数据获取失败', res.data.errMsg)
+            }
+            else {
+              for (var i = 0, len = res.data.result.length; i < len; i++) {
+                res.data.result[i].statusText = window.data.publishStatus[res.data.result[i].status];
+              }
+              vm.items = res.data.result;
+              vm.published = false;
+            }
+          });
       }
       else if (type === 'published') {
 
@@ -60,10 +74,9 @@
             }
             else {
               vm.items = res.data.result;
+              vm.published = true;
             }
-
           });
-
       }
 
     };
@@ -117,7 +130,7 @@
     vm.validate = validateReg;
     vm.form = {
       phone: '15212345698',
-      passwd: '123456'
+      passwd: '111111'
     };
     //登录
     vm.login = function () {
@@ -233,7 +246,8 @@
       }
     ];
     vm.form = {
-      craft_id: $stateParams.id,
+      Aid: $stateParams.aid,
+      craft_id: $stateParams.craft_id,
       publish: 0
     };
 
@@ -261,12 +275,12 @@
 
         });
     };
-    if (vm.form.craft_id) {
+    if (vm.form.craft_id !== undefined && vm.form.aid !== undefined) {
       api
         .studio
         .modifyArticle({
           params: {
-            aid: 0,
+            aid: vm.form.aid,
             craft_id: vm.form.craft_id
           }
         }).then(function (res) {
