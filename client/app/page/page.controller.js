@@ -50,6 +50,8 @@
         });
       }
       else if (type === 'published') {
+        // var data = new Object();
+        // data.studio_id = 36;
         api
           .studio
           .showcraft()
@@ -67,7 +69,7 @@
 
     };
 
-    vm.showItems('published');
+     vm.showItems('published');
     // window.dataStorage.user.save("happy");
   }
 
