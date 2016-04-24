@@ -206,7 +206,11 @@
    */
   function CreateJadeCtrl($stateParams, $mdDialog, api, toaster) {
 
-    var vm = this;
+    var vm = this,
+    Aid=$stateParams.aid,
+    craft_id=$stateParams.craft_id,
+    isUpdate=(Aid!==undefined&&Aid!=='')&&(craft_id!==undefined&&craft_id!=='');
+    
     vm.timeline = [
       {
         name: '原石',
@@ -246,11 +250,13 @@
       }
     ];
     vm.form = {
-      Aid: $stateParams.aid,
       craft_id: $stateParams.craft_id,
-      publish: 0
+      publish: 0,
+      imgurl:'http://hdn.xnimg.cn/photos/hdn321/20130612/2235/h_main_NNN4_e80a000007df111a.jpg'
     };
-
+    if(isUpdate){
+      vm.form.Aid=Aid;
+    }
     vm.tabs = {
       selectedIndex: 0
     };
@@ -275,7 +281,7 @@
 
         });
     };
-    if (vm.form.craft_id !== undefined && vm.form.aid !== undefined) {
+    if (isUpdate) {
       api
         .studio
         .modifyArticle({
@@ -302,7 +308,7 @@
     //基本资料部分
     vm.submit = function () {
       var msg = '';
-      if (vm.form.Aid) {//修改
+      if (isUpdate) {//修改
         //1:发布   0:预览
         vm.form.publish = 1;
         msg = '修改成功';
