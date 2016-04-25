@@ -68,6 +68,31 @@
       }
 
     };
+    // 删除玉石
+    vm.delcraft = function (craft_id){
+      var data = new Object();
+      data.craft_id = craft_id;
+      // console.log(data.craft_id);
+      if(confirm("确定要删除该玉石数据?")){
+          api.studio.delcraft(data).then(function (res) {
+            //alert("dsds");
+            if (res.data.errNo === 0) {
+              // console.log(res.data);
+              toaster.pop('success', "删除玉石成功");
+              $state.go('dashboard');
+            }
+            else {
+               // console.log(res.data);
+              toaster.pop('error', "出错了", res.data.errMsg);
+            }
+          },function(res){
+            toaster.pop('error', "删除玉石失败!", res.data.errMsg);
+          })
+      }
+
+      
+    }
+
 
      vm.showItems('published');
     // window.dataStorage.user.save("happy");
@@ -249,8 +274,7 @@
       })
     };
     
-    // 删除玉石
-    // api.studio.delcraft
+
   }
 
   /**
