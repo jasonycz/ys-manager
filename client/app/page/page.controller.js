@@ -207,9 +207,9 @@
   function CreateJadeCtrl($stateParams, $mdDialog, api, toaster) {
 
     var vm = this,
-    Aid=$stateParams.aid,
+    aid=$stateParams.aid,
     craft_id=$stateParams.craft_id,
-    isUpdate=(Aid!==undefined&&Aid!=='')&&(craft_id!==undefined&&craft_id!=='');
+    isUpdate=(aid!==undefined&&aid!=='')&&(craft_id!==undefined&&craft_id!=='');
     
     vm.timeline = [
       {
@@ -255,7 +255,7 @@
       imgurl:'http://hdn.xnimg.cn/photos/hdn321/20130612/2235/h_main_NNN4_e80a000007df111a.jpg'
     };
     if(isUpdate){
-      vm.form.Aid=Aid;
+      vm.form.aid=aid;
     }
     vm.tabs = {
       selectedIndex: 0
