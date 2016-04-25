@@ -249,7 +249,8 @@
       })
     };
     
-
+    // 删除玉石
+    // api.studio.delcraft
   }
 
   /**
