@@ -206,6 +206,8 @@
         data.phone = vm.form.user.phone;
         vm.form.validation = true;
         api.user.getverify(data);
+        // var temp = api.user.getverify(data);
+        // console.log(temp);
       }else{
         toaster.pop('error', "请输入电话号码");
         return;
@@ -231,17 +233,16 @@
       var data = new Object();
       data.phone = vm.form.user.phone;
       data.verify_code = vm.form.user.verify_code;
-      data.new_password = vm.form.user.new_password;
-      // console.log(data);
+      data.password = vm.form.user.new_password;
       api.user.resetbyphone(data).then(function (res) {
         // todo something.....
-        // console.log(window.dataStorage.user.data.user_id);
         if (res.data.errNo === 0) {
           toaster.pop('success', "重置密码成功");
+           console.log(res.data);
           $state.go('page.login');
         }
         else {
-          toaster.pop('error', "出错了", res.data.errMsg);
+          toaster.pop('error', "出错了 forgotPwd", res.data.errMsg);
         }
       },function(res){
         toaster.pop('error', "重置密码失败!", res.data.errMsg);

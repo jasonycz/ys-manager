@@ -154,7 +154,7 @@
      * @returns {*}
      */
     api.user.resetbyphone = function (data) {
-      return $http.post(baseUrl + '/user/resetbyphone  ', data);
+      return $http.post(baseUrl + '/user/resetbyphone', data);
     };
 
     /**
@@ -163,7 +163,7 @@
      * @returns {*}
      */
     api.user.getverify = function (data) {
-      return $http.post(baseUrl + '/user/getverify   ', data);
+      return $http.post(baseUrl + '/user/getverify', data);
     };
 
     /**
@@ -172,7 +172,7 @@
      * @returns {*}
      */
     api.user.setpower = function (data) {
-      return $http.post(baseUrl + '/user/setpower   ', data);
+      return $http.post(baseUrl + '/user/setpower', data);
     };
 
     /**
