@@ -6,7 +6,7 @@
     .controller('DashboardCtrl', ['$mdDialog', 'api', 'toaster', DashboardCtrl])
     .controller('QRcodeCtrl', ['$mdDialog', 'items', QRcodeCtrl])
     .controller('invoiceCtrl', ['$scope', '$window', invoiceCtrl])
-    .controller('AuthCtrl', ['$state', 'api', 'validateReg', 'toaster',  authCtrl])
+    .controller('AuthCtrl', ['$state', 'api','validateReg', 'toaster','$timeout', authCtrl])
     .controller('LoginCtrl', ['$state', 'api', 'validateReg', 'toaster', LoginCtrl])
     .controller('ProfileCtrl', ['$scope', '$state', ProfileCtrl])
     .controller('uploadCtrl', ['$timeout', '$mdDialog', 'items', 'Upload', 'api', 'toaster', uploadCtrl]) //时间轴添加照片弹框
@@ -153,12 +153,11 @@
    * @param $http
    * @param validateReg
    */
-  function authCtrl($state, api, validateReg, toaster) {
-
+  function authCtrl($state, api, validateReg, toaster, $timeout) {
     var vm = this;
     vm.validate = validateReg;
     vm.form = {};
-
+    // alert('ok');
     //登录
     vm.login = function ($event) {
       $event.preventDefault();
@@ -169,7 +168,7 @@
     };
 
     vm.signup = function () {
-      alert(2)
+      alert(2);
     };
 
     // 修改密码
@@ -191,14 +190,64 @@
           toaster.pop('error', "出错了", res.data.errMsg);
         }
       },function(res){
-        alert('重置密码失败!');
+        toaster.pop('error', "重置密码失败!", res.data.errMsg);
       })
     };
+    vm.getVerifyCode = function (){
+      // 定义按钮btn
+      var btn = $("#sendVerifyBtn");
+           
+      // 定义发送时间间隔(s)
+      var SEND_INTERVAL = 30;
+      var timeLeft = SEND_INTERVAL;
 
+      if(vm.form.user.phone){
+        var data = new Object();
+        data.phone = vm.form.user.phone;
+        vm.form.validation = true;
+        api.user.getverify(data);
+      }else{
+        toaster.pop('error', "请输入电话号码");
+        return;
+      }          
+      var timeCount = function() {
+          $timeout(function() {
+              if(timeLeft > 0) {
+                  timeLeft -= 1;
+                  btn.html(timeLeft + "秒后重新发送");
+                  timeCount();
+              } else {
+                  // console.log('ok');
+                 vm.form.validation = false;
+                 btn.html("发送短信验证码");
+              }
+          }, 1000);
+      }
+       timeCount();
+    }
     //忘记密码
     vm.forgotPwd = function () {
-      alert(vm.form.email)
-    }
+
+      var data = new Object();
+      data.phone = vm.form.user.phone;
+      data.verify_code = vm.form.user.verify_code;
+      data.new_password = vm.form.user.new_password;
+      // console.log(data);
+      api.user.resetbyphone(data).then(function (res) {
+        // todo something.....
+        // console.log(window.dataStorage.user.data.user_id);
+        if (res.data.errNo === 0) {
+          toaster.pop('success', "重置密码成功");
+          $state.go('page.login');
+        }
+        else {
+          toaster.pop('error', "出错了", res.data.errMsg);
+        }
+      },function(res){
+        toaster.pop('error', "重置密码失败!", res.data.errMsg);
+      })
+    };
+    
 
   }
 

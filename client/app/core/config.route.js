@@ -51,6 +51,12 @@
             controller:'AuthCtrl',
             controllerAs:'vm'
           })
+          .state('page.forgotPwd', {
+            url: '/forgotPwd',
+            templateUrl: 'app/page/forgotPwd.html',
+            controller:'AuthCtrl',
+            controllerAs:'vm'
+          })
           .state('page.login', {
             url: '/login',
             templateUrl: 'app/page/login.html',
