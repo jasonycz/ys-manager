@@ -22,13 +22,13 @@
     var vm = this;
     vm.items = [];
     vm.published = true;
-    
-    vm.doAction={
-      publish:function(){
+
+    vm.doAction = {
+      publish: function () {
         alert('发布文章');
       }
     };
-    
+
     vm.showQR = function (item, $event) {
 
       $mdDialog.show({
@@ -207,10 +207,10 @@
   function CreateJadeCtrl($stateParams, $mdDialog, api, toaster) {
 
     var vm = this,
-    aid=$stateParams.aid,
-    craft_id=$stateParams.craft_id,
-    isUpdate=(aid!==undefined&&aid!=='')&&(craft_id!==undefined&&craft_id!=='');
-    
+      aid = $stateParams.aid,
+      craft_id = $stateParams.craft_id,
+      isUpdate = (aid !== undefined && aid !== '') && (craft_id !== undefined && craft_id !== '');
+
     vm.timeline = [
       {
         name: '原石',
@@ -252,10 +252,10 @@
     vm.form = {
       craft_id: $stateParams.craft_id,
       publish: 0,
-      imgurl:'http://hdn.xnimg.cn/photos/hdn321/20130612/2235/h_main_NNN4_e80a000007df111a.jpg'
+      imgurl: 'http://hdn.xnimg.cn/photos/hdn321/20130612/2235/h_main_NNN4_e80a000007df111a.jpg'
     };
-    if(isUpdate){
-      vm.form.aid=aid;
+    if (isUpdate) {
+      vm.form.aid = aid;
     }
     vm.tabs = {
       selectedIndex: 0
@@ -291,7 +291,14 @@
           }
         }).then(function (res) {
           if (res.data.errNo === 0) {
-            vm.form = res.data.result;
+            var data = res.data.result;
+            if (typeof data.createDate === 'string' && data.createDate.length >= 10) {
+              data.createDate = new Date(data.createDate);
+            }
+            else {
+              delete data.createDate;
+            }
+            vm.form = data;
           }
           else {
             toaster.pop('error', '出错了', res.data.errMsg);
