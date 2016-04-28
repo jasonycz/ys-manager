@@ -6,7 +6,7 @@
     .controller('DashboardCtrl', ['$mdDialog', 'api', 'toaster', DashboardCtrl])
     .controller('QRcodeCtrl', ['$mdDialog', 'items', QRcodeCtrl])
     .controller('invoiceCtrl', ['$scope', '$window', invoiceCtrl])
-    .controller('AuthCtrl', ['api', 'validateReg', authCtrl])
+    .controller('AuthCtrl', ['$state', 'api','validateReg', 'toaster','$timeout', authCtrl])
     .controller('LoginCtrl', ['$state', 'api', 'validateReg', 'toaster', LoginCtrl])
     .controller('ProfileCtrl', ['$scope', '$state', ProfileCtrl])
     .controller('uploadCtrl', ['$timeout', '$mdDialog', 'items', 'Upload', 'api', 'toaster', uploadCtrl]) //时间轴添加照片弹框
@@ -21,6 +21,13 @@
   function DashboardCtrl($mdDialog, api, toaster) {
     var vm = this;
     vm.items = [];
+    vm.published = true;
+
+    vm.doAction = {
+      publish: function () {
+        alert('发布文章');
+      }
+    };
 
     vm.showQR = function (item, $event) {
 
@@ -40,17 +47,25 @@
 
       if (type === 'unpublished') {
 
-        api.studio.listnofinish().then(function (res) {
-          if (res.data.errNo !== 0) {
-            //toaster.pop('error', '数据获取失败', res.data.errMsg)
-          }
-          else {
-            vm.items = res.data.result;
-          }
-        });
+        api
+          .studio
+          .listnofinish()
+          .then(function (res) {
+            if (res.data.errNo !== 0) {
+              //toaster.pop('error', '数据获取失败', res.data.errMsg)
+            }
+            else {
+              for (var i = 0, len = res.data.result.length; i < len; i++) {
+                res.data.result[i].statusText = window.data.publishStatus[res.data.result[i].status];
+              }
+              vm.items = res.data.result;
+              vm.published = false;
+            }
+          });
       }
       else if (type === 'published') {
-
+        // var data = new Object();
+        // data.studio_id = 36;
         api
           .studio
           .showcraft()
@@ -60,15 +75,40 @@
             }
             else {
               vm.items = res.data.result;
+              vm.published = true;
             }
-
           });
-
       }
 
     };
+    // 删除玉石
+    vm.delcraft = function (craft_id){
+      var data = new Object();
+      data.craft_id = craft_id;
+      // console.log(data.craft_id);
+      if(confirm("确定要删除该玉石数据?")){
+          api.studio.delcraft(data).then(function (res) {
+            //alert("dsds");
+            if (res.data.errNo === 0) {
+              // console.log(res.data);
+              vm.showItems('published');
+              toaster.pop('success', "删除玉石成功");
+            }
+            else {
+               // console.log(res.data);
+              toaster.pop('error', "出错了", res.data.errMsg);
+            }
+          },function(res){
+            toaster.pop('error', "删除玉石失败!", res.data.errMsg);
+          })
+      }
 
-    vm.showItems('published');
+      
+    }
+
+// alert('okwwww');
+     vm.showItems('published');
+    // window.dataStorage.user.save("happy");
   }
 
   /**
@@ -112,24 +152,32 @@
     api.me().then(function (res) {
       if (res.data.errNo === 0) {//已经登录
         $state.go('dashboard');
+        // console.log('已经登录');
+        // console.log(window.dataStorage.user);
+        // console.log(res.data);
       }
     });
-    vm.validate = validateReg;
+    vm.validate = validateReg; 
     vm.form = {
       phone: '15212345698',
-      passwd: '123456'
-    };
+      passwd: '111111'
+    }; 
+    // vm.form = {
+    //   phone: '13121902385',
+    //   passwd: '1234567'
+    // }; 
     //登录
     vm.login = function () {
-
-      vm.loginable = false;
-      api.user.login(vm.form).then(function (res) {
+      // alert('login');
+        vm.loginable = false;
+        api.user.login(vm.form).then(function (res) {
         vm.loginable = true;
 
         if (res.data.errNo === 0) {
-
+          // console.log(res.data.result);
           window.dataStorage.user.save(res.data.result);
-
+          // console.log(window.dataStorage.user);
+          // alert('save');
           $state.go('dashboard');
         }
         else {
@@ -138,6 +186,7 @@
 
       });
     };
+    vm.login();
   }
 
   /**
@@ -146,42 +195,107 @@
    * @param $http
    * @param validateReg
    */
-  function authCtrl(api, validateReg) {
-
+  function authCtrl($state, api, validateReg, toaster, $timeout) {
     var vm = this;
     vm.validate = validateReg;
-    vm.form = {};
-
+    vm.form = {user:''};
+    // alert('ok');
     //登录
     vm.login = function ($event) {
       $event.preventDefault();
 
       $http.post('/dataefasdfadsf', vm.form).then(function () {
+<<<<<<< HEAD
         // console.log(arguments)
+=======
+        //console.log(arguments)
+>>>>>>> c6abfbef52a8ef997135b56c0256462ab2d431d7
       });
     };
 
     vm.signup = function () {
-      alert(2)
+      alert(2);
     };
 
-    //修改密码
+    // 修改密码
     vm.updatePwd = function () {
 
-      alert(vm.form.phone);
-
-      $http.post('/api/updatepassword', {
-        phone: vm.form.phone,
-        password: vm.form.password
-      }).then(function () {
+      var data = new Object();
+      data.user_id = window.dataStorage.user.data.user_id;
+      data.old_password = vm.form.old_password;
+      data.new_password = vm.form.new_password;
+      // console.log(data);
+      api.user.resetpwd(data).then(function (res) {
         // todo something.....
+        // console.log(window.dataStorage.user.data.user_id);
+        if (res.data.errNo === 0) {
+          toaster.pop('success', "重置密码成功");
+          $state.go('dashboard');
+        }
+        else {
+          toaster.pop('error', "出错了", res.data.errMsg);
+        }
+      },function(res){
+        toaster.pop('error', "重置密码失败!", res.data.errMsg);
       })
     };
+    vm.getVerifyCode = function (){
+      // console.log(vm.form);return;
+      // 定义按钮btn
+      var btn = $("#sendVerifyBtn");
+           
+      // 定义发送时间间隔(s)
+      var SEND_INTERVAL = 30;
+      var timeLeft = SEND_INTERVAL;
 
+      if(vm.form.user.phone){
+        var data = new Object();
+        data.phone = vm.form.user.phone;
+        vm.form.validation = true;
+        api.user.getverify(data);
+        // var temp = api.user.getverify(data);
+        // console.log(temp);
+      }else{
+        toaster.pop('error', "请输入电话号码");
+        return;
+      }          
+      var timeCount = function() {
+          $timeout(function() {
+              if(timeLeft > 0) {
+                  timeLeft -= 1;
+                  btn.html(timeLeft + "秒后重新发送");
+                  timeCount();
+              } else {
+                  // console.log('ok');
+                 vm.form.validation = false;
+                 btn.html("发送短信验证码");
+              }
+          }, 1000);
+      }
+       timeCount();
+    }
     //忘记密码
     vm.forgotPwd = function () {
-      alert(vm.form.email)
-    }
+
+      var data = new Object();
+      data.phone = vm.form.user.phone;
+      data.verify_code = vm.form.user.verify_code;
+      data.password = vm.form.user.new_password;
+      api.user.resetbyphone(data).then(function (res) {
+        // todo something.....
+        if (res.data.errNo === 0) {
+          toaster.pop('success', "重置密码成功");
+          // console.log(res.data);
+          $state.go('page.login');
+        }
+        else {
+          toaster.pop('error', "出错了 forgotPwd", res.data.errMsg);
+        }
+      },function(res){
+        toaster.pop('error', "重置密码失败!", res.data.errMsg);
+      })
+    };
+    
 
   }
 
@@ -193,7 +307,11 @@
    */
   function CreateJadeCtrl($stateParams, $mdDialog, api, toaster) {
 
-    var vm = this;
+    var vm = this,
+      aid = $stateParams.aid,
+      craft_id = $stateParams.craft_id,
+      isUpdate = (aid !== undefined && aid !== '') && (craft_id !== undefined && craft_id !== '');
+
     vm.timeline = [
       {
         name: '原石',
@@ -233,10 +351,13 @@
       }
     ];
     vm.form = {
-      craft_id: $stateParams.id,
-      publish: 0
+      craft_id: $stateParams.craft_id,
+      publish: 0,
+      imgurl: 'http://hdn.xnimg.cn/photos/hdn321/20130612/2235/h_main_NNN4_e80a000007df111a.jpg'
     };
-
+    if (isUpdate) {
+      vm.form.aid = aid;
+    }
     vm.tabs = {
       selectedIndex: 0
     };
@@ -267,17 +388,28 @@
 
         });
     };
-    if (vm.form.craft_id) {
+    if (isUpdate) {
       api
         .studio
         .modifyArticle({
           params: {
+<<<<<<< HEAD
             aid: 0,//  需要修改////////////////////////
+=======
+            aid: vm.form.aid,
+>>>>>>> c6abfbef52a8ef997135b56c0256462ab2d431d7
             craft_id: vm.form.craft_id
           }
         }).then(function (res) {
           if (res.data.errNo === 0) {
-            vm.form = res.data.result;
+            var data = res.data.result;
+            if (typeof data.createDate === 'string' && data.createDate.length >= 10) {
+              data.createDate = new Date(data.createDate);
+            }
+            else {
+              delete data.createDate;
+            }
+            vm.form = data;
           }
           else {
             toaster.pop('error', '出错了', res.data.errMsg);
@@ -293,7 +425,7 @@
     //基本资料部分
     vm.submit = function () {
       var msg = '';
-      if (vm.form.Aid) {//修改
+      if (isUpdate) {//修改
         //1:发布   0:预览
         vm.form.publish = 1;
         msg = '修改成功';
@@ -418,7 +550,11 @@
 
   //时间轴添加介绍弹框
   function addTxtCtrl($mdDialog, items) {
+<<<<<<< HEAD
     // console.log($mdDialog)
+=======
+    //console.log($mdDialog)
+>>>>>>> c6abfbef52a8ef997135b56c0256462ab2d431d7
     var vm = this;
     vm.form = {};
 
@@ -525,7 +661,11 @@
 
     vm.item = items;
 
+<<<<<<< HEAD
     // console.log(vm.item, items);
+=======
+    //console.log(vm.item, items);
+>>>>>>> c6abfbef52a8ef997135b56c0256462ab2d431d7
   }
 
   /**

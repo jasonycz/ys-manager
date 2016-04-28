@@ -4,63 +4,62 @@
       <div class="body-inner">
         <form class="card bg-white"
               name="form"
-              ng-submit="form.$valid && vm.updatePwd()"
+              ng-submit="form.$valid && vm.forgotPwd()"
               novalidate>
           <div class="card-content">
             <section class="logo text-center">
-              <h3><a href="#/">{{main.brand}} - 修改密码</a></h3>
+              <h3><a href="#/">{{main.brand}} - 重置密码</a></h3>
             </section>
             <div
               class="form-horizontal">
               <fieldset>
-              <!--   <md-input-container
+              <md-input-container
                   md-is-error="form.phone.$invalid && (form.$submitted || form.phone.$dirty)"
                   class="md-block">
 
                   <input type="text"
                          required
                          name="phone"
-                         ng-pattern="vm.validate.mobile"
-                         ng-model="vm.form.phone">
+                         minlength="11"
+                         ng-pattern="/^[1][358][0-9]{9}$/"
+                         ng-model="vm.form.user.phone">
                   <label>手机</label>
                   <div
                     ng-messages="form.phone.$error"
                     ng-if="form.$submitted || form.phone.$touched">
 
                     <div ng-message="required">必填项</div>
+                    <div ng-message="minlength">手机为11位数字</div>
                     <div ng-message="pattern">手机格式错误</div>
 
                   </div>
-                </md-input-container> -->
+                </md-input-container> 
 
-                <md-input-container
-                  md-is-error="form.old_password.$invalid && (form.$submitted || form.old_password.$dirty)"
-                  class="md-block">
+                <md-input-container  class="">       
+                    <input required 
+                           type="text"
+                           name="verify_code"
+                           ng-model="vm.form.user.verify_code"
+                           ng-pattern="/^[0-9]{6}$/" />
+                    <label>验证码</label>
+                    <div ng-messages="form.verify_code.$error" multiple ng-if='form.verify_code.$dirty'>
+                        
+                        <div ng-message="pattern">It must be an valid verify_code.</div>
+                    </div>
+              </md-input-container> 
+              <md-input-container  class="col-md-5">                
+                 <md-button class="md-raised btn-w-md md-primary col-md-offset-12" data-ng-click="vm.getVerifyCode()"   data-ng-disabled='vm.form.validation' id="sendVerifyBtn" >发送短信验证码               
+                 </md-button>        
+              </md-input-container> 
 
-                  <input type="password"
-                         required
-                         name="old_password"
-                         minlength="6"
-                         ng-model="vm.form.old_password">
-                  <label>旧密码</label>
-                  <div
-                    ng-messages="form.old_password.$error"
-                    ng-if="form.$submitted || form.old_password.$touched">
-
-                    <div ng-message="required">必填项</div>
-                    <div ng-message="minlength">最少6位字符</div>
-
-                  </div>
-                </md-input-container>
-
-                <md-input-container
+               <md-input-container
                   md-is-error="form.new_password.$invalid && (form.$submitted || form.new_password.$dirty)"
                   class="md-block">
                   <input type="password"
                          required
                          name="new_password"
                          minlength="6"
-                         ng-model="vm.form.new_password">
+                         ng-model="vm.form.user.new_password">
                   <label>新密码</label>
                   <div
                     ng-messages="form.new_password.$error"
@@ -70,16 +69,16 @@
                     <div ng-message="minlength">最少6位字符</div>
 
                   </div>
-                </md-input-container>
-
+              </md-input-container>
+ 
                 <md-input-container
                   md-is-error="form.rePwd.$invalid && (form.$submitted || form.rePwd.$dirty)"
                   class="md-block">
                     <input type="password"
                            required
                            name="rePwd"
-                           match="vm.form.new_password"
-                           ng-model="vm.form.rePwd">
+                           match="vm.form.user.new_password"
+                           ng-model="vm.form.user.rePwd">
                     <label>重复新密码</label>
                   <div
                     ng-messages="form.rePwd.$error"
@@ -89,7 +88,7 @@
                     <div ng-message="match">2次密码不一致</div>
 
                   </div>
-                </md-input-container>
+                </md-input-container> 
 
               </fieldset>
             </div>
@@ -99,7 +98,7 @@
             <md-button
               type="submit"
               class="md-raised btn-w-md"
-              ng-class="{'md-primary':form.$valid}">更新
+              ng-class="{'md-primary':form.$valid}">重置密码
             </md-button>
           </div>
         </form>

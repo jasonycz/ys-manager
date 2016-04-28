@@ -18,8 +18,6 @@
       ng-submit="form.$valid && vm.submit()"
       novalidate>
       <fieldset>
-        <input type="hidden" ng-model="vm.form.Aid">
-        <input type="hidden" ng-model="vm.form.craft_id">
 
         <md-input-container
           class="md-block"
@@ -73,19 +71,19 @@
           <div flex="5" hide-xs hide-sm></div>
           <md-input-container
             class="md-block"
-            md-is-error="form.measurement.$invalid && (form.$submitted || form.measurement.$dirty)"
+            md-is-error="form.type.$invalid && (form.$submitted || form.type.$dirty)"
             flex-gt-sm>
 
             <label>玉石类型</label>
             <input
-              ng-model="vm.form.measurement"
+              ng-model="vm.form.type"
               ng-required="true"
-              name="measurement"
-              id="measurement">
+              name="type"
+              id="type">
 
             <div class="errors"
-                 ng-messages="form.measurement.$error"
-                 ng-if="form.$submitted || form.measurement.$touched">
+                 ng-messages="form.type.$error"
+                 ng-if="form.$submitted || form.type.$touched">
               <div ng-message="required">必填项</div>
             </div>
 
@@ -119,19 +117,19 @@
 
           <md-input-container
             class="md-block"
-            md-is-error="form.jadeSize.$invalid && (form.$submitted || form.jadeSize.$dirty)"
+            md-is-error="form.measurement.$invalid && (form.$submitted || form.measurement.$dirty)"
             flex-gt-sm>
 
             <label>玉石尺寸</label>
             <input
-              ng-model="vm.form.jadeSize"
+              ng-model="vm.form.measurement"
               ng-required="true"
-              name="jadeSize"
-              id="jadeSize">
+              name="measurement"
+              id="measurement">
 
             <div class="errors"
-                 ng-messages="form.jadeSize.$error"
-                 ng-if="form.$submitted || form.jadeSize.$touched">
+                 ng-messages="form.measurement.$error"
+                 ng-if="form.$submitted || form.measurement.$touched">
               <div ng-message="required">必填项</div>
             </div>
 

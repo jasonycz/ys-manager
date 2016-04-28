@@ -6,25 +6,25 @@
 
   angular
     .module('app.layout')
-    .controller('layoutHeaderCtrl', ['$state', 'api', layoutHeaderCtrl]);
+    .controller('layoutHeaderCtrl', ['$state', 'api', 'toaster', layoutHeaderCtrl]);
 
-  function layoutHeaderCtrl($state, api) {
+  function layoutHeaderCtrl($state, api, toaster) {
 
     var vm = this;
 
     //注销操作
     vm.logout = function () {
 
-      // api.user
-      //   .logout()
-      //   .then(function (res) {
-      //     if (res.data.errNo !== 0) {
-      //
-      //     }
-      //     else {
-      //       $state.go('page.login');
-      //     }
-      //   });
+      api.user
+        .logout()
+        .then(function (res) {
+          if (res.data.errNo !== 0) {
+              toaster.pop('error', "出错了", res.data.errMsg);
+          }
+          else {
+            $state.go('page.login');
+          }
+        });
       $state.go('page.login');
     }
   }

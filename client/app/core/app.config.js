@@ -141,6 +141,15 @@
     };
 
     /**
+     * 用户推出登录
+     * @param data
+     * @returns {*}
+     */
+    api.user.logout = function (data) {
+      return $http.post(baseUrl + '/user/logout', data);
+    };
+
+    /**
      * 修改密码
      * @returns {*}
      */
@@ -154,7 +163,7 @@
      * @returns {*}
      */
     api.user.resetbyphone = function (data) {
-      return $http.post(baseUrl + '/user/resetbyphone  ', data);
+      return $http.post(baseUrl + '/user/resetbyphone', data);
     };
 
     /**
@@ -163,7 +172,7 @@
      * @returns {*}
      */
     api.user.getverify = function (data) {
-      return $http.post(baseUrl + '/user/getverify   ', data);
+      return $http.post(baseUrl + '/user/getverify', data);
     };
 
     /**
@@ -172,7 +181,7 @@
      * @returns {*}
      */
     api.user.setpower = function (data) {
-      return $http.post(baseUrl + '/user/setpower   ', data);
+      return $http.post(baseUrl + '/user/setpower', data);
     };
 
     /**
@@ -335,7 +344,7 @@
 
           //不是请求 api/me 的时候,出现未登陆错误
           if (response.data.errNo && response.data.errNo !== 0 && response.config.url.indexOf('/api/me') === -1) {
-            console.log(response);
+            //console.log(response);
             toaster.pop('error', '出错了', response.data.errMsg);
           }
 
@@ -347,7 +356,8 @@
           return response;
         },
         responseError: function (response) {
-
+          console.log(response);
+          toaster.pop('error','出错了', '状态码：'+response.status);
           return response;
         }
       }
@@ -356,31 +366,3 @@
 
 })(window);
 
-//存放全局数据
-(function (window) {
-  window.dataStorage = {};
-
-  dataStorage.user = {
-    data: undefined,
-    init: function () {
-      var data = window.sessionStorage.getItem('ys-user');
-      if (data) {
-        dataStorage.user.data = JSON.parse(data)
-      }
-    },
-    save: function (data) {
-      dataStorage.user.data = data;
-      window.sessionStorage.setItem('ys-user', JSON.stringify(data));
-    },
-    clear: function () {
-      dataStorage.user.data = undefined;
-      window.sessionStorage.removeItem('ys-user');
-    }
-  };
-  
-  dataStorage.init = function () {
-    dataStorage.user.init()
-  };
-
-  window.dataStorage.init();
-})(window);
