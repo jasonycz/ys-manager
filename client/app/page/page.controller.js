@@ -241,7 +241,7 @@
       selectedIndex: 0
     };
 
-    // console.log("vm.form.craft_id"+vm.form.craft_id);
+     console.log("vm.form.craft_id"+vm.form.craft_id);
     // return;
 
     var getcid = function () {
@@ -249,19 +249,19 @@
         .studio
         .getcid()
         .then(function (res) {
-          // if (res.data.errNo === 0) {
-            console.log(res);
-            return;
+            // if (res.data.errNo === 0) {
+             console.log(res);
+             return;
             vm.form.craft_id = res.data.result.craft_id;
-          // }
-          // else {
-          //  toaster.pop('error', '获取雕件id失败', '正在重新获取,错误信息:' + res.data.errMsg);
-
-            // if (res.data.errNo !== 100012) {
-            //   setTimeout(function () {
-            //     getcid();
-            //   }, 200);
             // }
+            // else {
+            //  toaster.pop('error', '获取雕件id失败', '正在重新获取,错误信息:' + res.data.errMsg);
+
+              // if (res.data.errNo !== 100012) {
+              //   setTimeout(function () {
+              //     getcid();
+              //   }, 200);
+              // }
 
           //}
 
@@ -272,7 +272,7 @@
         .studio
         .modifyArticle({
           params: {
-            aid: 0,
+            aid: 0,//  需要修改////////////////////////
             craft_id: vm.form.craft_id
           }
         }).then(function (res) {
@@ -287,7 +287,7 @@
         })
     }else{
       getcid();
-      
+
     }
 
     //基本资料部分
