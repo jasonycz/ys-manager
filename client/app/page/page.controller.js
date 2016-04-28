@@ -157,7 +157,7 @@
       $event.preventDefault();
 
       $http.post('/dataefasdfadsf', vm.form).then(function () {
-        console.log(arguments)
+        // console.log(arguments)
       });
     };
 
@@ -240,24 +240,30 @@
     vm.tabs = {
       selectedIndex: 0
     };
+
+    // console.log("vm.form.craft_id"+vm.form.craft_id);
+    // return;
+
     var getcid = function () {
       api
         .studio
         .getcid()
         .then(function (res) {
-          if (res.data.errNo === 0) {
+          // if (res.data.errNo === 0) {
+            console.log(res);
+            return;
             vm.form.craft_id = res.data.result.craft_id;
-          }
-          else {
-            toaster.pop('error', '获取雕件id失败', '正在重新获取,错误信息:' + res.data.errMsg);
+          // }
+          // else {
+          //  toaster.pop('error', '获取雕件id失败', '正在重新获取,错误信息:' + res.data.errMsg);
 
-            if (res.data.errNo !== 100012) {
-              setTimeout(function () {
-                getcid();
-              }, 200);
-            }
+            // if (res.data.errNo !== 100012) {
+            //   setTimeout(function () {
+            //     getcid();
+            //   }, 200);
+            // }
 
-          }
+          //}
 
         });
     };
@@ -279,10 +285,9 @@
         }, function (err) {
 
         })
-    }
-    else {
-      //获取雕件id
+    }else{
       getcid();
+      
     }
 
     //基本资料部分
@@ -292,8 +297,7 @@
         //1:发布   0:预览
         vm.form.publish = 1;
         msg = '修改成功';
-      }
-      else {
+      }else {
         msg = '添加成功';
       }
 
@@ -305,6 +309,7 @@
 
             vm.tabs.selectedIndex = 1;
             vm.form = {};//reset
+            console.log(res);
           }
         });
 
@@ -413,7 +418,7 @@
 
   //时间轴添加介绍弹框
   function addTxtCtrl($mdDialog, items) {
-    console.log($mdDialog)
+    // console.log($mdDialog)
     var vm = this;
     vm.form = {};
 
@@ -520,7 +525,7 @@
 
     vm.item = items;
 
-    console.log(vm.item, items);
+    // console.log(vm.item, items);
   }
 
   /**
