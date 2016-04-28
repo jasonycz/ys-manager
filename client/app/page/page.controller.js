@@ -78,8 +78,8 @@
             //alert("dsds");
             if (res.data.errNo === 0) {
               // console.log(res.data);
+              vm.showItems('published');
               toaster.pop('success', "删除玉石成功");
-              $state.go('dashboard');
             }
             else {
                // console.log(res.data);
@@ -93,7 +93,7 @@
       
     }
 
-
+// alert('okwwww');
      vm.showItems('published');
     // window.dataStorage.user.save("happy");
   }
@@ -181,7 +181,7 @@
   function authCtrl($state, api, validateReg, toaster, $timeout) {
     var vm = this;
     vm.validate = validateReg;
-    vm.form = {};
+    vm.form = {user:''};
     // alert('ok');
     //登录
     vm.login = function ($event) {
@@ -219,6 +219,7 @@
       })
     };
     vm.getVerifyCode = function (){
+      // console.log(vm.form);return;
       // 定义按钮btn
       var btn = $("#sendVerifyBtn");
            
@@ -263,7 +264,7 @@
         // todo something.....
         if (res.data.errNo === 0) {
           toaster.pop('success', "重置密码成功");
-           console.log(res.data);
+          // console.log(res.data);
           $state.go('page.login');
         }
         else {
