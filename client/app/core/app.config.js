@@ -141,6 +141,15 @@
     };
 
     /**
+     * 用户推出登录
+     * @param data
+     * @returns {*}
+     */
+    api.user.logout = function (data) {
+      return $http.post(baseUrl + '/user/logout', data);
+    };
+
+    /**
      * 修改密码
      * @returns {*}
      */
