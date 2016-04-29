@@ -50,17 +50,18 @@
         });
       }
       else if (type === 'published') {
-        // var data = new Object();
-        // data.studio_id = 36;
         api
           .studio
           .showcraft()
           .then(function (res) {
-            if (res.data.errNo !== 0) {
-              //toaster.pop('error', '数据获取失败', res.data.errMsg)
-            }
-            else {
-              vm.items = res.data.result;
+            // console.log(res.data);
+            if (res.data.errNo == 700011) {
+              vm.items = [];
+              toaster.pop('warning ', '数据获取失败', res.data.errMsg);
+            }else if (res.data.errNo === 0) {
+              vm.items = res.data.result;             
+            }else{
+               toaster.pop('error ', '数据获取错误', res.data.errMsg);
             }
 
           });
@@ -76,10 +77,12 @@
       if(confirm("确定要删除该玉石数据?")){
           api.studio.delcraft(data).then(function (res) {
             //alert("dsds");
+            //console.log(res.data)
             if (res.data.errNo === 0) {
               // console.log(res.data);
-              vm.showItems('published');
+              
               toaster.pop('success', "删除玉石成功");
+              vm.showItems('published');
             }
             else {
                // console.log(res.data);
@@ -94,7 +97,7 @@
     }
 
 // alert('okwwww');
-     vm.showItems('published');
+      vm.showItems('published');
     // window.dataStorage.user.save("happy");
   }
 
