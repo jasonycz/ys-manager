@@ -107,8 +107,8 @@
 
   function api($http) {
 
-    //var baseUrl = 'http://101.201.198.27';
-    var baseUrl = location.protocol + '//' + location.hostname + '/api';
+    var baseUrl = 'http://101.201.198.27';
+    //var baseUrl = location.protocol + '//' + location.hostname + '/api';
     var api = {
       studio: {},
       user: {},
