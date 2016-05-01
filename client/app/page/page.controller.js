@@ -484,7 +484,7 @@
 
     vm.uploadFiles = function ($files) {
       vm.files = $files;
-
+      // console.log(vm.files[0]);
       if (vm.files && vm.files.length) {
         Upload.upload({
           url: api.studio.uploaduyimg(),
