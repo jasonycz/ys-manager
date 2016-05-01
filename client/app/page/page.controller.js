@@ -291,41 +291,78 @@
     vm.timeline = [
       {
         name: '原石',
-        description: '',
-        img: ['images/assets/600_400-1.jpg'],
-        className: 'b-info'
+        descript: '',
+        img: [],
+        // className: 'b-info'
+        
       },
       {
         name: '设计',
-        img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
+        descript: '',
+        img: [],
         className: ''
       },
       {
         name: '粗绘',
-        img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
-        className: 'b-primary'
+        descript: '',
+        img: [],
+        // className: 'b-primary',
       },
       {
         name: '细绘',
-        img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
-        className: 'b-white'
+        descript: '',
+        img: [],
+        // className: 'b-white'
       },
       {
         name: '打磨抛光',
-        img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
-        className: 'b-white'
+        descript: '',
+        img: [],
+         // className: 'b-white'
       },
-      {
-        name: '落款证书',
-        img: ['images/assets/600_400-1.jpg'],
-        className: 'b-white'
-      },
-      {
-        name: '结束（物流）',
-        img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
-        className: 'b-white'
-      }
+      
     ];
+    vm.craft_id = '';
+
+
+   //  vm.timeline = [
+   //    {
+   //      name: '原石',
+   //      description: '',
+   //      img: ['images/assets/600_400-1.jpg'],
+   //      className: 'b-info'
+   //    },
+   //    {
+   //      name: '设计',
+   //      img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
+   //      className: ''
+   //    },
+   //    {
+   //      name: '粗绘',
+   //      img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
+   //      className: 'b-primary'
+   //    },
+   //    {
+   //      name: '细绘',
+   //      img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
+   //      className: 'b-white'
+   //    },
+   //    {
+   //      name: '打磨抛光',
+   //      img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
+   //      className: 'b-white'
+   //    },
+   //    {
+   //      name: '落款证书',
+   //      img: ['images/assets/600_400-1.jpg'],
+   //      className: 'b-white'
+   //    },
+   //    {
+   //      name: '结束（物流）',
+   //      img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
+   //      className: 'b-white'
+   //    }
+   // ];
     vm.form = {
       craft_id: $stateParams.id,
       publish: 0
@@ -341,6 +378,7 @@
         .then(function (res) {
           if (res.data.errNo === 0) {
             vm.form.craft_id = res.data.result.craft_id;
+            console.log(vm.form.craft_id);
           }
           else {
             toaster.pop('error', '获取雕件id失败', '正在重新获取,错误信息:' + res.data.errMsg);
@@ -356,6 +394,7 @@
         });
     };
     if (vm.form.craft_id) {
+      // alert(vm.form.craft_id);return;
       api
         .studio
         .modifyArticle({
@@ -379,6 +418,24 @@
       getcid();
     }
 
+    // // 获取时间轴相关信息
+    // api.studio.modifyTime({
+    //    params: {
+    //     craft_id: vm.form.craft_id
+    //    }
+
+    //   }).then(function(res){
+    //       console.log(res);return;
+    //       // 将新的时间轴信息录入数组当中
+    //       vm.craft_id = vm.form.craft_id;
+    //       vm.timeline = res.data.result.timeLine;
+
+    //   });
+
+
+
+
+
     //基本资料部分
     vm.submit = function () {
       var msg = '';
@@ -390,17 +447,23 @@
       else {
         msg = '添加成功';
       }
-
+      console.log(vm.form.craft_id);
+      console.log(vm.form);
       api.studio
         .upData(vm.form)
         .then(function (res) {
           if (res.data.errNo === 0) {
             toaster.pop('success', '成功', msg);
-
             vm.tabs.selectedIndex = 1;
+
             vm.form = {};//reset
+          }else{
+             alert("vm.submit 出错啦");
           }
-        });
+         },function(res){
+                console.log(res);
+
+         });
 
     };
 
@@ -449,8 +512,18 @@
         // console.log(answer);
         vm.timeline[index].img.push(answer[0]);
         // console.log(vm.timeline[index].img);
+        //           // 更新时间轴
+          //       api.studio.upTimeData({
+          //          params: {
+          //           craft_id: vm.craft_id,
+          //           timeLine: vm.timeline
+          //          }
+          //       }).then(function(res){
+          //           console.log(res);
+          //       },function(res){
+          //           console.log(res);
 
-        //vm.form[index].description = answer;
+          //       });
       }, function (answer) {
           alert('error in vm.upload');
       });
@@ -471,7 +544,8 @@
         }
         //clickOutsideToClose: true
       }).then(function (answer) {
-        vm.form[index].description = answer;
+        // console.log(answer);
+        vm.timeline[index].description = answer.txt;
       }, function () {
 
       });
@@ -531,6 +605,46 @@
     vm.cancel = function () {
       $mdDialog.hide();
     };
+
+
+          // // 获取时间轴相关信息
+          //   api.studio.modifyTime({
+          //      params: {
+          //       craft_id: vm.form.craft_id
+          //      }
+
+          //   }).then(function(res){
+          //       console.log(res);
+          //       // 将新的时间轴信息录入数组当中
+          //       vm.craft_id = vm.form.craft_id;
+          //       vm.timeline = res.data.result.timeLine;
+
+          //       // 新修改的数据
+          //       console.log('新的数据');
+          //       console.log(vm.form);return;
+          //       vm.timeline[0].img = vm.form.img;
+          //       vm.timeline[0].descript = vm.form.description;
+          //       vm.timeline[0].name = vm.form.name;
+          //           // 更新时间轴
+          //       api.studio.upTimeData({
+          //          params: {
+          //           craft_id: vm.craft_id,
+          //           timeLine: vm.timeline
+          //          }
+          //       }).then(function(res){
+          //           console.log(res);
+          //       },function(res){
+          //           console.log(res);
+
+          //       });
+          //       // return;
+
+
+
+
+
+
+
   }
 
   /**
