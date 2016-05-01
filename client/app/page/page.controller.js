@@ -205,11 +205,7 @@
       $event.preventDefault();
 
       $http.post('/dataefasdfadsf', vm.form).then(function () {
-<<<<<<< HEAD
-        // console.log(arguments)
-=======
-        //console.log(arguments)
->>>>>>> c6abfbef52a8ef997135b56c0256462ab2d431d7
+
       });
     };
 
@@ -285,7 +281,7 @@
         // todo something.....
         if (res.data.errNo === 0) {
           toaster.pop('success', "重置密码成功");
-          // console.log(res.data);
+          // console.log(res.datxa);
           $state.go('page.login');
         }
         else {
@@ -393,11 +389,11 @@
         .studio
         .modifyArticle({
           params: {
-<<<<<<< HEAD
-            aid: 0,//  需要修改////////////////////////
-=======
+
+            // aid: 0,//  需要修改////////////////////////
+
             aid: vm.form.aid,
->>>>>>> c6abfbef52a8ef997135b56c0256462ab2d431d7
+
             craft_id: vm.form.craft_id
           }
         }).then(function (res) {
@@ -550,11 +546,8 @@
 
   //时间轴添加介绍弹框
   function addTxtCtrl($mdDialog, items) {
-<<<<<<< HEAD
-    // console.log($mdDialog)
-=======
-    //console.log($mdDialog)
->>>>>>> c6abfbef52a8ef997135b56c0256462ab2d431d7
+
+
     var vm = this;
     vm.form = {};
 
@@ -661,11 +654,6 @@
 
     vm.item = items;
 
-<<<<<<< HEAD
-    // console.log(vm.item, items);
-=======
-    //console.log(vm.item, items);
->>>>>>> c6abfbef52a8ef997135b56c0256462ab2d431d7
   }
 
   /**
