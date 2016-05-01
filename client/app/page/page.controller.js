@@ -95,8 +95,6 @@
 
       
     }
-
-// alert('okwwww');
       vm.showItems('published');
     // window.dataStorage.user.save("happy");
   }
@@ -443,10 +441,20 @@
         parent: angular.element(document.body),
         targetEvent: $event,
         locals: {
-          items: { index: index }
+          items: { index: index },
+
         }
-        //clickOutsideToClose: true
+        //clickOutsideToClose: true  
+      }).then(function (answer) {
+        // console.log(answer);
+        vm.timeline[index].img.push(answer[0]);
+        // console.log(vm.timeline[index].img);
+
+        //vm.form[index].description = answer;
+      }, function (answer) {
+          alert('error in vm.upload');
       });
+            
     };
 
     vm.addDescription = function (index, $event) {
@@ -479,9 +487,11 @@
     vm.form = [];
 
     vm.cancel = function () {
+      $mdDialog.hide();
+    };
+    vm.save = function () {
       $mdDialog.hide(vm.form);
     };
-
     vm.uploadFiles = function ($files) {
       vm.files = $files;
       // console.log(vm.files[0]);
@@ -492,8 +502,9 @@
           sendFieldsAs: 'form'
         }).then(function (response) {
           if (response.data.errNo === 0) {
-            vm.form.push(response.data.result.img_url);
-            //vm.result = response.data;
+             vm.form.push(response.data.result.img_url);
+             //console.log(vm.form);
+             // items.push(response.data.result.img_url);
           }
         }, function (response) {
           if (response.status > 0) {
