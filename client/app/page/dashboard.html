@@ -69,6 +69,7 @@
                   <th>雕件名称</th>
                   <th>状态</th>
                   <th class="color-success">操作</th>
+                  <th class="color-success"   ng-show="!vm.pulishValidation">发布</th>
                 </tr>
               </thead>
               <tbody>
@@ -80,6 +81,11 @@
                   <td>
                     <a ui-sref="page.createJade({craft_id:{{item.craft_id}},aid:{{item.aid}}})">编辑</a>
                     <!--<a ng-click="vm.doAction.publish(item)">发布</a>-->
+                  </td>
+                  <td>
+                    <a ng-click="vm.publish(item.craft_id)" ng-show="item.status===6||item.status===7||item.status===8">发布</a>
+                    <!-- <a ng-click="vm.delcraft(item.craft_id)" >删除</a>  --> 
+
                   </td>
                 </tr>
               </tbody>

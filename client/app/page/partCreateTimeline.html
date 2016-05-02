@@ -119,7 +119,7 @@
                     </md-button>
                   </div>
                   <div class="panel-body pull-in b-t b-light row">
-                    <p ng-bind="item.descript"></p>
+                    <p ng-bind="item.describe"></p>
                     <div class="m-b m-t tl-img-list">
 
                       <a class="col-md-2" ng-repeat="img in item.img track by $index">
@@ -130,10 +130,21 @@
                 </div>
               </div>
             </li>
+              
+           <div class="center-block col-md-4">
+            <md-button
+              type="submit"
+              class="md-raised btn-w-md"
+              ng-click = "vm.upTimeData()">提交
+            </md-button>
+          </div>
 
           </ul>
         </div>
       </div>
+
+      
+
 
     </div>
   </div>

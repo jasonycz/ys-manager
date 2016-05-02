@@ -22,6 +22,7 @@
     var vm = this;
     vm.items = [];
     vm.published = true;
+    vm.pulishValidation  = true;
 
     vm.doAction = {
       publish: function () {
@@ -60,6 +61,7 @@
               }
               vm.items = res.data.result;
               vm.published = false;
+              vm.pulishValidation  = false;
             }
           });
       }
@@ -79,6 +81,7 @@
 
             }
           });
+          vm.pulishValidation  = true;
       }
 
     };
@@ -109,8 +112,43 @@
       
     }
       vm.showItems('published');
-    // window.dataStorage.user.save("happy");
-  }
+    // 发布已经完成软文和时间轴的
+    vm.publish = function(craft_id){
+      // alert('ok');
+        var data = new Object();
+        data.craft_id = craft_id;
+
+        api.studio.publish(data).then(function (res) {
+          //alert("dsds");
+          //console.log(res.data)
+              if (res.data.errNo === 0) {
+                // console.log(res.data);
+                
+                toaster.pop('success', "发布成功");
+                vm.showItems('published');
+              }else if(res.data.errNo === 900010){
+                toaster.pop('warning', "雕件已发布");
+                return;
+              }else if(res.data.errNo === 900011){
+                toaster.pop('error', "雕件id不合法");
+                return;
+              }else if(res.data.errNo === 900012){
+                toaster.pop('error', "未创建软文");
+                return;
+              }else if(res.data.errNo === 900013){
+                toaster.pop('error', "未创建时间轴");
+                return;
+              }
+              else {
+                 // error code
+                toaster.pop('error', "出错了", res.data.errMsg);
+              }
+            },function(res){
+              toaster.pop('error', "发布失败!", res.data.errMsg);
+        })
+       } 
+
+    }
 
   /**
    * 二维码
@@ -309,42 +347,70 @@
       craft_id = $stateParams.craft_id,
       isUpdate = (aid !== undefined && aid !== '') && (craft_id !== undefined && craft_id !== '');
 
+      
+
     vm.timeline = [
-      {
-        name: '原石',
-        descript: '',
+      { 
         img: [],
+        describe: '',
+        name: '原石',
+
         // className: 'b-info'
         
       },
       {
-        name: '设计',
-        descript: '',
         img: [],
-        className: ''
+        describe: '',
+        name: '设计',
+
+
+        // className: ''
       },
       {
-        name: '粗绘',
-        descript: '',
         img: [],
+        describe: '',
+        name: '粗绘',
+        
+        
         // className: 'b-primary',
       },
       {
-        name: '细绘',
-        descript: '',
+        
         img: [],
+        describe: '',
+        name: '细绘',
+        
         // className: 'b-white'
       },
       {
-        name: '打磨抛光',
-        descript: '',
+        
         img: [],
+        describe: '',
+        name: '打磨抛光',
+
          // className: 'b-white'
       },
+      {
+        
+        img: [],
+        describe: '',
+        name: '落款证书',
+       // className: 'b-white'
+      },
+      {
+        
+        img: [],
+        describe: '',
+        name: '结束（物流）',
+        //className: 'b-white'
+      }
       
     ];
     vm.craft_id = '';
-
+    // var timeLineData ={
+    //   timeline: ''
+    // }
+    // timeLineData['timeline'] = vm.timeline;
 
    //  vm.timeline = [
    //    {
@@ -431,11 +497,7 @@
         .studio
         .modifyArticle({
           params: {
-
-            // aid: 0,//  需要修改////////////////////////
-
             aid: vm.form.aid,
-
             craft_id: vm.form.craft_id
           }
         }).then(function (res) {
@@ -460,22 +522,25 @@
 
     }
 
-    // // 获取时间轴相关信息
+    // 获取时间轴相关信息
     api.studio.modifyTime({
        params: {
         craft_id: vm.form.craft_id
        }
 
       }).then(function(res){
-          console.log(res);return;
+          console.log('获取时间轴相关信息');
+          console.log(res);
           // 将新的时间轴信息录入数组当中
           vm.craft_id = vm.form.craft_id;
-          vm.timeline = res.data.result.timeLine;
+          if(res.data.result.timeLine){ //  需要重新写逻辑 这样写不严谨
+             vm.timeline = res.data.result.timeLine;
+             // alert("hello");
+             // console.log( vm.timeline );
+          }
+          
 
       });
-
-
-
 
 
     //基本资料部分
@@ -510,7 +575,7 @@
 
     };
 
-    //打开在线相册
+    // 打开在线相册
     vm.showPhotoAlbum = function ($event) {
 
       $mdDialog.show({
@@ -554,19 +619,7 @@
       }).then(function (answer) {
         // console.log(answer);
         vm.timeline[index].img.push(answer[0]);
-        // console.log(vm.timeline[index].img);
-        //           // 更新时间轴
-          //       api.studio.upTimeData({
-          //          params: {
-          //           craft_id: vm.craft_id,
-          //           timeLine: vm.timeline
-          //          }
-          //       }).then(function(res){
-          //           console.log(res);
-          //       },function(res){
-          //           console.log(res);
 
-          //       });
       }, function (answer) {
           alert('error in vm.upload');
       });
@@ -588,12 +641,46 @@
         //clickOutsideToClose: true
       }).then(function (answer) {
          //console.log(answer);
-        vm.timeline[index].descript = answer.txt;
+        vm.timeline[index].describe = answer.txt;
       }, function () {
 
       });
 
     };
+
+    // 更新时间轴信息
+    vm.upTimeData = function(){
+
+      // console.log(timeLineData); 
+      // console.log(vm.craft_id); 
+      // var data = {
+      //   craft_id: vm.craft_id,
+      //   timeLine: {
+      //     timeline: vm.timeline
+      //   }
+      // };
+      var data = new Object();
+      data.craft_id = vm.craft_id;
+      //data.timeLine =  timeLineData;//vm.timeline; 
+      data.timeLine = vm.timeline; //timeLineData;
+ 
+       console.log(data); 
+       // var data = {
+       //  craft_id: vm.craft_id,
+       //  timeLine:  vm.timeline
+       // }
+
+
+      api.studio.upTimeData(data).then(function(res){
+          console.log(res);
+          toaster.pop('success', '更新时间轴成功');
+      },function(res){
+          // console.log(res);
+          toaster.pop('error', '出错了', res.data.errMsg);
+
+      });
+    }
+
 
   }
 
@@ -611,7 +698,7 @@
     };
     vm.uploadFiles = function ($files) {
       vm.files = $files;
-      // console.log(vm.files[0]);
+        console.log(vm.files[0]);
       if (vm.files && vm.files.length) {
         Upload.upload({
           url: api.studio.uploaduyimg(),
@@ -620,7 +707,7 @@
         }).then(function (response) {
           if (response.data.errNo === 0) {
              vm.form.push(response.data.result.img_url);
-             console.log(vm.form);
+             // console.log(vm.form);
              // items.push(response.data.result.img_url);
           }
         }, function (response) {
@@ -667,7 +754,7 @@
           //       console.log('新的数据');
           //       console.log(vm.form);return;
           //       vm.timeline[0].img = vm.form.img;
-          //       vm.timeline[0].descript = vm.form.description;
+          //       vm.timeline[0].describe = vm.form.description;
           //       vm.timeline[0].name = vm.form.name;
           //           // 更新时间轴
           //       api.studio.upTimeData({

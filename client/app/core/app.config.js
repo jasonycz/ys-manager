@@ -287,6 +287,14 @@
       return $http.get(baseUrl + '/studio/modifyTime', data)
     };
 
+  /**
+     * 雕件发布页面
+     * @param data {craft_id雕件id}
+     * @returns {*}
+     */
+    api.studio.publish = function (data) {
+      return $http.post(baseUrl + '/studio/publish', data)
+    };
     /**
      * 手机端预览雕件
      * @param {int} craft_id 雕件id
