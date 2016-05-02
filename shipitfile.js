@@ -12,7 +12,7 @@ module.exports = shipit => {
   })
 
   const localBuildPath = 'dist/'
-  const deployPath = '/data/apps/ysProject/public/'
+  const deployPath = '/usr/share/nginx/ys-manager'
 
   shipit.task('deploy', () => {
     shipit.local('gulp build')

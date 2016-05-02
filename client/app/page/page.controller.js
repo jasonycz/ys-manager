@@ -21,6 +21,13 @@
   function DashboardCtrl($mdDialog, api, toaster) {
     var vm = this;
     vm.items = [];
+    vm.published = true;
+
+    vm.doAction = {
+      publish: function () {
+        alert('发布文章');
+      }
+    };
 
     vm.showQR = function (item, $event) {
 
@@ -40,14 +47,21 @@
 
       if (type === 'unpublished') {
 
-        api.studio.listnofinish().then(function (res) {
-          if (res.data.errNo !== 0) {
-            //toaster.pop('error', '数据获取失败', res.data.errMsg)
-          }
-          else {
-            vm.items = res.data.result;
-          }
-        });
+        api
+          .studio
+          .listnofinish()
+          .then(function (res) {
+            if (res.data.errNo !== 0) {
+              //toaster.pop('error', '数据获取失败', res.data.errMsg)
+            }
+            else {
+              for (var i = 0, len = res.data.result.length; i < len; i++) {
+                res.data.result[i].statusText = window.data.publishStatus[res.data.result[i].status];
+              }
+              vm.items = res.data.result;
+              vm.published = false;
+            }
+          });
       }
       else if (type === 'published') {
         api
@@ -62,10 +76,9 @@
               vm.items = res.data.result;             
             }else{
                toaster.pop('error ', '数据获取错误', res.data.errMsg);
+
             }
-
           });
-
       }
 
     };
@@ -145,11 +158,15 @@
         // console.log(res.data);
       }
     });
-    vm.validate = validateReg;
+    vm.validate = validateReg; 
+    // vm.form = {
+    //   phone: '15212345698',
+    //   passwd: '111111'
+    // }; 
     // vm.form = {
     //   phone: '13121902385',
     //   passwd: '1234567'
-    // };
+    // }; 
     //登录
     vm.login = function () {
       // alert('login');
@@ -189,7 +206,7 @@
       $event.preventDefault();
 
       $http.post('/dataefasdfadsf', vm.form).then(function () {
-        //console.log(arguments)
+
       });
     };
 
@@ -265,7 +282,7 @@
         // todo something.....
         if (res.data.errNo === 0) {
           toaster.pop('success', "重置密码成功");
-          // console.log(res.data);
+          // console.log(res.datxa);
           $state.go('page.login');
         }
         else {
@@ -287,7 +304,11 @@
    */
   function CreateJadeCtrl($stateParams, $mdDialog, api, toaster) {
 
-    var vm = this;
+    var vm = this,
+      aid = $stateParams.aid,
+      craft_id = $stateParams.craft_id,
+      isUpdate = (aid !== undefined && aid !== '') && (craft_id !== undefined && craft_id !== '');
+
     vm.timeline = [
       {
         name: '原石',
@@ -364,47 +385,69 @@
    //    }
    // ];
     vm.form = {
-      craft_id: $stateParams.id,
-      publish: 0
+      craft_id: $stateParams.craft_id,
+      publish: 0,
+      imgurl: 'http://hdn.xnimg.cn/photos/hdn321/20130612/2235/h_main_NNN4_e80a000007df111a.jpg'
     };
-
+    if (isUpdate) {
+      vm.form.aid = aid;
+    }
     vm.tabs = {
       selectedIndex: 0
     };
-    var getcid = function () {
-      api
-        .studio
-        .getcid()
-        .then(function (res) {
-          if (res.data.errNo === 0) {
-            vm.form.craft_id = res.data.result.craft_id;
-            console.log(vm.form.craft_id);
-          }
-          else {
-            toaster.pop('error', '获取雕件id失败', '正在重新获取,错误信息:' + res.data.errMsg);
 
-            if (res.data.errNo !== 100012) {
-              setTimeout(function () {
-                getcid();
-              }, 200);
+     console.log("vm.form.craft_id"+vm.form.craft_id);
+    // return;
+
+     var getcid = function () {
+        api
+          .studio
+          .getcid()
+          .then(function (res) {
+            if (res.data.errNo === 0) {
+              vm.form.craft_id = res.data.result.craft_id;
+              console.log(vm.form.craft_id);
+            }
+            else {
+              toaster.pop('error', '获取雕件id失败', '正在重新获取,错误信息:' + res.data.errMsg);
+
+              if (res.data.errNo !== 100012) {
+                setTimeout(function () {
+                  getcid();
+                }, 200);
+              }
+
             }
 
-          }
-
-        });
-    };
-    if (vm.form.craft_id) {
-      // alert(vm.form.craft_id);return;
+          });
+      };
+// <<<<<<< HEAD
+//     if (vm.form.craft_id) {
+//       // alert(vm.form.craft_id);return;
+// =======
+    if (isUpdate) {
+// >>>>>>> develop
       api
         .studio
         .modifyArticle({
           params: {
-            aid: 0,
+
+            // aid: 0,//  需要修改////////////////////////
+
+            aid: vm.form.aid,
+
             craft_id: vm.form.craft_id
           }
         }).then(function (res) {
           if (res.data.errNo === 0) {
-            vm.form = res.data.result;
+            var data = res.data.result;
+            if (typeof data.createDate === 'string' && data.createDate.length >= 10) {
+              data.createDate = new Date(data.createDate);
+            }
+            else {
+              delete data.createDate;
+            }
+            vm.form = data;
           }
           else {
             toaster.pop('error', '出错了', res.data.errMsg);
@@ -412,25 +455,24 @@
         }, function (err) {
 
         })
-    }
-    else {
-      //获取雕件id
+    }else{
       getcid();
+
     }
 
     // // 获取时间轴相关信息
-    // api.studio.modifyTime({
-    //    params: {
-    //     craft_id: vm.form.craft_id
-    //    }
+    api.studio.modifyTime({
+       params: {
+        craft_id: vm.form.craft_id
+       }
 
-    //   }).then(function(res){
-    //       console.log(res);return;
-    //       // 将新的时间轴信息录入数组当中
-    //       vm.craft_id = vm.form.craft_id;
-    //       vm.timeline = res.data.result.timeLine;
+      }).then(function(res){
+          console.log(res);return;
+          // 将新的时间轴信息录入数组当中
+          vm.craft_id = vm.form.craft_id;
+          vm.timeline = res.data.result.timeLine;
 
-    //   });
+      });
 
 
 
@@ -439,12 +481,11 @@
     //基本资料部分
     vm.submit = function () {
       var msg = '';
-      if (vm.form.Aid) {//修改
+      if (isUpdate) {//修改
         //1:发布   0:预览
         vm.form.publish = 1;
         msg = '修改成功';
-      }
-      else {
+      }else {
         msg = '添加成功';
       }
       console.log(vm.form.craft_id);
@@ -457,8 +498,10 @@
             vm.tabs.selectedIndex = 1;
 
             vm.form = {};//reset
+
           }else{
              alert("vm.submit 出错啦");
+
           }
          },function(res){
                 console.log(res);
@@ -544,8 +587,8 @@
         }
         //clickOutsideToClose: true
       }).then(function (answer) {
-        // console.log(answer);
-        vm.timeline[index].description = answer.txt;
+         //console.log(answer);
+        vm.timeline[index].descript = answer.txt;
       }, function () {
 
       });
@@ -577,7 +620,7 @@
         }).then(function (response) {
           if (response.data.errNo === 0) {
              vm.form.push(response.data.result.img_url);
-             //console.log(vm.form);
+             console.log(vm.form);
              // items.push(response.data.result.img_url);
           }
         }, function (response) {
@@ -594,7 +637,8 @@
 
   //时间轴添加介绍弹框
   function addTxtCtrl($mdDialog, items) {
-    //console.log($mdDialog)
+
+
     var vm = this;
     vm.form = {};
 
@@ -741,7 +785,6 @@
 
     vm.item = items;
 
-    //console.log(vm.item, items);
   }
 
   /**

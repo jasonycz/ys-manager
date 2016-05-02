@@ -1,5 +1,6 @@
 <!doctype html>
 <html ng-app="app" id="ng-app">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -11,8 +12,7 @@
   <!-- Needs images, font... therefore can not be part of main.css -->
   <link rel="stylesheet" href="styles/loader.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet"
-        href="bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
+  <link rel="stylesheet" href="bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
   <!-- end Needs images -->
 
   <!-- build:css({.tmp,client}) styles/main.css -->
@@ -24,11 +24,8 @@
   <!-- endbuild -->
 
 </head>
-<body ng-controller="AppCtrl"
-      id="app"
-      class="app"
-      data-custom-page
-      data-ng-class="{'layout-boxed': main.layout === 'boxed','nav-collapsed-min': main.isMenuCollapsed}">
+
+<body ng-controller="AppCtrl" id="app" class="app" data-custom-page data-ng-class="{'layout-boxed': main.layout === 'boxed','nav-collapsed-min': main.isMenuCollapsed}">
   <!--[if lt IE 9]>
   <div class="lt-ie9-bg">
     <p class="browsehappy">You are using an <strong>outdated</strong> browser.</p>
@@ -38,22 +35,14 @@
 
   <div id="loader-container" ng-class="{'hide':!app.loading.hide}"></div>
 
-  <header data-ng-include="'app/layout/header.html'"
-          id="header"
-          class="header-container {{main.skin}}"
-          data-ng-class="{ 'header-fixed': main.fixedHeader}"></header>
+  <header data-ng-include="'app/layout/header.html'" id="header" class="header-container {{main.skin}}" data-ng-class="{ 'header-fixed': main.fixedHeader}"></header>
 
-  <div class="main-container"
-       data-ng-class="{ 'app-nav-horizontal': main.menu === 'horizontal' }">
-    <aside data-ng-include=" 'app/layout/sidebar.html' "
-           id="nav-container"
-           class="nav-container {{main.skin}} nav-{{main.menu}}"
-           data-ng-class="{ 'nav-fixed': main.fixedSidebar}">
+  <div class="main-container" data-ng-class="{ 'app-nav-horizontal': main.menu === 'horizontal' }">
+    <aside data-ng-include=" 'app/layout/sidebar.html' " id="nav-container" class="nav-container {{main.skin}} nav-{{main.menu}}" data-ng-class="{ 'nav-fixed': main.fixedSidebar}">
     </aside>
 
     <div id="content" class="content-container">
-      <section data-ui-view
-               class="view-container {{main.pageTransition.class}}"></section>
+      <section data-ui-view class="view-container {{main.pageTransition.class}}"></section>
     </div>
   </div>
   <toaster-container></toaster-container>
@@ -85,8 +74,7 @@
   <script src="bower_components/textAngular/dist/textAngular-sanitize.min.js"></script>
 
   <script src="bower_components/angular-translate/angular-translate.min.js"></script>
-  <script
-    src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+  <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
 
   <script src="bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
   <script src="bower_components/qrcode.js/qrcode.js"></script>
@@ -106,6 +94,7 @@
   <script src="app/ui/ui.module.js"></script>
   <script src="app/core/app.config.js"></script>
   <script src="app/core/app.controller.js"></script>
+  <script src="app/core/app.data.js"></script>
   <script src="app/core/config.route.js"></script>
   <script src="app/core/i18n.js"></script>
   <script src="app/form/form.controller.js"></script>
@@ -127,4 +116,6 @@
   <!-- build:js scripts/app.js -->
 
 </body>
+
 </html>
+
