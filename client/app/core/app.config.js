@@ -357,7 +357,6 @@
           }
 
           if (response.data.errNo === 100012) {
-
             window.location.href = '/#/page/login';
           }
 
