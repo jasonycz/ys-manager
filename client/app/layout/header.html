@@ -30,7 +30,7 @@
                 <a href="javascript:;" class="dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled" md-button aria-label="profile">
                     <img src="images/g1.jpg" alt="" class="img-circle img30_30">
                     <span class="hidden-xs">
-                        <span data-translate="XXXX"></span>
+                        <span data-translate="用户名"></span>
                     </span>
                 </a>
                 <ul class="with-arrow pull-right dropdown-menu-scaleIn" uib-dropdown-menu>
@@ -39,10 +39,11 @@
                             <i class="zmdi zmdi-forward"></i>
                             <span data-translate="修改密码"></span>
                         </a>
-                        <a ng-click="vm.logout()">
+                        <a ng-click="vm.logout()" style="cursor:pointer">
                             <i class="zmdi zmdi-forward"></i>
                             <span data-translate="退出登录"></span>
                         </a>
+
                     </li>
                 </ul>
             </li>
