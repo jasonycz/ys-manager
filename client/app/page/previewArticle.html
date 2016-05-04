@@ -1,17 +1,23 @@
 <div class="page-container">
     <div class="page preview-article">
 
-      <h2 class="md-title" ng-bind="vm.article.craft_name"></h2>
+      <h2>标题:</h2><h2 class="md-title" ng-bind="vm.article.craft_name"></h2>
       <p class="remark">
+        <h3>作者</h3>
+         <span ng-bind="vm.article.author"></span>
+        <h3>创建时间</h3>
         <span ng-bind="vm.article.created_time"></span>
+        <h3>雕件类型</h3>
         <span class="goods-type" ng-bind="vm.article.type"></span>
+        <h3>雕件尺寸</h3>
         <span ng-bind="vm.article.measurement"></span>
       </p>
 
       <div class="md-padding panel-body md-body-1 b-t">
-        
+      <h3>雕件文章</h3>
         <div ng-bind-html="vm.article.content"></div>
-        <img ng-src="{{vm.article.img[0].img_url}}" alt="" class="center-block">
+      <h3>雕件图片</h3>
+        <img ng-src="{{vm.article.img_url}}" alt="" class="center-block">
       </div>
 
     </div>
