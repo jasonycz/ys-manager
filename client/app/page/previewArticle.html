@@ -86,13 +86,12 @@
 
         </div>
 
-<md-input-container class="md-block">
-            <label>玉石详细描述</label>
-            <div text-angular 
-              ng-model="vm.article.content"
-              ng-readonly="true"
+
+            <div>玉石详细描述</div>
+            <div 
+              ng-bind-html="vm.article.content"
             ></div>
-          </md-input-container>
+         
 
   <!-- <md-content layout="column" flex="20" class="md-padding">
     <div class="list-group no-margin">
