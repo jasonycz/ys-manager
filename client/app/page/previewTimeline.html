@@ -1,17 +1,17 @@
 <ul class="timeline">
-  <li class="tl-item tl-left" ng-repeat="item in vm.items track by $index">
+  <li class="tl-item tl-left" ng-repeat="item in vm.timeLine track by $index">
     <div class="tl-wrap {{::item.css}}">
-      <span class="tl-date" ng-bind="::item.name"></span>
+      <span class="tl-date" ng-bind="::item.process_name"></span>
       <div class="tl-content panel padder b-a block">
         <span class="arrow left pull-up hidden-left"></span>
         <span class="arrow right pull-up visible-left"></span>
         <!--<div class="text-lt m-b-sm"></div>-->
         <div class="panel-body pull-in b-light row">
-          <p ng-bind="item.introduce"></p>
+          <p ng-bind="item.describe"></p>
 
           <div class="m-b m-t tl-img-list">
-            <a class="col-md-2" ng-repeat="photo in item.photos track by $index">
-              <img ng-src="{{::photo}}"
+            <a class="col-md-2" ng-repeat="photo in item.img[0] track by $index">
+              <img ng-src="{{::photo.img_url}}"
                    ng-click="vm.showBigImg(photo,$event)"
                    alt="...">
             </a>

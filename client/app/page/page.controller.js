@@ -825,10 +825,11 @@
       .showonecraft({
         params: {
           craft_id: $stateParams.id,
-          type: 1 //时间轴
+          type: 1 // 文章介绍
         }
       }).then(function (res) {
-        vm.timeLine = res.data.result;
+        vm.article = res.data.result[0];
+        console.log(res);
       });
 
     api
@@ -836,10 +837,12 @@
       .showonecraft({
         params: {
           craft_id: $stateParams.id,
-          type: 2 //时间轴
+          type: 2 // 时间轴
         }
       }).then(function (res) {
-        vm.article = res.data.result[0];
+        vm.timeLine = res.data.result;
+        console.log('timeLine');
+        console.log(vm.timeLine);
       });
     //显示大图片
     vm.showBigImg = function (imgUrl, $event) {
