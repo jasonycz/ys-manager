@@ -829,7 +829,7 @@
         }
       }).then(function (res) {
         vm.article = res.data.result[0];
-        //console.log(res);
+        console.log(res);
       });
 
     api
