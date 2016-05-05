@@ -1,22 +1,107 @@
-<div class="page-container">
-    <div class="page preview-article">
 
-      <h2 class="md-title" ng-bind="vm.article.craft_name"></h2>
-      <p class="remark">
-        <span ng-bind="vm.article.created_time"></span>
-        <span class="goods-type" ng-bind="vm.article.type"></span>
-        <span ng-bind="vm.article.measurement"></span>
-      </p>
+<div layout="row" class="page-partCreateArticle">
 
-      <div class="md-padding panel-body md-body-1 b-t">
-        
-        <div ng-bind-html="vm.article.content"></div>
-        <img ng-src="{{vm.article.img[0].img_url}}" alt="" class="center-block">
-      </div>
+  <md-content layout="column" flex="20" class="md-padding">
+    <a class="list-media-item">
+       <img ng-src="{{vm.article.img_url}}" alt="" class="center-block">
+      <div class="media-item-title">雕刻图片</div>
+    </a>
+  </md-content>
 
+  <div class="md-inline-form" layout-padding=""
+       flex="60"
+       layout="column">
+        <md-input-container  class="md-block">
+          <label>标题</label>
+
+          <input
+            type="text"
+            ng-model="vm.article.craft_name"
+            ng-readonly="true"
+            >
+        </md-input-container>
+
+        <md-input-container
+          class="md-block"
+        >
+          <label>作者</label>
+
+          <input
+            type="text"
+            ng-model="vm.article.author"
+            ng-readonly="true"
+            >
+        </md-input-container>
+
+        <md-input-container
+          class="md-block"
+        >
+          <label>创建时间</label>
+
+          <input
+            type="text"
+            ng-model="vm.article.created_time"
+            ng-readonly="true"
+            >
+        </md-input-container>
+
+        <div layout-gt-sm="row">
+
+          <md-input-container
+            class="md-block">
+
+            <label>玉石类型</label>
+            <input
+             type="text"
+            ng-model="vm.article.type"
+            ng-readonly="true">
+          </md-input-container>
+        </div>
+
+        <div layout-gt-sm="row">
+
+          <md-input-container
+            class="md-block"
+>
+            <label>玉石名称</label>
+
+            <input
+              type="text"
+             ng-model="vm.article.craft_name"
+            ng-readonly="true"
+              >
+          </md-input-container>
+
+          <div flex="5" hide-xs hide-sm></div>
+
+          <md-input-container
+            class="md-block">
+            <label>玉石尺寸</label>
+            <input
+              type="text"
+             ng-model="vm.article.measurement"
+            ng-readonly="true"
+              >
+          </md-input-container>
+
+        </div>
+
+
+            <div>玉石详细描述</div>
+            <div 
+              ng-bind-html="vm.article.content"
+            ></div>
+         
+
+  <!-- <md-content layout="column" flex="20" class="md-padding">
+    <div class="list-group no-margin">
+      <a class="list-group-item" ng-click="vm.showPhotoAlbum($event)"><i class="zmdi zmdi-image"></i> 图片 </a>
+      <!--<a href="javascript:;" class="list-group-item"><i class="zmdi zmdi-videocam"></i> 视频 </a>
     </div>
+  </md-content> -->
 
-</div>
+
+</div> 
 
 
 
