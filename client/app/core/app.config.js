@@ -108,8 +108,8 @@
   function api($http) {
 
 
-   var baseUrl = 'http://web.bellwebwork.com/';
-  //  var baseUrl = 'http://101.201.198.27';
+    var baseUrl = 'http://web.bellwebwork.com/';
+    //  var baseUrl = 'http://101.201.198.27';
     //var baseUrl = location.protocol + '//' + location.hostname + '/api';
     var api = {
       studio: {},
@@ -289,11 +289,11 @@
       return $http.get(baseUrl + '/studio/modifyTime', data)
     };
 
-  /**
-     * 雕件发布页面
-     * @param data {craft_id雕件id}
-     * @returns {*}
-     */
+    /**
+       * 雕件发布页面
+       * @param data {craft_id雕件id}
+       * @returns {*}
+       */
     api.studio.publish = function (data) {
       return $http.post(baseUrl + '/studio/publish', data)
     };
@@ -366,7 +366,7 @@
         },
         responseError: function (response) {
           console.log(response);
-          toaster.pop('error','出错了', '状态码：'+response.status);
+          toaster.pop('error', '出错了', '状态码：' + response.status);
           return response;
         }
       }
