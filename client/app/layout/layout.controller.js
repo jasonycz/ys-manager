@@ -11,12 +11,14 @@
   function layoutHeaderCtrl($state, api, toaster) {
 
     var vm = this;
-    if(window.dataStorage.user&&window.dataStorage.user.data){
+    if(window.dataStorage.user&&(window.dataStorage.user.data!= undefined)){
       vm.loginUser=window.dataStorage.user.data.user_name;
     }
 
     //注销操作
     vm.logout = function () {
+      // 在本地注销用户数据
+      window.dataStorage.user.clear();//data 变为 undefined
 
       api.user
         .logout()

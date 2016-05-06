@@ -3,7 +3,7 @@
 
   angular
     .module('app.page')
-    .controller('DashboardCtrl', ['$mdDialog', 'api', 'toaster', DashboardCtrl])
+    .controller('DashboardCtrl', ['$mdDialog', 'api', 'toaster','$state', DashboardCtrl])
     .controller('QRcodeCtrl', ['$mdDialog', 'items', QRcodeCtrl])
     .controller('invoiceCtrl', ['$scope', '$window', invoiceCtrl])
     .controller('AuthCtrl', ['$state', 'api','validateReg', 'toaster','$timeout', authCtrl])
@@ -18,7 +18,7 @@
     ;
 
   //面板
-  function DashboardCtrl($mdDialog, api, toaster) {
+  function DashboardCtrl($mdDialog, api, toaster,$state) {
     var vm = this;
     vm.items = [];
     vm.published = true;
@@ -65,7 +65,7 @@
             }
           });
       }
-      else if (type === 'published') {
+      else if (type === 'published' && window.dataStorage.user && (window.dataStorage.user.data !== undefined )) {
         api
           .studio
           .showcraft()
@@ -82,6 +82,9 @@
             }
           });
           vm.pulishValidation  = true;
+      }else{
+        toaster.pop('error','请先登录!');
+        $state.go('page.login');
       }
 
     };
@@ -267,9 +270,9 @@
           toaster.pop('success', "重置密码成功");
           $state.go('dashboard');
         }
-        else {
-          toaster.pop('error', "出错了", res.data.errMsg);
-        }
+        // else {
+        //   toaster.pop('error', "出错了", res.data.errMsg);
+        // }
       },function(res){
         toaster.pop('error', "重置密码失败!", res.data.errMsg);
       })
@@ -462,7 +465,7 @@
       selectedIndex: 0
     };
 
-     console.log("vm.form.craft_id"+vm.form.craft_id);
+    
     // return;
 
      var getcid = function () {
@@ -521,7 +524,7 @@
       getcid();
 
     }
-
+ console.log("vm.form.craft_id"+vm.form.craft_id);
     // 获取时间轴相关信息
     api.studio.modifyTime({
        params: {
