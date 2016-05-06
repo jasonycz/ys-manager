@@ -850,21 +850,28 @@
     vm.selectItem = [];
     vm.items = [
     
-      { id: 1, url: 'images/assets/600_400-1.jpg' },
-      { id: 1, url: 'images/assets/600_400-2.jpg' },
-      { id: 1, url: 'images/assets/600_400-3.jpg' },
-      { id: 1, url: 'images/assets/600_400-4.jpg' },
-      { id: 1, url: 'images/assets/600_400-5.jpg' },
-      { id: 1, url: 'images/assets/600_400-1.jpg' },
-      { id: 1, url: 'images/assets/600_400-2.jpg' },
-      { id: 1, url: 'images/assets/600_400-3.jpg' },
-      { id: 1, url: 'images/assets/600_400-4.jpg' },
-      { id: 1, url: 'images/assets/600_400-6.jpg' }
+      // { id: 1, url: 'images/assets/600_400-1.jpg' },
+      // { id: 1, url: 'images/assets/600_400-2.jpg' },
+      // { id: 1, url: 'images/assets/600_400-3.jpg' },
+      // { id: 1, url: 'images/assets/600_400-4.jpg' },
+      // { id: 1, url: 'images/assets/600_400-5.jpg' },
+      // { id: 1, url: 'images/assets/600_400-1.jpg' },
+      // { id: 1, url: 'images/assets/600_400-2.jpg' },
+      // { id: 1, url: 'images/assets/600_400-3.jpg' },
+      // { id: 1, url: 'images/assets/600_400-4.jpg' },
+      // { id: 1, url: 'images/assets/600_400-6.jpg' }
     ];
-    console.log(vm.items);
+    // console.log(vm.items);
     api.studio.allimges().then(function(res){
-      if(res.data.errNo === 0){console.log(res.data.result);
-        vm.items.url = res.data.result[0];console.log(vm.itmes.url);
+      if(res.data.errNo === 0){
+        // for(var i=0;i<res.data.result.length;i++){
+        //   // vm.items[i]['url'] = res.data.result[i];
+        // }
+
+        vm.items = res.data.result[0];
+        // console.log(res.data.result);
+        // console.log(vm.items);
+        // return;
       }
       
     })
