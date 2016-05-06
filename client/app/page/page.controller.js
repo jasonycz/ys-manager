@@ -3,7 +3,7 @@
 
   angular
     .module('app.page')
-    .controller('DashboardCtrl', ['$mdDialog', 'api', 'toaster', DashboardCtrl])
+    .controller('DashboardCtrl', ['$mdDialog', 'api', 'toaster','$state', DashboardCtrl])
     .controller('QRcodeCtrl', ['$mdDialog', 'items', QRcodeCtrl])
     .controller('invoiceCtrl', ['$scope', '$window', invoiceCtrl])
     .controller('AuthCtrl', ['$state', 'api','validateReg', 'toaster','$timeout', authCtrl])
@@ -11,14 +11,14 @@
     .controller('ProfileCtrl', ['$scope', '$state', ProfileCtrl])
     .controller('uploadCtrl', ['$timeout', '$mdDialog', 'items', 'Upload', 'api', 'toaster', uploadCtrl]) //时间轴添加照片弹框
     .controller('addTxtCtrl', ['$mdDialog', 'items', addTxtCtrl]) //时间轴添加介绍弹框
-    .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', 'api', 'toaster', CreateJadeCtrl])
+    .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', 'api', 'toaster','$state', CreateJadeCtrl])
     .controller('GoodDetailsJadeCtrl', ['$stateParams', 'api', '$mdDialog', GoodDetailsJadeCtrl])
     .controller('showBigImgCtrl', ['$mdDialog', 'items', showBigImgCtrl]) //显示大图
     .controller('photoAlbumCtrl', ['$mdDialog', 'items', photoAlbumCtrl]) //在线相册
     ;
 
   //面板
-  function DashboardCtrl($mdDialog, api, toaster) {
+  function DashboardCtrl($mdDialog, api, toaster,$state) {
     var vm = this;
     vm.items = [];
     vm.published = true;
@@ -65,7 +65,7 @@
             }
           });
       }
-      else if (type === 'published') {
+      else if (type === 'published' && window.dataStorage.user && (window.dataStorage.user.data !== undefined )) {
         api
           .studio
           .showcraft()
@@ -73,15 +73,18 @@
             // console.log(res.data);
             if (res.data.errNo == 700011) {
               vm.items = [];
-              toaster.pop('warning ', '数据获取失败', res.data.errMsg);
+              // toaster.pop('warning ', '数据获取失败', res.data.errMsg);
             }else if (res.data.errNo === 0) {
               vm.items = res.data.result;             
             }else{
-               toaster.pop('error ', '数据获取错误', res.data.errMsg);
+               // toaster.pop('error ', '数据获取错误', res.data.errMsg);
 
             }
           });
           vm.pulishValidation  = true;
+      }else{
+        toaster.pop('error','请先登录!');
+        $state.go('page.login');
       }
 
     };
@@ -102,10 +105,10 @@
             }
             else {
                // console.log(res.data);
-              toaster.pop('error', "出错了", res.data.errMsg);
+              // toaster.pop('error', "出错了", res.data.errMsg);
             }
           },function(res){
-            toaster.pop('error', "删除玉石失败!", res.data.errMsg);
+            // toaster.pop('error', "删除玉石失败!", res.data.errMsg);
           })
       }
 
@@ -141,10 +144,10 @@
               }
               else {
                  // error code
-                toaster.pop('error', "出错了", res.data.errMsg);
+                // toaster.pop('error', "出错了", res.data.errMsg);
               }
             },function(res){
-              toaster.pop('error', "发布失败!", res.data.errMsg);
+              // toaster.pop('error', "发布失败!", res.data.errMsg);
         })
        } 
 
@@ -220,7 +223,7 @@
           $state.go('dashboard');
         }
         else {
-          toaster.pop('error', "出错了", res.data.errMsg);
+          // toaster.pop('error', "出错了", res.data.errMsg);
         }
 
       });
@@ -267,11 +270,11 @@
           toaster.pop('success', "重置密码成功");
           $state.go('dashboard');
         }
-        else {
-          toaster.pop('error', "出错了", res.data.errMsg);
-        }
+        // else {
+        //   toaster.pop('error', "出错了", res.data.errMsg);
+        // }
       },function(res){
-        toaster.pop('error', "重置密码失败!", res.data.errMsg);
+        // toaster.pop('error', "重置密码失败!", res.data.errMsg);
       })
     };
     vm.getVerifyCode = function (){
@@ -324,10 +327,10 @@
           $state.go('page.login');
         }
         else {
-          toaster.pop('error', "出错了 forgotPwd", res.data.errMsg);
+          // toaster.pop('error', "出错了 forgotPwd", res.data.errMsg);
         }
       },function(res){
-        toaster.pop('error', "重置密码失败!", res.data.errMsg);
+        // toaster.pop('error', "重置密码失败!", res.data.errMsg);
       })
     };
     
@@ -340,7 +343,7 @@
    * @param $log
    * @constructor
    */
-  function CreateJadeCtrl($stateParams, $mdDialog, api, toaster) {
+  function CreateJadeCtrl($stateParams, $mdDialog, api, toaster, $state) {
 
     var vm = this,
       aid = $stateParams.aid,
@@ -354,25 +357,22 @@
         img: [],
         describe: '',
         name: '原石',
-
-        // className: 'b-info'
+      
+       className: 'b-info'
         
       },
       {
         img: [],
         describe: '',
         name: '设计',
-
-
-        // className: ''
+        className: ''
       },
       {
         img: [],
         describe: '',
         name: '粗绘',
         
-        
-        // className: 'b-primary',
+        className: 'b-primary',
       },
       {
         
@@ -380,76 +380,33 @@
         describe: '',
         name: '细绘',
         
-        // className: 'b-white'
+       className: 'b-white'
       },
       {
         
         img: [],
         describe: '',
         name: '打磨抛光',
-
-         // className: 'b-white'
+        className: 'b-white'
       },
       {
         
         img: [],
         describe: '',
         name: '落款证书',
-       // className: 'b-white'
+        className: 'b-white'
       },
       {
         
         img: [],
         describe: '',
         name: '结束（物流）',
-        //className: 'b-white'
+        className: 'b-white'
       }
       
     ];
-    vm.craft_id = '';
-    // var timeLineData ={
-    //   timeline: ''
-    // }
-    // timeLineData['timeline'] = vm.timeline;
+    // vm.craft_id = '';
 
-   //  vm.timeline = [
-   //    {
-   //      name: '原石',
-   //      description: '',
-   //      img: ['images/assets/600_400-1.jpg'],
-   //      className: 'b-info'
-   //    },
-   //    {
-   //      name: '设计',
-   //      img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
-   //      className: ''
-   //    },
-   //    {
-   //      name: '粗绘',
-   //      img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
-   //      className: 'b-primary'
-   //    },
-   //    {
-   //      name: '细绘',
-   //      img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
-   //      className: 'b-white'
-   //    },
-   //    {
-   //      name: '打磨抛光',
-   //      img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
-   //      className: 'b-white'
-   //    },
-   //    {
-   //      name: '落款证书',
-   //      img: ['images/assets/600_400-1.jpg'],
-   //      className: 'b-white'
-   //    },
-   //    {
-   //      name: '结束（物流）',
-   //      img: ['images/assets/600_400-1.jpg', 'images/assets/600_400-1.jpg'],
-   //      className: 'b-white'
-   //    }
-   // ];
     vm.form = {
       craft_id: $stateParams.craft_id,
       publish: 0,
@@ -462,7 +419,7 @@
       selectedIndex: 0
     };
 
-     console.log("vm.form.craft_id"+vm.form.craft_id);
+    
     // return;
 
      var getcid = function () {
@@ -471,7 +428,10 @@
           .getcid()
           .then(function (res) {
             if (res.data.errNo === 0) {
+              console.log('res.data.result');
+              console.log(res);
               vm.form.craft_id = res.data.result.craft_id;
+              console.log('vm.form.craft_id in getcid');
               console.log(vm.form.craft_id);
             }
             else {
@@ -487,12 +447,9 @@
 
           });
       };
-// <<<<<<< HEAD
-//     if (vm.form.craft_id) {
-//       // alert(vm.form.craft_id);return;
-// =======
+
     if (isUpdate) {
-// >>>>>>> develop
+      console.log('isUpdate');
       api
         .studio
         .modifyArticle({
@@ -512,16 +469,17 @@
             vm.form = data;
           }
           else {
-            toaster.pop('error', '出错了', res.data.errMsg);
+            // toaster.pop('error', '出错了', res.data.errMsg);
           }
         }, function (err) {
 
         })
     }else{
       getcid();
+      console.log('getcid');
 
     }
-
+    // console.log("vm.form.craft_id"+vm.form.craft_id);
     // 获取时间轴相关信息
     api.studio.modifyTime({
        params: {
@@ -532,11 +490,10 @@
           console.log('获取时间轴相关信息');
           console.log(res);
           // 将新的时间轴信息录入数组当中
-          vm.craft_id = vm.form.craft_id;
+          // vm.craft_id = vm.form.craft_id;
           if(res.data.result.timeLine){ //  需要重新写逻辑 这样写不严谨
              vm.timeline = res.data.result.timeLine;
-             // alert("hello");
-             // console.log( vm.timeline );
+             
           }
           
 
@@ -562,7 +519,7 @@
             toaster.pop('success', '成功', msg);
             vm.tabs.selectedIndex = 1;
 
-            vm.form = {};//reset
+            // vm.form = {};//reset  不放在这  change by ycz 因为timeline还需要用到craft_id
 
           }else{
              alert("vm.submit 出错啦");
@@ -592,6 +549,9 @@
         //选中了
         if (angular.isArray(items)) {
           alert('选中了' + items.length + '个');
+          alert('暂时只用选中的第一个，后台现在也只用一个，如果没有就默认给一个');
+          console.log(items);
+          vm.form.imgurl = items[0].url;
         }
 
       }, function () {
@@ -660,7 +620,7 @@
       //   }
       // };
       var data = new Object();
-      data.craft_id = vm.craft_id;
+      data.craft_id = vm.form.craft_id;
       //data.timeLine =  timeLineData;//vm.timeline; 
       data.timeLine = vm.timeline; //timeLineData;
  
@@ -673,10 +633,13 @@
 
       api.studio.upTimeData(data).then(function(res){
           console.log(res);
-          toaster.pop('success', '更新时间轴成功');
+          if(res.data.errNo === 0){
+            toaster.pop('success', '更新时间轴成功');
+            $state.go('dashboard');
+          }
       },function(res){
           // console.log(res);
-          toaster.pop('error', '出错了', res.data.errMsg);
+          // toaster.pop('error', '出错了', res.data.errMsg);
 
       });
     }
