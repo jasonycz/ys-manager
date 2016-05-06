@@ -73,11 +73,11 @@
             // console.log(res.data);
             if (res.data.errNo == 700011) {
               vm.items = [];
-              toaster.pop('warning ', '数据获取失败', res.data.errMsg);
+              // toaster.pop('warning ', '数据获取失败', res.data.errMsg);
             }else if (res.data.errNo === 0) {
               vm.items = res.data.result;             
             }else{
-               toaster.pop('error ', '数据获取错误', res.data.errMsg);
+               // toaster.pop('error ', '数据获取错误', res.data.errMsg);
 
             }
           });
@@ -105,10 +105,10 @@
             }
             else {
                // console.log(res.data);
-              toaster.pop('error', "出错了", res.data.errMsg);
+              // toaster.pop('error', "出错了", res.data.errMsg);
             }
           },function(res){
-            toaster.pop('error', "删除玉石失败!", res.data.errMsg);
+            // toaster.pop('error', "删除玉石失败!", res.data.errMsg);
           })
       }
 
@@ -144,10 +144,10 @@
               }
               else {
                  // error code
-                toaster.pop('error', "出错了", res.data.errMsg);
+                // toaster.pop('error', "出错了", res.data.errMsg);
               }
             },function(res){
-              toaster.pop('error', "发布失败!", res.data.errMsg);
+              // toaster.pop('error', "发布失败!", res.data.errMsg);
         })
        } 
 
@@ -223,7 +223,7 @@
           $state.go('dashboard');
         }
         else {
-          toaster.pop('error', "出错了", res.data.errMsg);
+          // toaster.pop('error', "出错了", res.data.errMsg);
         }
 
       });
@@ -274,7 +274,7 @@
         //   toaster.pop('error', "出错了", res.data.errMsg);
         // }
       },function(res){
-        toaster.pop('error', "重置密码失败!", res.data.errMsg);
+        // toaster.pop('error', "重置密码失败!", res.data.errMsg);
       })
     };
     vm.getVerifyCode = function (){
@@ -327,10 +327,10 @@
           $state.go('page.login');
         }
         else {
-          toaster.pop('error', "出错了 forgotPwd", res.data.errMsg);
+          // toaster.pop('error', "出错了 forgotPwd", res.data.errMsg);
         }
       },function(res){
-        toaster.pop('error', "重置密码失败!", res.data.errMsg);
+        // toaster.pop('error', "重置密码失败!", res.data.errMsg);
       })
     };
     
@@ -515,7 +515,7 @@
             vm.form = data;
           }
           else {
-            toaster.pop('error', '出错了', res.data.errMsg);
+            // toaster.pop('error', '出错了', res.data.errMsg);
           }
         }, function (err) {
 
@@ -679,7 +679,7 @@
           toaster.pop('success', '更新时间轴成功');
       },function(res){
           // console.log(res);
-          toaster.pop('error', '出错了', res.data.errMsg);
+          // toaster.pop('error', '出错了', res.data.errMsg);
 
       });
     }
