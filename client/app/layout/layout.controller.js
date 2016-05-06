@@ -11,7 +11,10 @@
   function layoutHeaderCtrl($state, api, toaster) {
 
     var vm = this;
-    vm.loginUser=window.dataStorage.user.data.user_name;
+    if(window.dataStorage.user.data){
+      vm.loginUser=window.dataStorage.user.data.user_name;
+    }
+    
 
 
     //注销操作
