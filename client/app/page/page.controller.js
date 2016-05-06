@@ -14,7 +14,7 @@
     .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', 'api', 'toaster','$state', CreateJadeCtrl])
     .controller('GoodDetailsJadeCtrl', ['$stateParams', 'api', '$mdDialog', GoodDetailsJadeCtrl])
     .controller('showBigImgCtrl', ['$mdDialog', 'items', showBigImgCtrl]) //显示大图
-    .controller('photoAlbumCtrl', ['$mdDialog', 'items', photoAlbumCtrl]) //在线相册
+    .controller('photoAlbumCtrl', ['$mdDialog', 'items','api', photoAlbumCtrl]) //在线相册
     ;
 
   //面板
@@ -191,14 +191,14 @@
   function LoginCtrl($state, api, validateReg, toaster) {
     var vm = this;
     vm.loginable = true;
-    api.me().then(function (res) {
-      if (res.data.errNo === 0) {//已经登录
-        $state.go('dashboard');
-        // console.log('已经登录');
-        // console.log(window.dataStorage.user);
-        // console.log(res.data);
-      }
-    });
+    // api.me().then(function (res) {
+    //   if (res.data.errNo === 0) {//已经登录
+    //     $state.go('dashboard');
+    //     // console.log('已经登录');
+    //     // console.log(window.dataStorage.user);
+    //     // console.log(res.data);
+    //   }
+    // });
     vm.validate = validateReg; 
     // vm.form = {
     //   phone: '15212345698',
@@ -845,17 +845,29 @@
    * @param $mdDialog
    * @param items
    */
-  function photoAlbumCtrl($mdDialog, items) {
+  function photoAlbumCtrl($mdDialog, items, api) {
     var vm = this;
     vm.selectItem = [];
     vm.items = [
+    
       { id: 1, url: 'images/assets/600_400-1.jpg' },
       { id: 1, url: 'images/assets/600_400-2.jpg' },
       { id: 1, url: 'images/assets/600_400-3.jpg' },
       { id: 1, url: 'images/assets/600_400-4.jpg' },
       { id: 1, url: 'images/assets/600_400-5.jpg' },
+      { id: 1, url: 'images/assets/600_400-1.jpg' },
+      { id: 1, url: 'images/assets/600_400-2.jpg' },
+      { id: 1, url: 'images/assets/600_400-3.jpg' },
+      { id: 1, url: 'images/assets/600_400-4.jpg' },
       { id: 1, url: 'images/assets/600_400-6.jpg' }
     ];
+    console.log(vm.items);
+    api.studio.allimges().then(function(res){
+      if(res.data.errNo === 0){console.log(res.data.result);
+        vm.items.url = res.data.result[0];console.log(vm.itmes.url);
+      }
+      
+    })
 
     vm.selectItemFun = function (item) {
 

@@ -8,9 +8,13 @@
     .module('app.layout')
     .controller('layoutHeaderCtrl', ['$state', 'api', 'toaster', layoutHeaderCtrl]);
 
+
+
+
   function layoutHeaderCtrl($state, api, toaster) {
 
     var vm = this;
+    vm.loginUser='';
     if(window.dataStorage.user&&(window.dataStorage.user.data!= undefined)){
       vm.loginUser=window.dataStorage.user.data.user_name;
     }
