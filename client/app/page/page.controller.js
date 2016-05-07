@@ -155,7 +155,7 @@
 
   /**
    * 二维码
-   * @param $mdDialogå
+   * @param $mdDialog
    * @param items
    * @constructor
    */
