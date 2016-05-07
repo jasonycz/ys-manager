@@ -22,7 +22,7 @@
     var vm = this;
     vm.items = [];
     vm.published = true;
-    vm.pulishValidation = true;
+    //vm.pulishValidation = true;
 
     vm.doAction = {
       publish: function () {
@@ -61,7 +61,7 @@
               }
               vm.items = res.data.result;
               vm.published = false;
-              vm.pulishValidation = false;
+              //vm.pulishValidation = false;
             }
           });
       }
@@ -81,7 +81,8 @@
 
             }
           });
-        vm.pulishValidation = true;
+        //vm.pulishValidation = true;
+       vm.published = true;
       } else {
         toaster.pop('error', '请先登录!');
         $state.go('page.login');
@@ -116,7 +117,7 @@
 
 
     }
-    vm.showItems('published');
+   vm.showItems('published');
     // 发布已经完成软文和时间轴的
     vm.publish = function (craft_id) {
       // alert('ok');
@@ -193,14 +194,14 @@
   function LoginCtrl($state, api, validateReg, toaster) {
     var vm = this;
     vm.loginable = true;
-    api.me().then(function (res) {
-      if (res.data.errNo === 0) {//已经登录
-        $state.go('dashboard');
-        // console.log('已经登录');
-        // console.log(window.dataStorage.user);
-        // console.log(res.data);
-      }
-    });
+    // api.me().then(function (res) {
+    //   if (res.data.errNo === 0) {//已经登录
+    //     $state.go('dashboard');
+    //     // console.log('已经登录');
+    //     // console.log(window.dataStorage.user);
+    //     // console.log(res.data);
+    //   }
+    // });
     vm.validate = validateReg;
     // vm.form = {
     //   phone: '15212345698',

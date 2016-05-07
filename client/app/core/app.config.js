@@ -107,15 +107,9 @@
 
   function api($http) {
 
-<<<<<<< HEAD
     var baseUrl = 'http://web.bellwebwork.com';
     //  var baseUrl = 'http://101.201.198.27';
     //var baseUrl = location.protocol + '//' + location.hostname + '/api';
-=======
-     var baseUrl = 'http://web.bellwebwork.com/';
-    //  var baseUrl = 'http://101.201.198.27';
-    // var baseUrl = location.protocol + '//' + location.hostname + '/api';
->>>>>>> f35c66f0aec2b1bd15725694dcae3947fbfa029e
 
     var api = {
       studio: {},

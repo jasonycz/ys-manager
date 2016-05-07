@@ -6,24 +6,22 @@
 
   angular
     .module('app.layout')
-    .controller('layoutHeaderCtrl', ['$state', 'api', 'toaster', layoutHeaderCtrl]);
+    .controller('layoutHeaderCtrl', ['$state', 'api', 'toaster','$interval', layoutHeaderCtrl]);
 
-  function layoutHeaderCtrl($state, api, toaster) {
+  function layoutHeaderCtrl($state, api, toaster,$interval) {
 
     var vm = this;
     vm.loginUser='';
-    var getUserInfoTimer=setInterval(function(){
+
+    var getUserInfoTimer=$interval(function(){
 
       if(window.dataStorage.user&&window.dataStorage.user.data){
         vm.loginUser=window.dataStorage.user.data.user_name;
-        window.clearInterval(getUserInfoTimer);
+        $interval.cancel(getUserInfoTimer);
       }
 
-    },1000);
+    },500);
    
-
-    
-
     //注销操作
     vm.logout = function () {
       // 在本地注销用户数据
