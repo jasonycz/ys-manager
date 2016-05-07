@@ -35,7 +35,7 @@
             $state.go('page.login');
           }
         });
-      $state.go('page.login');
+      
     }
   }
 

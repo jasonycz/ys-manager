@@ -22,7 +22,7 @@
     var vm = this;
     vm.items = [];
     vm.published = true;
-    vm.pulishValidation = true;
+    // vm.pulishValidation = true;
 
     vm.doAction = {
       publish: function () {
@@ -61,7 +61,7 @@
               }
               vm.items = res.data.result;
               vm.published = false;
-              vm.pulishValidation = false;
+              // vm.pulishValidation = false;
             }
           });
       }
@@ -81,7 +81,8 @@
 
             }
           });
-        vm.pulishValidation = true;
+        // vm.pulishValidation = true;
+        vm.published = true;
       } else {
         toaster.pop('error', '请先登录!');
         $state.go('page.login');
