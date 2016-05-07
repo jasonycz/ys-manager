@@ -298,6 +298,15 @@
       return $http.post(baseUrl + '/studio/publish', data)
     };
     /**
+       * 返回工作室的雕件图片
+       * @param 
+       * @returns {*}
+       */
+    api.studio.allimges = function () {
+      return $http.get(baseUrl + '/studio/allimges')
+    };
+
+    /**
      * 手机端预览雕件
      * @param {int} craft_id 雕件id
      * @returns {*}

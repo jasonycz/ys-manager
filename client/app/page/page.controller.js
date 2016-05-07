@@ -14,7 +14,7 @@
     .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', 'api', 'toaster', '$state', CreateJadeCtrl])
     .controller('GoodDetailsJadeCtrl', ['$stateParams', 'api', '$mdDialog', GoodDetailsJadeCtrl])
     .controller('showBigImgCtrl', ['$mdDialog', 'items', showBigImgCtrl]) //显示大图
-    .controller('photoAlbumCtrl', ['$mdDialog', 'items', photoAlbumCtrl]) //在线相册
+    .controller('photoAlbumCtrl', ['$mdDialog', 'items','api', photoAlbumCtrl]) //在线相册
     ;
 
   //面板
@@ -845,17 +845,36 @@
    * @param $mdDialog
    * @param items
    */
-  function photoAlbumCtrl($mdDialog, items) {
+  function photoAlbumCtrl($mdDialog, items, api) {
     var vm = this;
     vm.selectItem = [];
     vm.items = [
-      { id: 1, url: 'images/assets/600_400-1.jpg' },
-      { id: 1, url: 'images/assets/600_400-2.jpg' },
-      { id: 1, url: 'images/assets/600_400-3.jpg' },
-      { id: 1, url: 'images/assets/600_400-4.jpg' },
-      { id: 1, url: 'images/assets/600_400-5.jpg' },
-      { id: 1, url: 'images/assets/600_400-6.jpg' }
+    
+      // { id: 1, url: 'images/assets/600_400-1.jpg' },
+      // { id: 1, url: 'images/assets/600_400-2.jpg' },
+      // { id: 1, url: 'images/assets/600_400-3.jpg' },
+      // { id: 1, url: 'images/assets/600_400-4.jpg' },
+      // { id: 1, url: 'images/assets/600_400-5.jpg' },
+      // { id: 1, url: 'images/assets/600_400-1.jpg' },
+      // { id: 1, url: 'images/assets/600_400-2.jpg' },
+      // { id: 1, url: 'images/assets/600_400-3.jpg' },
+      // { id: 1, url: 'images/assets/600_400-4.jpg' },
+      // { id: 1, url: 'images/assets/600_400-6.jpg' }
     ];
+    // console.log(vm.items);
+    api.studio.allimges().then(function(res){
+      if(res.data.errNo === 0){
+        // for(var i=0;i<res.data.result.length;i++){
+        //   // vm.items[i]['url'] = res.data.result[i];
+        // }
+
+        vm.items = res.data.result[0];
+        console.log(res.data.result);
+        console.log(vm.items);
+        // return;
+      }
+      
+    })
 
     vm.selectItemFun = function (item) {
 
