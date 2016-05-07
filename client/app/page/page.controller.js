@@ -577,8 +577,14 @@
         }
         //clickOutsideToClose: true  
       }).then(function (answer) {
-        // console.log(answer);
-        vm.timeline[index].img.push(answer[0]);
+         console.log(answer);
+         // return;
+         if(answer[0] !== ''){
+            vm.timeline[index].img.push(answer[0]);
+         }else{
+            return;
+         }
+        
 
       }, function (answer) {
         alert('error in vm.upload');
