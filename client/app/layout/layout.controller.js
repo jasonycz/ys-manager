@@ -6,20 +6,22 @@
 
   angular
     .module('app.layout')
-    .controller('layoutHeaderCtrl', ['$state', 'api', 'toaster', layoutHeaderCtrl]);
+    .controller('layoutHeaderCtrl', ['$state', 'api', 'toaster','$interval', layoutHeaderCtrl]);
 
-
-
-
-  function layoutHeaderCtrl($state, api, toaster) {
+  function layoutHeaderCtrl($state, api, toaster,$interval) {
 
     var vm = this;
     vm.loginUser='';
-    if(window.dataStorage.user&&(window.dataStorage.user.data!= undefined)){
-      vm.loginUser=window.dataStorage.user.data.user_name;
-    }
 
+    var getUserInfoTimer=$interval(function(){
 
+      if(window.dataStorage.user&&window.dataStorage.user.data){
+        vm.loginUser=window.dataStorage.user.data.user_name;
+        $interval.cancel(getUserInfoTimer);
+      }
+
+    },500);
+   
     //注销操作
     vm.logout = function () {
       // 在本地注销用户数据
@@ -30,12 +32,12 @@
         .then(function (res) {
           if (res.data.errNo !== 0) {
               toaster.pop('error', "出错了", res.data.errMsg);
+               $state.go('page.login');
           }
           else {
             $state.go('page.login');
           }
         });
-      
     }
   }
 
