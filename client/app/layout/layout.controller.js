@@ -19,6 +19,7 @@
       vm.loginUser=window.dataStorage.user.data.user_name;
     }
 
+
     //注销操作
     vm.logout = function () {
       // 在本地注销用户数据

@@ -3,26 +3,26 @@
 
   angular
     .module('app.page')
-    .controller('DashboardCtrl', ['$mdDialog', 'api', 'toaster','$state', DashboardCtrl])
+    .controller('DashboardCtrl', ['$mdDialog', 'api', 'toaster', '$state', DashboardCtrl])
     .controller('QRcodeCtrl', ['$mdDialog', 'items', QRcodeCtrl])
     .controller('invoiceCtrl', ['$scope', '$window', invoiceCtrl])
-    .controller('AuthCtrl', ['$state', 'api','validateReg', 'toaster','$timeout', authCtrl])
+    .controller('AuthCtrl', ['$state', 'api', 'validateReg', 'toaster', '$timeout', authCtrl])
     .controller('LoginCtrl', ['$state', 'api', 'validateReg', 'toaster', LoginCtrl])
     .controller('ProfileCtrl', ['$scope', '$state', ProfileCtrl])
     .controller('uploadCtrl', ['$timeout', '$mdDialog', 'items', 'Upload', 'api', 'toaster', uploadCtrl]) //时间轴添加照片弹框
     .controller('addTxtCtrl', ['$mdDialog', 'items', addTxtCtrl]) //时间轴添加介绍弹框
-    .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', 'api', 'toaster','$state', CreateJadeCtrl])
+    .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', 'api', 'toaster', '$state', CreateJadeCtrl])
     .controller('GoodDetailsJadeCtrl', ['$stateParams', 'api', '$mdDialog', GoodDetailsJadeCtrl])
     .controller('showBigImgCtrl', ['$mdDialog', 'items', showBigImgCtrl]) //显示大图
     .controller('photoAlbumCtrl', ['$mdDialog', 'items','api', photoAlbumCtrl]) //在线相册
     ;
 
   //面板
-  function DashboardCtrl($mdDialog, api, toaster,$state) {
+  function DashboardCtrl($mdDialog, api, toaster, $state) {
     var vm = this;
     vm.items = [];
     vm.published = true;
-    vm.pulishValidation  = true;
+    vm.pulishValidation = true;
 
     vm.doAction = {
       publish: function () {
@@ -61,11 +61,11 @@
               }
               vm.items = res.data.result;
               vm.published = false;
-              vm.pulishValidation  = false;
+              vm.pulishValidation = false;
             }
           });
       }
-      else if (type === 'published' && window.dataStorage.user && (window.dataStorage.user.data !== undefined )) {
+      else if (type === 'published' && window.dataStorage.user && (window.dataStorage.user.data !== undefined)) {
         api
           .studio
           .showcraft()
@@ -74,89 +74,90 @@
             if (res.data.errNo == 700011) {
               vm.items = [];
               // toaster.pop('warning ', '数据获取失败', res.data.errMsg);
-            }else if (res.data.errNo === 0) {
-              vm.items = res.data.result;             
-            }else{
-               // toaster.pop('error ', '数据获取错误', res.data.errMsg);
+            } else if (res.data.errNo === 0) {
+              vm.items = res.data.result;
+            } else {
+              // toaster.pop('error ', '数据获取错误', res.data.errMsg);
 
             }
           });
-          vm.pulishValidation  = true;
-      }else{
-        toaster.pop('error','请先登录!');
+        vm.pulishValidation = true;
+      } else {
+        toaster.pop('error', '请先登录!');
         $state.go('page.login');
       }
 
     };
     // 删除玉石
-    vm.delcraft = function (craft_id){
-      alert('iii');
+
+    vm.delcraft = function (craft_id) {
+
       var data = new Object();
       data.craft_id = craft_id;
       // console.log(data.craft_id);
-      if(confirm("确定要删除该玉石数据?")){
-          api.studio.delcraft(data).then(function (res) {
-            //alert("dsds");
-            //console.log(res.data)
-            if (res.data.errNo === 0) {
-              // console.log(res.data);
-              
-              toaster.pop('success', "删除玉石成功");
-              vm.showItems('published');
-            }
-            else {
-               // console.log(res.data);
-              // toaster.pop('error', "出错了", res.data.errMsg);
-            }
-          },function(res){
-            // toaster.pop('error', "删除玉石失败!", res.data.errMsg);
-          })
-      }
-
-      
-    }
-      vm.showItems('published');
-    // 发布已经完成软文和时间轴的
-    vm.publish = function(craft_id){
-      // alert('ok');
-        var data = new Object();
-        data.craft_id = craft_id;
-
-        api.studio.publish(data).then(function (res) {
+      if (confirm("确定要删除该玉石数据?")) {
+        api.studio.delcraft(data).then(function (res) {
           //alert("dsds");
           //console.log(res.data)
-              if (res.data.errNo === 0) {
-                // console.log(res.data);
-                
-                toaster.pop('success', "发布成功");
-                vm.showItems('published');
-              }else if(res.data.errNo === 900010){
-                toaster.pop('warning', "雕件已发布");
-                return;
-              }else if(res.data.errNo === 900011){
-                toaster.pop('error', "雕件id不合法");
-                return;
-              }else if(res.data.errNo === 900012){
-                toaster.pop('error', "未创建软文");
-                return;
-              }else if(res.data.errNo === 900013){
-                toaster.pop('error', "未创建时间轴");
-                return;
-              }
-              else {
-                 // error code
-                // toaster.pop('error', "出错了", res.data.errMsg);
-              }
-            },function(res){
-              // toaster.pop('error', "发布失败!", res.data.errMsg);
+          if (res.data.errNo === 0) {
+            // console.log(res.data);
+
+            toaster.pop('success', "删除玉石成功");
+            vm.showItems('published');
+          }
+          else {
+            // console.log(res.data);
+            // toaster.pop('error', "出错了", res.data.errMsg);
+          }
+        }, function (res) {
+          // toaster.pop('error', "删除玉石失败!", res.data.errMsg);
         })
-       } 
+      }
+
 
     }
+    vm.showItems('published');
+    // 发布已经完成软文和时间轴的
+    vm.publish = function (craft_id) {
+      // alert('ok');
+      var data = new Object();
+      data.craft_id = craft_id;
+
+      api.studio.publish(data).then(function (res) {
+        //alert("dsds");
+        //console.log(res.data)
+        if (res.data.errNo === 0) {
+          // console.log(res.data);
+
+          toaster.pop('success', "发布成功");
+          vm.showItems('published');
+        } else if (res.data.errNo === 900010) {
+          toaster.pop('warning', "雕件已发布");
+          return;
+        } else if (res.data.errNo === 900011) {
+          toaster.pop('error', "雕件id不合法");
+          return;
+        } else if (res.data.errNo === 900012) {
+          toaster.pop('error', "未创建软文");
+          return;
+        } else if (res.data.errNo === 900013) {
+          toaster.pop('error', "未创建时间轴");
+          return;
+        }
+        else {
+          // error code
+          // toaster.pop('error', "出错了", res.data.errMsg);
+        }
+      }, function (res) {
+        // toaster.pop('error', "发布失败!", res.data.errMsg);
+      })
+    }
+
+  }
 
   /**
    * 二维码
-   * @param $mdDialogå
+   * @param $mdDialog
    * @param items
    * @constructor
    */
@@ -166,7 +167,7 @@
     vm.qrcode = {
       width: 120,
       height: 120,
-      text: 'http://101.201.198.27/studio/showonecraft?studioid=' + window.dataStorage.user.data.studio_id + '&craftid=' + items.craft_id + '&type=1'
+      text: 'http://app.bellwebwork.com/#/wap/show/' + window.dataStorage.user.data.studio_id + '/' + items.craft_id + '/1'
     };
     vm.cancel = function () {
       $mdDialog.hide();
@@ -192,15 +193,15 @@
   function LoginCtrl($state, api, validateReg, toaster) {
     var vm = this;
     vm.loginable = true;
-    // api.me().then(function (res) {
-    //   if (res.data.errNo === 0) {//已经登录
-    //     $state.go('dashboard');
-    //     // console.log('已经登录');
-    //     // console.log(window.dataStorage.user);
-    //     // console.log(res.data);
-    //   }
-    // });
-    vm.validate = validateReg; 
+    api.me().then(function (res) {
+      if (res.data.errNo === 0) {//已经登录
+        $state.go('dashboard');
+        // console.log('已经登录');
+        // console.log(window.dataStorage.user);
+        // console.log(res.data);
+      }
+    });
+    vm.validate = validateReg;
     // vm.form = {
     //   phone: '15212345698',
     //   passwd: '111111'
@@ -212,8 +213,8 @@
     //登录
     vm.login = function () {
       // alert('login');
-        vm.loginable = false;
-        api.user.login(vm.form).then(function (res) {
+      vm.loginable = false;
+      api.user.login(vm.form).then(function (res) {
         vm.loginable = true;
 
         if (res.data.errNo === 0) {
@@ -241,7 +242,7 @@
   function authCtrl($state, api, validateReg, toaster, $timeout) {
     var vm = this;
     vm.validate = validateReg;
-    vm.form = {user:''};
+    vm.form = { user: '' };
     // alert('ok');
     //登录
     vm.login = function ($event) {
@@ -274,44 +275,44 @@
         // else {
         //   toaster.pop('error', "出错了", res.data.errMsg);
         // }
-      },function(res){
+      }, function (res) {
         // toaster.pop('error', "重置密码失败!", res.data.errMsg);
       })
     };
-    vm.getVerifyCode = function (){
+    vm.getVerifyCode = function () {
       // console.log(vm.form);return;
       // 定义按钮btn
       var btn = $("#sendVerifyBtn");
-           
+
       // 定义发送时间间隔(s)
       var SEND_INTERVAL = 30;
       var timeLeft = SEND_INTERVAL;
 
-      if(vm.form.user.phone){
+      if (vm.form.user.phone) {
         var data = new Object();
         data.phone = vm.form.user.phone;
         vm.form.validation = true;
         api.user.getverify(data);
         // var temp = api.user.getverify(data);
         // console.log(temp);
-      }else{
+      } else {
         toaster.pop('error', "请输入电话号码");
         return;
-      }          
-      var timeCount = function() {
-          $timeout(function() {
-              if(timeLeft > 0) {
-                  timeLeft -= 1;
-                  btn.html(timeLeft + "秒后重新发送");
-                  timeCount();
-              } else {
-                  // console.log('ok');
-                 vm.form.validation = false;
-                 btn.html("发送短信验证码");
-              }
-          }, 1000);
       }
-       timeCount();
+      var timeCount = function () {
+        $timeout(function () {
+          if (timeLeft > 0) {
+            timeLeft -= 1;
+            btn.html(timeLeft + "秒后重新发送");
+            timeCount();
+          } else {
+            // console.log('ok');
+            vm.form.validation = false;
+            btn.html("发送短信验证码");
+          }
+        }, 1000);
+      }
+      timeCount();
     }
     //忘记密码
     vm.forgotPwd = function () {
@@ -330,11 +331,11 @@
         else {
           // toaster.pop('error', "出错了 forgotPwd", res.data.errMsg);
         }
-      },function(res){
+      }, function (res) {
         // toaster.pop('error', "重置密码失败!", res.data.errMsg);
       })
     };
-    
+
 
   }
 
@@ -351,16 +352,16 @@
       craft_id = $stateParams.craft_id,
       isUpdate = (aid !== undefined && aid !== '') && (craft_id !== undefined && craft_id !== '');
 
-      
+
 
     vm.timeline = [
-      { 
+      {
         img: [],
         describe: '',
         name: '原石',
-      
-       className: 'b-info'
-        
+
+        className: 'b-info'
+
       },
       {
         img: [],
@@ -372,39 +373,39 @@
         img: [],
         describe: '',
         name: '粗绘',
-        
+
         className: 'b-primary',
       },
       {
-        
+
         img: [],
         describe: '',
         name: '细绘',
-        
-       className: 'b-white'
+
+        className: 'b-white'
       },
       {
-        
+
         img: [],
         describe: '',
         name: '打磨抛光',
         className: 'b-white'
       },
       {
-        
+
         img: [],
         describe: '',
         name: '落款证书',
         className: 'b-white'
       },
       {
-        
+
         img: [],
         describe: '',
         name: '结束（物流）',
         className: 'b-white'
       }
-      
+
     ];
     // vm.craft_id = '';
 
@@ -420,8 +421,6 @@
       selectedIndex: 0
     };
 
-    
-    // return;
 
      var getcid = function () {
         api
@@ -446,8 +445,11 @@
 
             // }
 
-          });
-      };
+
+          }
+
+        });
+    };
 
     if (isUpdate) {
       console.log('isUpdate');
@@ -475,7 +477,7 @@
         }, function (err) {
 
         })
-    }else{
+    } else {
       getcid();
       console.log('getcid');
 
@@ -483,22 +485,22 @@
     // console.log("vm.form.craft_id"+vm.form.craft_id);
     // 获取时间轴相关信息
     api.studio.modifyTime({
-       params: {
+      params: {
         craft_id: vm.form.craft_id
-       }
+      }
 
-      }).then(function(res){
-          console.log('获取时间轴相关信息');
-          console.log(res);
-          // 将新的时间轴信息录入数组当中
-          // vm.craft_id = vm.form.craft_id;
-          if(res.data.result.timeLine){ //  需要重新写逻辑 这样写不严谨
-             vm.timeline = res.data.result.timeLine;
-             
-          }
-          
+    }).then(function (res) {
+      console.log('获取时间轴相关信息');
+      console.log(res);
+      // 将新的时间轴信息录入数组当中
+      // vm.craft_id = vm.form.craft_id;
+      if (res.data.result.timeLine) { //  需要重新写逻辑 这样写不严谨
+        vm.timeline = res.data.result.timeLine;
 
-      });
+      }
+
+
+    });
 
 
     //基本资料部分
@@ -508,7 +510,7 @@
         //1:发布   0:预览
         vm.form.publish = 1;
         msg = '修改成功';
-      }else {
+      } else {
         msg = '添加成功';
       }
       console.log(vm.form.craft_id);
@@ -523,14 +525,14 @@
 
             // vm.form = {};//reset  不放在这  change by ycz 因为timeline还需要用到craft_id
 
-          }else{
-             alert("vm.submit 出错啦");
+          } else {
+            alert("vm.submit 出错啦");
 
           }
-         },function(res){
-                console.log(res);
+        }, function (res) {
+          console.log(res);
 
-         });
+        });
 
     };
 
@@ -584,9 +586,9 @@
         vm.timeline[index].img.push(answer[0]);
 
       }, function (answer) {
-          alert('error in vm.upload');
+        alert('error in vm.upload');
       });
-            
+
     };
 
     vm.addDescription = function (index, $event) {
@@ -603,7 +605,7 @@
         }
         //clickOutsideToClose: true
       }).then(function (answer) {
-         //console.log(answer);
+        //console.log(answer);
         vm.timeline[index].describe = answer.txt;
       }, function () {
 
@@ -612,7 +614,7 @@
     };
 
     // 更新时间轴信息
-    vm.upTimeData = function(){
+    vm.upTimeData = function () {
 
       // console.log(timeLineData); 
       // console.log(vm.craft_id); 
@@ -626,23 +628,23 @@
       data.craft_id = vm.form.craft_id;
       //data.timeLine =  timeLineData;//vm.timeline; 
       data.timeLine = vm.timeline; //timeLineData;
- 
-       console.log(data); 
-       // var data = {
-       //  craft_id: vm.craft_id,
-       //  timeLine:  vm.timeline
-       // }
+
+      console.log(data);
+      // var data = {
+      //  craft_id: vm.craft_id,
+      //  timeLine:  vm.timeline
+      // }
 
 
-      api.studio.upTimeData(data).then(function(res){
-          console.log(res);
-          if(res.data.errNo === 0){
-            toaster.pop('success', '更新时间轴成功');
-            $state.go('dashboard');
-          }
-      },function(res){
-          // console.log(res);
-          // toaster.pop('error', '出错了', res.data.errMsg);
+      api.studio.upTimeData(data).then(function (res) {
+        console.log(res);
+        if (res.data.errNo === 0) {
+          toaster.pop('success', '更新时间轴成功');
+          $state.go('dashboard');
+        }
+      }, function (res) {
+        // console.log(res);
+        // toaster.pop('error', '出错了', res.data.errMsg);
 
       });
     }
@@ -664,7 +666,7 @@
     };
     vm.uploadFiles = function ($files) {
       vm.files = $files;
-        console.log(vm.files[0]);
+      console.log(vm.files[0]);
       if (vm.files && vm.files.length) {
         Upload.upload({
           url: api.studio.uploaduyimg(),
@@ -672,9 +674,9 @@
           sendFieldsAs: 'form'
         }).then(function (response) {
           if (response.data.errNo === 0) {
-             vm.form.push(response.data.result.img_url);
-             // console.log(vm.form);
-             // items.push(response.data.result.img_url);
+            vm.form.push(response.data.result.img_url);
+            // console.log(vm.form);
+            // items.push(response.data.result.img_url);
           }
         }, function (response) {
           if (response.status > 0) {
@@ -704,37 +706,37 @@
     };
 
 
-          // // 获取时间轴相关信息
-          //   api.studio.modifyTime({
-          //      params: {
-          //       craft_id: vm.form.craft_id
-          //      }
+    // // 获取时间轴相关信息
+    //   api.studio.modifyTime({
+    //      params: {
+    //       craft_id: vm.form.craft_id
+    //      }
 
-          //   }).then(function(res){
-          //       console.log(res);
-          //       // 将新的时间轴信息录入数组当中
-          //       vm.craft_id = vm.form.craft_id;
-          //       vm.timeline = res.data.result.timeLine;
+    //   }).then(function(res){
+    //       console.log(res);
+    //       // 将新的时间轴信息录入数组当中
+    //       vm.craft_id = vm.form.craft_id;
+    //       vm.timeline = res.data.result.timeLine;
 
-          //       // 新修改的数据
-          //       console.log('新的数据');
-          //       console.log(vm.form);return;
-          //       vm.timeline[0].img = vm.form.img;
-          //       vm.timeline[0].describe = vm.form.description;
-          //       vm.timeline[0].name = vm.form.name;
-          //           // 更新时间轴
-          //       api.studio.upTimeData({
-          //          params: {
-          //           craft_id: vm.craft_id,
-          //           timeLine: vm.timeline
-          //          }
-          //       }).then(function(res){
-          //           console.log(res);
-          //       },function(res){
-          //           console.log(res);
+    //       // 新修改的数据
+    //       console.log('新的数据');
+    //       console.log(vm.form);return;
+    //       vm.timeline[0].img = vm.form.img;
+    //       vm.timeline[0].describe = vm.form.description;
+    //       vm.timeline[0].name = vm.form.name;
+    //           // 更新时间轴
+    //       api.studio.upTimeData({
+    //          params: {
+    //           craft_id: vm.craft_id,
+    //           timeLine: vm.timeline
+    //          }
+    //       }).then(function(res){
+    //           console.log(res);
+    //       },function(res){
+    //           console.log(res);
 
-          //       });
-          //       // return;
+    //       });
+    //       // return;
 
 
 
