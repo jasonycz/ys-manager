@@ -90,6 +90,7 @@
     };
     // 删除玉石
     vm.delcraft = function (craft_id){
+      alert('iii');
       var data = new Object();
       data.craft_id = craft_id;
       // console.log(data.craft_id);
@@ -512,6 +513,7 @@
       }
       console.log(vm.form.craft_id);
       console.log(vm.form);
+      // return;
       api.studio
         .upData(vm.form)
         .then(function (res) {
@@ -552,6 +554,7 @@
           // alert('暂时只用选中的第一个，后台现在也只用一个，如果没有就默认给一个');
            console.log(items);
           vm.form.imgurl = items[0].img_url;
+          console.log(vm.form.imgurl);
         }
 
       }, function () {
