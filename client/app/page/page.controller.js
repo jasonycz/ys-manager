@@ -433,20 +433,19 @@
               vm.form.craft_id = res.data.result.craft_id;
               console.log('vm.form.craft_id in getcid');
               console.log(vm.form.craft_id);
-            }
-            else {
+            }else {
               // toaster.pop('error', '获取雕件id失败', '正在重新获取,错误信息:' + res.data.errMsg);
 
               // if (res.data.errNo !== 100012) {
                 setTimeout(function () {
                   getcid();
                 }, 200);
-              }
+            }
 
             // }
 
 
-          }
+          // }
 
         });
     };
@@ -552,7 +551,7 @@
       }).then(function (items) {
         //选中了
         if (angular.isArray(items)) {
-           alert('选中了' + items.length + '个');
+          // alert('选中了' + items.length + '个');
           // alert('暂时只用选中的第一个，后台现在也只用一个，如果没有就默认给一个');
            console.log(items);
           vm.form.imgurl = items[0].img_url;
