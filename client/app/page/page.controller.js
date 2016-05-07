@@ -869,8 +869,8 @@
         // }
 
         vm.items = res.data.result[0];
-        // console.log(res.data.result);
-        // console.log(vm.items);
+        console.log(res.data.result);
+        console.log(vm.items);
         // return;
       }
       
