@@ -577,11 +577,16 @@
         }
         //clickOutsideToClose: true  
       }).then(function (answer) {
-         console.log(answer);
+         //  console.log("answer");
+         // console.log(answer);
+
          // return;
-         if(answer[0] !== ''){
+         if(answer[0] !== undefined){
             vm.timeline[index].img.push(answer[0]);
          }else{
+         // console.log("answer");
+         // console.log(answer);
+         // alert('weikoong');
             return;
          }
         
