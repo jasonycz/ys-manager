@@ -19,6 +19,15 @@
 
   //面板
   function DashboardCtrl($mdDialog, api, toaster, $state) {
+
+    // var test=[];
+    // console.log(test);
+    // console.log(test[0]);
+    // if(test[0]=== undefined){
+    //   alert('ppp');
+    // }
+    // return;
+
     var vm = this;
     vm.items = [];
     vm.published = true;
@@ -579,9 +588,12 @@
       }).then(function (answer) {
          console.log(answer);
          // return;
-         if(answer[0] !== ''){
+         if(answer[0] !== undefined){
             vm.timeline[index].img.push(answer[0]);
          }else{
+         console.log("answer");
+         console.log(answer);
+         alert('weikoong');
             return;
          }
         
