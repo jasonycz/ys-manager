@@ -36,14 +36,13 @@
                 <tr ng-repeat="file in vm.files track by $index">
                   <td ng-bind="$index"></td>
                   <td ng-bind="file.name"></td>
-                  <td class="color-success"  
-                  ng-style="{
-                  'background-image':'url({{vm.backgroundUrl}})',
-                  'background-size' : '50%',
-                   'background-repeat' : 'no-repeat',
-                   'background-position':  'center',
-                   
-                   }" ></td>
+
+                   <td><img ng-src={{vm.backgroundUrl}}
+                            ng-style="{
+                            width="20px",
+                            height="20px" 
+                            }"
+                   ></td>
                   <td><i class="color-error">x</i></td>
                 </tr>
                 </tbody>

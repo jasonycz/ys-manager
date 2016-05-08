@@ -9,7 +9,7 @@
     .controller('AuthCtrl', ['$state', 'api', 'validateReg', 'toaster', '$timeout', authCtrl])
     .controller('LoginCtrl', ['$state', 'api', 'validateReg', 'toaster', LoginCtrl])
     .controller('ProfileCtrl', ['$scope', '$state', ProfileCtrl])
-    .controller('uploadCtrl', ['$timeout', '$mdDialog', 'items', 'Upload', 'api', 'toaster', uploadCtrl]) //时间轴添加照片弹框
+    .controller('uploadCtrl', ['$timeout', '$mdDialog', 'items', 'Upload', 'api', 'toaster','$interval', uploadCtrl]) //时间轴添加照片弹框
     .controller('addTxtCtrl', ['$mdDialog', 'items', addTxtCtrl]) //时间轴添加介绍弹框
     .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', 'api', 'toaster', '$state', CreateJadeCtrl])
     .controller('GoodDetailsJadeCtrl', ['$stateParams', 'api', '$mdDialog', GoodDetailsJadeCtrl])
@@ -669,11 +669,11 @@
   }
 
   //上传弹框
-  function uploadCtrl($timeout, $mdDialog, items, Upload, api, toaster) {
+  function uploadCtrl($timeout, $mdDialog, items, Upload, api, toaster ,$interval) {
 
     var vm = this;
     vm.form = [];
-    vm.uploadValidation = false;
+    // vm.uploadValidation = false;
     // vm.loadInfo = '图片加载中...';
     vm.backgroundUrl = 'images/loading.gif';
     //vm.backgroundUrl = 'images/success.png';
@@ -696,12 +696,24 @@
         }).then(function (response) {
           if (response.data.errNo === 0) {
             vm.form.push(response.data.result.img_url);
-            vm.uploadValidation = true;
+            // vm.uploadValidation = true;
 
             // console.log('服务器返回的数据');
             // console.log(vm.form);
             // vm.loadInfo = '完成';
             vm.backgroundUrl = 'images/success.png';
+
+          // var getUser=$interval(function(){
+
+            
+          //     vm.backgroundUrl='images/success.png';
+          //     $interval.cancel(getUser);
+
+
+          // },500);
+
+           // console.log(vm.backgroundUrl);
+           // alert(vm.backgroundUrl);
           }
         }, function (response) {
           if (response.status > 0) {
