@@ -691,6 +691,7 @@
             // console.log(vm.form);
             // vm.loadInfo = '完成';
             vm.backgroundUrl = 'images/success.png';
+            console.log(vm.backgroundUrl);
           }
         }, function (response) {
           if (response.status > 0) {
