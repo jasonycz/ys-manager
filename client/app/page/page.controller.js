@@ -579,14 +579,13 @@
       }).then(function (answer) {
          //  console.log("answer");
          // console.log(answer);
-
          // return;
-         if(answer[0] !== undefined){
+         if(answer && (answer[0] !== undefined)){
             vm.timeline[index].img.push(answer[0]);
          }else{
          // console.log("answer");
          // console.log(answer);
-         // alert('weikoong');
+            toaster.pop('error', '图片为空,这是不应该出现的');
             return;
          }
         
@@ -663,12 +662,17 @@
 
     var vm = this;
     vm.form = [];
+    vm.uploadValidation = false;
+    // vm.loadInfo = '图片加载中...';
+    vm.backgroundUrl = 'images/loading.gif';
+    //vm.backgroundUrl = 'images/success.png';
 
     vm.cancel = function () {
       $mdDialog.hide();
     };
     vm.save = function () {
       $mdDialog.hide(vm.form);
+
     };
     vm.uploadFiles = function ($files) {
       vm.files = $files;
@@ -681,8 +685,12 @@
         }).then(function (response) {
           if (response.data.errNo === 0) {
             vm.form.push(response.data.result.img_url);
+            vm.uploadValidation = true;
+
+            // console.log('服务器返回的数据');
             // console.log(vm.form);
-            // items.push(response.data.result.img_url);
+            // vm.loadInfo = '完成';
+            vm.backgroundUrl = 'images/success.png';
           }
         }, function (response) {
           if (response.status > 0) {
@@ -690,6 +698,7 @@
           }
         }, function (evt) {
           vm.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+
         });
       }
     }
