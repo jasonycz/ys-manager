@@ -1,7 +1,7 @@
-module.exports = function() {
+module.exports = function () {
     var client = 'client',
         clientApp = './client/app'
-        dist = 'dist',
+    dist = 'dist',
         tmp = '.tmp',
         docs = 'documentation',
         landing = 'landing';
@@ -16,17 +16,18 @@ module.exports = function() {
         ],
         assets: [
             client + "/app/**/*.html",
-            client + "/bower_components/font-awesome/css/*", 
-            client + "/bower_components/font-awesome/fonts/*", 
-            client + "/bower_components/weather-icons/css/*", 
-            client + "/bower_components/weather-icons/font/*", 
-            client + "/bower_components/weather-icons/fonts/*", 
+            client + "/bower_components/font-awesome/css/*",
+            client + "/bower_components/font-awesome/fonts/*",
+            client + "/bower_components/weather-icons/css/*",
+            client + "/bower_components/weather-icons/font/*",
+            client + "/bower_components/weather-icons/fonts/*",
             client + "/bower_components/material-design-iconic-font/dist/**/*",
             client + "/fonts/**/*",
-            client + "/i18n/**/*", 
-            client + "/images/**/*", 
-            client + "/styles/loader.css", 
-            client + "/styles/ui/images/*", 
+            client + "/i18n/**/*",
+            client + "/images/**/*",
+            client + '/vendors/**/*',
+            client + "/styles/loader.css",
+            client + "/styles/ui/images/*",
             client + "/favicon.ico"
         ],
         less: [],
@@ -38,14 +39,14 @@ module.exports = function() {
             clientApp + "/**/*.js",
             '!' + clientApp + "/**/*.spec.js"
         ],
-        docs: docs, 
+        docs: docs,
         docsJade: [
             docs + "/jade/index.jade",
             docs + "/jade/faqs.jade",
             docs + "/jade/layout.jade"
         ],
         allToClean: [
-            tmp, 
+            tmp,
             ".DS_Store",
             ".sass-cache",
             "node_modules",
