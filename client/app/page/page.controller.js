@@ -595,7 +595,7 @@
          }else{
          // console.log("answer");
          // console.log(answer);
-            toaster.pop('error', '图片为空,这是不应该出现的');
+          //  toaster.pop('error', '图片为空,这是不应该出现的');
 
             return;
          }
