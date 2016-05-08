@@ -673,7 +673,7 @@
 
     var vm = this;
     vm.form = [];
-    // vm.uploadValidation = false;
+    vm.uploadValidation = false;
     // vm.loadInfo = '图片加载中...';
     vm.backgroundUrl = 'images/loading.gif';
     //vm.backgroundUrl = 'images/success.png';
@@ -696,7 +696,7 @@
         }).then(function (response) {
           if (response.data.errNo === 0) {
             vm.form.push(response.data.result.img_url);
-            // vm.uploadValidation = true;
+             vm.uploadValidation = true;
 
             // console.log('服务器返回的数据');
             // console.log(vm.form);
