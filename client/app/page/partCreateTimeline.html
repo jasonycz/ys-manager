@@ -36,7 +36,14 @@
                 <tr ng-repeat="file in vm.files track by $index">
                   <td ng-bind="$index"></td>
                   <td ng-bind="file.name"></td>
-                  <td class="color-success">完成</td>
+                  <td class="color-success"  
+                  ng-style="{
+                  'background-image':'url({{vm.backgroundUrl}})',
+                  'background-size' : '50%',
+                   'background-repeat' : 'no-repeat',
+                   'background-position':  'center',
+                   
+                   }" ></td>
                   <td><i class="color-error">x</i></td>
                 </tr>
                 </tbody>
@@ -45,7 +52,7 @@
             </md-dialog-content>
             <md-dialog-actions layout="row">
               <md-button ng-click="vm.cancel()">取消</md-button>
-              <md-button ng-click="vm.save()">完成</md-button>
+              <md-button ng-click="vm.save()" ng-show="vm.uploadValidation">完成</md-button>
             </md-dialog-actions>
           </form>
         </md-dialog>
