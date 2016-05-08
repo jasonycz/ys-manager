@@ -9,12 +9,12 @@
     .controller('AuthCtrl', ['$state', 'api', 'validateReg', 'toaster', '$timeout', authCtrl])
     .controller('LoginCtrl', ['$state', 'api', 'validateReg', 'toaster', LoginCtrl])
     .controller('ProfileCtrl', ['$scope', '$state', ProfileCtrl])
-    .controller('uploadCtrl', ['$timeout', '$mdDialog', 'items', 'Upload', 'api', 'toaster','$interval', uploadCtrl]) //时间轴添加照片弹框
+    .controller('uploadCtrl', ['$timeout', '$mdDialog', 'items', 'Upload', 'api', 'toaster', '$interval', uploadCtrl]) //时间轴添加照片弹框
     .controller('addTxtCtrl', ['$mdDialog', 'items', addTxtCtrl]) //时间轴添加介绍弹框
-    .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', 'api', 'toaster', '$state', CreateJadeCtrl])
+    .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', 'api', 'toaster', '$state', '$timeout', CreateJadeCtrl])
     .controller('GoodDetailsJadeCtrl', ['$stateParams', 'api', '$mdDialog', GoodDetailsJadeCtrl])
     .controller('showBigImgCtrl', ['$mdDialog', 'items', showBigImgCtrl]) //显示大图
-    .controller('photoAlbumCtrl', ['$mdDialog', 'items','api', photoAlbumCtrl]) //在线相册
+    .controller('photoAlbumCtrl', ['$mdDialog', 'items', 'api', photoAlbumCtrl]) //在线相册
     ;
 
   //面板
@@ -125,7 +125,7 @@
 
 
     }
-   vm.showItems('published');
+    vm.showItems('published');
     // 发布已经完成软文和时间轴的
     vm.publish = function (craft_id) {
       // alert('ok');
@@ -354,23 +354,33 @@
    * @param $log
    * @constructor
    */
-  function CreateJadeCtrl($stateParams, $mdDialog, api, toaster, $state) {
+  function CreateJadeCtrl($stateParams, $mdDialog, api, toaster, $state, $timeout) {
 
     var vm = this,
       aid = $stateParams.aid,
       craft_id = $stateParams.craft_id,
       isUpdate = (aid !== undefined && aid !== '') && (craft_id !== undefined && craft_id !== '');
 
-
+    //编辑器
+    vm.editor = {
+      config: {
+        UEDITOR_HOME_URL: '/vendors/ueditor1.4.3.2/',
+        autoHeightEnabled: true,
+        autoFloatEnabled: true,
+        initialFrameHeight: 120,
+        toolbars: [
+          ['fullscreen', 'source', 'undo', 'redo', 'bold'],
+          ['date', 'time', 'imagecenter']
+        ],
+      }
+    }
 
     vm.timeline = [
       {
         img: [],
         describe: '',
         name: '原石',
-
         className: 'b-info'
-
       },
       {
         img: [],
@@ -382,33 +392,27 @@
         img: [],
         describe: '',
         name: '粗绘',
-
         className: 'b-primary',
       },
       {
-
         img: [],
         describe: '',
         name: '细绘',
-
         className: 'b-white'
       },
       {
-
         img: [],
         describe: '',
         name: '打磨抛光',
         className: 'b-white'
       },
       {
-
         img: [],
         describe: '',
         name: '落款证书',
         className: 'b-white'
       },
       {
-
         img: [],
         describe: '',
         name: '结束（物流）',
@@ -430,28 +434,25 @@
       selectedIndex: 0
     };
 
-
-     var getcid = function () {
-        api
-          .studio
-          .getcid()
-          .then(function (res) {
-            if (res.data.errNo === 0 && (res.data.result.craft_id !== undefined)) {
-              console.log('res.data.result');
-              console.log(res);
-              vm.form.craft_id = res.data.result.craft_id;
-              console.log('vm.form.craft_id in getcid');
-              console.log(vm.form.craft_id);
-            }else {
-              // toaster.pop('error', '获取雕件id失败', '正在重新获取,错误信息:' + res.data.errMsg);
-
-              // if (res.data.errNo !== 100012) {
-                setTimeout(function () {
-                  getcid();
-                }, 200);
-            }
-
-            // }
+    var getcid = function () {
+      api
+        .studio
+        .getcid()
+        .then(function (res) {
+          if (res.data.errNo === 0 && (res.data.result.craft_id !== undefined)) {
+            console.log('res.data.result');
+            console.log(res);
+            vm.form.craft_id = res.data.result.craft_id;
+            console.log('vm.form.craft_id in getcid');
+            console.log(vm.form.craft_id);
+          } else {
+            // toaster.pop('error', '获取雕件id失败', '正在重新获取,错误信息:' + res.data.errMsg);
+            // if (res.data.errNo !== 100012) {
+            setTimeout(function () {
+              getcid();
+            }, 200);
+          }
+          // }
         });
     };
 
@@ -465,7 +466,7 @@
             craft_id: vm.form.craft_id
           }
         }).then(function (res) {
-          if (res.data.errNo === 0 ) {
+          if (res.data.errNo === 0) {
             var data = res.data.result;
             if (typeof data.createDate === 'string' && data.createDate.length >= 10) {
               data.createDate = new Date(data.createDate);
@@ -480,11 +481,10 @@
           }
         }, function (err) {
 
-        })
+        });
     } else {
       getcid();
       console.log('getcid');
-
     }
     // console.log("vm.form.craft_id"+vm.form.craft_id);
     // 获取时间轴相关信息
@@ -500,10 +500,7 @@
       // vm.craft_id = vm.form.craft_id;
       if (res.data.result.timeLine) { //  需要重新写逻辑 这样写不严谨
         vm.timeline = res.data.result.timeLine;
-
       }
-
-
     });
 
 
@@ -556,13 +553,13 @@
       }).then(function (items) {
         //选中了
         if (angular.isArray(items)) {
+          //vm.editor.dom 百度编辑器
           // alert('选中了' + items.length + '个');
           // alert('暂时只用选中的第一个，后台现在也只用一个，如果没有就默认给一个');
-           console.log(items);
+          console.log(items[0].img_url);
           vm.form.imgurl = items[0].img_url;
-          console.log(vm.form.imgurl);
+          vm.editor.dom.execCommand('inserthtml', '<img src="' + items[0].img_url + '" class=""/>');
         }
-
       }, function () {
         //取消
       });
@@ -586,20 +583,20 @@
         }
         //clickOutsideToClose: true  
       }).then(function (answer) {
-         //  console.log("answer");
-         // console.log(answer);
-         // return;
+        //  console.log("answer");
+        // console.log(answer);
+        // return;
 
-         if(answer && (answer[0] !== undefined)){
-            vm.timeline[index].img.push(answer[0]);
-         }else{
-         // console.log("answer");
-         // console.log(answer);
+        if (answer && (answer[0] !== undefined)) {
+          vm.timeline[index].img.push(answer[0]);
+        } else {
+          // console.log("answer");
+          // console.log(answer);
           //  toaster.pop('error', '图片为空,这是不应该出现的');
 
-            return;
-         }
-        
+          return;
+        }
+
 
       }, function (answer) {
         alert('error in vm.upload');
@@ -664,12 +661,10 @@
 
       });
     }
-
-
   }
 
   //上传弹框
-  function uploadCtrl($timeout, $mdDialog, items, Upload, api, toaster ,$interval) {
+  function uploadCtrl($timeout, $mdDialog, items, Upload, api, toaster, $interval) {
 
     var vm = this;
     vm.form = [];
@@ -706,17 +701,17 @@
             vm.backgroundUrl = 'images/success.png';
 
 
-          // var getUser=$interval(function(){
-
-            
-          //     vm.backgroundUrl='images/success.png';
-          //     $interval.cancel(getUser);
+            // var getUser=$interval(function(){
 
 
-          // },500);
+            //     vm.backgroundUrl='images/success.png';
+            //     $interval.cancel(getUser);
 
-           // console.log(vm.backgroundUrl);
-           // alert(vm.backgroundUrl);
+
+            // },500);
+
+            // console.log(vm.backgroundUrl);
+            // alert(vm.backgroundUrl);
 
           }
         }, function (response) {
@@ -896,7 +891,7 @@
     var vm = this;
     vm.selectItem = [];
     vm.items = [
-    
+
       // { id: 1, url: 'images/assets/600_400-1.jpg' },
       // { id: 1, url: 'images/assets/600_400-2.jpg' },
       // { id: 1, url: 'images/assets/600_400-3.jpg' },
@@ -909,8 +904,8 @@
       // { id: 1, url: 'images/assets/600_400-6.jpg' }
     ];
     // console.log(vm.items);
-    api.studio.allimges().then(function(res){
-      if(res.data.errNo === 0){
+    api.studio.allimges().then(function (res) {
+      if (res.data.errNo === 0) {
         // for(var i=0;i<res.data.result.length;i++){
         //   // vm.items[i]['url'] = res.data.result[i];
         // }
@@ -920,7 +915,7 @@
         console.log(vm.items);
         // return;
       }
-      
+
     })
 
     vm.selectItemFun = function (item) {

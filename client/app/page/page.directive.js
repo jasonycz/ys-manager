@@ -3,9 +3,10 @@
 
   angular.module('app.page')
     .directive('customPage', customPage)
-    .directive('qrcode', ['$window', qrcode]);
+    .directive('qrcode', ['$window', qrcode])
+    .directive('ueditor', [ueditor]);
 
-   function qrcode($window) {
+  function qrcode($window) {
 
     return {
       restrict: 'E',
@@ -13,12 +14,12 @@
         options: '='
       },
       link: function (scope, ele, attrs) {
-        console.log(ele,scope.options);
+        console.log(ele, scope.options);
         new QRCode(ele[0], scope.options);
 
       }
     };
-  };
+  }; 
 
   // add class for specific pages to achieve fullscreen, custom background etc.
   function customPage() {
@@ -63,4 +64,40 @@
     }
   }
 
+  function ueditor() {
+    return {
+      restrict: 'AE',
+      transclude: true,
+      replace: true,
+      template: '<script name="content" type="text/plain" ng-transclude>GGG</script>',
+      require: '?ngModel',
+      scope: {
+        config: '=',
+        editor: '='
+      },
+      link: function (scope, element, attrs, ngModel) {
+        //Todo: ueditor 路径
+        var editor = new UE.ui.Editor(scope.config || {});
+        scope.editor = editor;
+        editor.render(element[0]);
+
+        if (ngModel) {
+          //Model数据更新时，更新百度UEditor
+          ngModel.$render = function () {
+            try {
+              editor.setContent(ngModel.$viewValue);
+            } catch (e) { }
+          };
+          //百度UEditor数据更新时，更新Model
+          editor.addListener('contentChange', function () {
+            setTimeout(function () {
+              scope.$apply(function () {
+                ngModel.$setViewValue(editor.getContent());
+              })
+            }, 0);
+          })
+        }
+      }
+    }
+  }
 })();

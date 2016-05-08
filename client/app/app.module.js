@@ -15,7 +15,7 @@
         // 3rd party feature modules
         ,'mgo-angular-wizard'
         ,'ui.tree'
-        ,'textAngular'
+     
     ]);
 
 })();

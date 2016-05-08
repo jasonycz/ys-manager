@@ -5,10 +5,10 @@
     // Angular modules
     'ngAnimate'
     , 'ngMessages'
-
+    , 'ngSanitize'
     // Custom modules
     , 'app.layout'
-    , 'app.i18n'
+    //, 'app.i18n'
 
     // 3rd Party Modules
     , 'ngMaterial'
