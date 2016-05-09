@@ -115,6 +115,7 @@
 
     var api = {
       studio: {},
+      craft:{},
       user: {},
       wap: {}
     };
@@ -272,6 +273,14 @@
     api.studio.uploaduyimg = function () {
       return baseUrl + '/studio/uploaduyimg';
     };
+    /**
+     * 在线图库-图片上传
+     * @returns {string}
+     */
+    api.craft.uploadarticleimages = function () {
+      return baseUrl + '/craft/uploadarticleimages';
+    };
+    
 
     /**
      * 雕件软文修改页面

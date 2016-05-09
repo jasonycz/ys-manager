@@ -14,7 +14,7 @@
     .controller('CreateJadeCtrl', ['$stateParams', '$mdDialog', 'api', 'toaster', '$state', '$timeout', CreateJadeCtrl])
     .controller('GoodDetailsJadeCtrl', ['$stateParams', 'api', '$mdDialog', GoodDetailsJadeCtrl])
     .controller('showBigImgCtrl', ['$mdDialog', 'items', showBigImgCtrl]) //显示大图
-    .controller('photoAlbumCtrl', ['$mdDialog', 'items', 'api', photoAlbumCtrl]) //在线相册
+    .controller('photoAlbumCtrl', ['$mdDialog', '$timeout', 'items', 'api', 'Upload', photoAlbumCtrl]) //在线相册
     ;
 
   //面板
@@ -439,11 +439,11 @@
         .getcid()
         .then(function (res) {
           if (res.data.errNo === 0 && (res.data.result.craft_id !== undefined)) {
-            console.log('res.data.result');
-            console.log(res);
+            //console.log('res.data.result');
+            //console.log(res);
             vm.form.craft_id = res.data.result.craft_id;
-            console.log('vm.form.craft_id in getcid');
-            console.log(vm.form.craft_id);
+            //console.log('vm.form.craft_id in getcid');
+            //console.log(vm.form.craft_id);
           } else {
             // toaster.pop('error', '获取雕件id失败', '正在重新获取,错误信息:' + res.data.errMsg);
             // if (res.data.errNo !== 100012) {
@@ -546,7 +546,7 @@
         parent: angular.element(document.body),
         targetEvent: $event,
         locals: {
-          items: {}
+          items: { craft_id: vm.form.craft_id }
         }
         //clickOutsideToClose: true
       }).then(function (items) {
@@ -690,7 +690,6 @@
           if (response.data.errNo === 0) {
             vm.form.push(response.data.result.img_url);
             vm.uploadValidation = true;
-
           }
         }, function (response) {
           if (response.status > 0) {
@@ -860,15 +859,18 @@
   }
 
   /**
-   * 显示在线相册
+   * 显示在线相册 
    * @param $mdDialog
    * @param items
    */
-  function photoAlbumCtrl($mdDialog, items, api) {
+  function photoAlbumCtrl($mdDialog, $timeout, items, api, Upload) {
     var vm = this;
+    vm.files = [];//上传的图片
+    vm.showUpload = false;
     vm.selectItem = [];
     // { id: 1, url: 'images/assets/600_400-1.jpg' }
-    vm.items = [];
+    vm.items = [];//库存图片
+    //todo 加缓存
     api
       .studio
       .allimges()
@@ -878,10 +880,11 @@
         }
       });
 
+    //切换选中
     vm.selectItemFun = function (item) {
       if (item.active) {
-        vm.selectItem=vm.selectItem.slice(vm.selectItem.indexOf(item), 1);
-        item.active=false;
+        vm.selectItem = vm.selectItem.slice(vm.selectItem.indexOf(item), 1);
+        item.active = false;
       } else {
         item.active = true;
         vm.selectItem.push(item);
@@ -891,11 +894,52 @@
     vm.cancel = function () {
       $mdDialog.hide();
     };
+    //选择文件就上传
+    vm.upload = function ($files) {
+      vm.showUpload = true;
+
+      console.log($files);
+      if ($files && $files.length) {
+        // for (var i = 0; i < $files.length; i++) {
+        //   Upload.upload({url: api.craft.uploadarticleimages(), data: {file: $files[i]}, ...})...;
+        // }
+        vm.files = {
+          craft_id: items.craft_id
+        };
+        for (var i = 0; i < $files.length; i++) {
+          vm.files['file' + i] = $files[i];
+        }
+        Upload.upload({
+          url: api.craft.uploadarticleimages(),
+          sendFieldsAs: 'form',
+          data: vm.files
+        }).then(function (response) {
+          if (response.data.errNo === 0) {
+            var _result = [];
+            for (var url in response.data.result) {
+              _result.push({
+                img_url: response.data.result[url]
+              });
+            }
+            $timeout(function () {
+              Array.prototype.push.apply(vm.items, _result);
+              console.log(vm.items);
+            });
+          }
+        }, function (response) {
+          if (response.status > 0) {
+            toaster.pop('error', '图片上传失败', response.status + ': ' + response.data);
+          }
+        }, function (evt) {
+          vm.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        });
+      }
+    }
+
     vm.save = function () {
-      console.log('选择的图片',vm.selectItem);
+      //console.log('选择的图片',vm.selectItem);
       $mdDialog.hide(vm.selectItem);
     };
 
   }
-
 })();

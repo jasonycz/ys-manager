@@ -76,7 +76,7 @@
         editor: '='
       },
       link: function (scope, element, attrs, ngModel) {
-        //Todo: ueditor 路径
+        //todo: ueditor 路径
         var editor = new UE.ui.Editor(scope.config || {});
         scope.editor = editor;
         editor.render(element[0]);

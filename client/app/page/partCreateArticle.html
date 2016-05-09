@@ -83,7 +83,7 @@
         </div>
 
         <md-input-container md-is-error="form.content.$invalid && (form.$submitted || form.content.$dirty)" class="md-block">
-          <!--<div ng-bind-html="vm.form.content"></div>-->
+
           <ueditor class="ui-editor" config="vm.editor.config" required="true" editor="vm.editor.dom" ng-model="vm.form.content"
             name="content" id="details"></ueditor>
 
@@ -104,7 +104,6 @@
 
       </fieldset>
     </form>
-
   </div>
 
   <md-content layout="column" flex="20" class="md-padding">
@@ -114,12 +113,12 @@
       <!--<a href="javascript:;" class="list-group-item"><i class="zmdi zmdi-videocam"></i> 视频 </a>-->
     </div>
   </md-content>
-  
+
 </div>
 
 <script type="text/ng-template" id="photoAlbum.html">
   <md-dialog>
-    <form novalidate>
+    <form novalidate name="dialogForm">
       <md-toolbar>
         <div class="md-toolbar-tools">
           <h2>选择图片</h2>
@@ -131,9 +130,10 @@
       </md-toolbar>
       <md-dialog-content>
         <div class="md-dialog-content">
+          <div class="row" ng-show="vm.showUpload">
 
+          </div>
           <div class="row">
-
             <div class="col-md-4" ng-repeat="item in vm.items track by $index">
               <div class="ih-item ih-material select-item">
 
@@ -152,14 +152,19 @@
                 </a>
               </div>
             </div>
-
           </div>
-
 
         </div>
       </md-dialog-content>
       <md-dialog-actions layout="row">
-        <md-button class="md-primary" ng-click="vm.save()">确定</md-button>
+        <!--
+             ng-model="vm.files"  
+        -->
+        <md-button class="md-primary md-raised" 
+        multiple="multiple" 
+        ngf-max-size="10MB" 
+        ngf-select="vm.upload($files)" accept="'image/*'">本地上传</md-button>
+        <md-button class="md-raised" ng-class="{'md-primary':vm.selectItem.length>0}" ng-click="vm.save()">确定</md-button>
       </md-dialog-actions>
     </form>
   </md-dialog>
