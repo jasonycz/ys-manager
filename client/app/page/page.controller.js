@@ -211,10 +211,10 @@
     //   }
     // });
     vm.validate = validateReg;
-    // vm.form = {
-    //   phone: '15212345698',
-    //   passwd: '111111'
-    // }; 
+    vm.form = {
+      phone: '15212345698',
+      passwd: '111111'
+    };
     // vm.form = {
     //   phone: '13121902385',
     //   passwd: '1234567'
@@ -420,12 +420,11 @@
       }
 
     ];
-    // vm.craft_id = '';
 
     vm.form = {
       craft_id: $stateParams.craft_id,
       publish: 0,
-      imgurl: 'http://hdn.xnimg.cn/photos/hdn321/20130612/2235/h_main_NNN4_e80a000007df111a.jpg'
+      imgurl: 'http://hdn.xnimg.cn/photos/hdn321/20130612/2235/h_main_NNN4_e80a000007df111a.jpg'//默认图
     };
     if (isUpdate) {
       vm.form.aid = aid;
@@ -678,11 +677,10 @@
     };
     vm.save = function () {
       $mdDialog.hide(vm.form);
-
     };
     vm.uploadFiles = function ($files) {
       vm.files = $files;
-      console.log(vm.files[0]);
+      //console.log(vm.files[0]);
       if (vm.files && vm.files.length) {
         Upload.upload({
           url: api.studio.uploaduyimg(),
@@ -691,27 +689,7 @@
         }).then(function (response) {
           if (response.data.errNo === 0) {
             vm.form.push(response.data.result.img_url);
-
             vm.uploadValidation = true;
-
-
-            // console.log('服务器返回的数据');
-            // console.log(vm.form);
-            // vm.loadInfo = '完成';
-            vm.backgroundUrl = 'images/success.png';
-
-
-            // var getUser=$interval(function(){
-
-
-            //     vm.backgroundUrl='images/success.png';
-            //     $interval.cancel(getUser);
-
-
-            // },500);
-
-            // console.log(vm.backgroundUrl);
-            // alert(vm.backgroundUrl);
 
           }
         }, function (response) {
@@ -720,7 +698,6 @@
           }
         }, function (evt) {
           vm.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-
         });
       }
     }
@@ -890,55 +867,32 @@
   function photoAlbumCtrl($mdDialog, items, api) {
     var vm = this;
     vm.selectItem = [];
-    vm.items = [
-
-      // { id: 1, url: 'images/assets/600_400-1.jpg' },
-      // { id: 1, url: 'images/assets/600_400-2.jpg' },
-      // { id: 1, url: 'images/assets/600_400-3.jpg' },
-      // { id: 1, url: 'images/assets/600_400-4.jpg' },
-      // { id: 1, url: 'images/assets/600_400-5.jpg' },
-      // { id: 1, url: 'images/assets/600_400-1.jpg' },
-      // { id: 1, url: 'images/assets/600_400-2.jpg' },
-      // { id: 1, url: 'images/assets/600_400-3.jpg' },
-      // { id: 1, url: 'images/assets/600_400-4.jpg' },
-      // { id: 1, url: 'images/assets/600_400-6.jpg' }
-    ];
-    // console.log(vm.items);
-    api.studio.allimges().then(function (res) {
-      if (res.data.errNo === 0) {
-        // for(var i=0;i<res.data.result.length;i++){
-        //   // vm.items[i]['url'] = res.data.result[i];
-        // }
-
-        vm.items = res.data.result[0];
-        console.log(res.data.result);
-        console.log(vm.items);
-        // return;
-      }
-
-    })
+    // { id: 1, url: 'images/assets/600_400-1.jpg' }
+    vm.items = [];
+    api
+      .studio
+      .allimges()
+      .then(function (res) {
+        if (res.data.errNo === 0) {
+          vm.items = res.data.result[0];
+        }
+      });
 
     vm.selectItemFun = function (item) {
-
-      //  var index= vm.selectItem.indexOf(item);
-      // if(index>-1){
-      //   vm.selectItem.push(item);
-      // } else{
-      //   vm.selectItem.slice(index,1);
-      // }
       if (item.active) {
-        vm.selectItem.slice(index, 1);
+        vm.selectItem=vm.selectItem.slice(vm.selectItem.indexOf(item), 1);
+        item.active=false;
       } else {
         item.active = true;
         vm.selectItem.push(item);
       }
-
     };
 
     vm.cancel = function () {
       $mdDialog.hide();
     };
     vm.save = function () {
+      console.log('选择的图片',vm.selectItem);
       $mdDialog.hide(vm.selectItem);
     };
 

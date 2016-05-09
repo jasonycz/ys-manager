@@ -69,7 +69,7 @@
       restrict: 'AE',
       transclude: true,
       replace: true,
-      template: '<script name="content" type="text/plain" ng-transclude>GGG</script>',
+      template: '<script name="content" type="text/plain" ng-transclude></script>',
       require: '?ngModel',
       scope: {
         config: '=',
