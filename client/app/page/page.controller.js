@@ -557,7 +557,7 @@
           // alert('暂时只用选中的第一个，后台现在也只用一个，如果没有就默认给一个');
           console.log(items[0].img_url);
           vm.form.imgurl = items[0].img_url;
-          vm.editor.dom.execCommand('inserthtml', '<img src="' + items[0].img_url + '" class=""/>');
+          vm.editor.dom.execCommand('inserthtml', '<img src="' + items[0].img_url + '" style="display:block;width:80%;max-width:400px;margin-left:auto;margin-right:auto;"/>');
         }
       }, function () {
         //取消
