@@ -688,6 +688,7 @@
           sendFieldsAs: 'form'
         }).then(function (response) {
           if (response.data.errNo === 0) {
+            vm.backgroundUrl = 'images/success.png';
             vm.form.push(response.data.result.img_url);
             vm.uploadValidation = true;
           }
