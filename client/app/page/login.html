@@ -59,8 +59,8 @@
           </div>
           <div class="card-action no-border text-right" >
               <md-button  type="submit" ng-class="{'md-primary':form.$valid}" >登录</md-button>
-              <md-button >
-                <a ui-sref="page.forgotPwd" style="text-decoration: none;">忘记密码</a> 
+              <md-button type="text" ng-click="vm.goToForgotPwd()"> 
+                忘记密码
               </md-button>
           </div>
         </form>

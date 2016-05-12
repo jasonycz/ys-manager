@@ -240,6 +240,10 @@
       });
     };
     //vm.login();
+    vm.goToForgotPwd = function(){
+      $state.go('page.forgotPwd');
+    }
+
   }
 
   /**
@@ -344,8 +348,11 @@
         // toaster.pop('error', "重置密码失败!", res.data.errMsg);
       })
     };
-    
 
+
+    vm.goToLogin = function(){
+      $state.go('page.login');
+    }
 
   }
 
