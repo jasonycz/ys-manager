@@ -212,8 +212,8 @@
     // });
     vm.validate = validateReg;
     vm.form = {
-      phone: '15212345698',
-      passwd: '111111'
+      // phone: '15212345698',
+      // passwd: '111111'
     };
     // vm.form = {
     //   phone: '13121902385',
@@ -344,6 +344,7 @@
         // toaster.pop('error', "重置密码失败!", res.data.errMsg);
       })
     };
+    
 
 
   }

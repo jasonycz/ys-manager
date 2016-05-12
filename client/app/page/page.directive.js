@@ -46,7 +46,7 @@
             return $element.addClass('body-wide body-err');
           case '/page/updatepassword':
           case '/page/login':
-          case '/page/forgot-password':
+          case '/page/forgotPwd':
             return $element.addClass('body-wide body-auth');
           case '/page/lock-screen':
             return $element.addClass('body-wide body-lock');
