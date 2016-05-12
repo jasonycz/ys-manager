@@ -81,7 +81,7 @@
             // console.log(res.data);
             if (res.data.errNo == 700011) {
               vm.items = [];
-              // toaster.pop('warning ', '数据获取失败', res.data.errMsg);
+              toaster.pop('success ',  res.data.errMsg);
             } else if (res.data.errNo === 0) {
               vm.items = res.data.result;
             } else {
@@ -229,12 +229,11 @@
         if (res.data.errNo === 0) {
           // console.log(res.data.result);
           window.dataStorage.user.save(res.data.result);
-          // console.log(window.dataStorage.user);
-          // alert('save');
           $state.go('dashboard');
-        }
-        else {
-          // toaster.pop('error', "出错了", res.data.errMsg);
+        }else if (res.data.errNo === 100015){
+          toaster.pop('warning', "您是首次登陆,登录后记得修改初始密码");
+          window.dataStorage.user.save(res.data.result);
+          $state.go('dashboard');
         }
 
       });

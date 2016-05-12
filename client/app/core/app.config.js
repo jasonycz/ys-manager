@@ -373,7 +373,7 @@
           $rootScope.$broadcast('preloader:hide');
 
           //不是请求 api/me 的时候,出现未登陆错误
-          if (response.data.errNo && response.data.errNo !== 0 && response.config.url.indexOf('/api/me') === -1) {
+          if(response.data.errNo && response.data.errNo !== 0 && response.data.errNo !== 700011 && response.data.errNo !== 100015 && response.config.url.indexOf('/api/me') === -1) {
             //console.log(response);
             toaster.pop('error', '出错了', response.data.errMsg);
           }
