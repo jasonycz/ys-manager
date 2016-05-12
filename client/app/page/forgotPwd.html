@@ -94,11 +94,14 @@
             </div>
           </div>
           <div class="card-action no-border text-right">
+                       <!--  class="md-raised btn-w-md" -->
             <!--<a href="#/" class="color-primary" ng-click="update($event)">修改</a>-->
             <md-button
               type="submit"
-              class="md-raised btn-w-md"
               ng-class="{'md-primary':form.$valid}">重置密码
+            </md-button>
+            <md-button type="text" ng-click="vm.goToLogin()"> 
+              返回登录
             </md-button>
           </div>
         </form>

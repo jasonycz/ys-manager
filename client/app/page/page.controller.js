@@ -212,8 +212,8 @@
     // });
     vm.validate = validateReg;
     vm.form = {
-      phone: '15212345698',
-      passwd: '111111'
+      // phone: '15212345698',
+      // passwd: '111111'
     };
     // vm.form = {
     //   phone: '13121902385',
@@ -240,6 +240,10 @@
       });
     };
     //vm.login();
+    vm.goToForgotPwd = function(){
+      $state.go('page.forgotPwd');
+    }
+
   }
 
   /**
@@ -345,6 +349,10 @@
       })
     };
 
+
+    vm.goToLogin = function(){
+      $state.go('page.login');
+    }
 
   }
 
@@ -557,7 +565,7 @@
           // alert('暂时只用选中的第一个，后台现在也只用一个，如果没有就默认给一个');
           console.log(items[0].img_url);
           vm.form.imgurl = items[0].img_url;
-          vm.editor.dom.execCommand('inserthtml', '<img src="' + items[0].img_url + '" class=""/>');
+          vm.editor.dom.execCommand('inserthtml', '<img src="' + items[0].img_url + '" style="display:block;width:80%;max-width:400px;margin-left:auto;margin-right:auto;"/>');
         }
       }, function () {
         //取消
@@ -688,6 +696,7 @@
           sendFieldsAs: 'form'
         }).then(function (response) {
           if (response.data.errNo === 0) {
+            vm.backgroundUrl = 'images/success.png';
             vm.form.push(response.data.result.img_url);
             vm.uploadValidation = true;
           }
